@@ -267,13 +267,24 @@
     <form id="userBookingForm">
         <label for="firstName">First Name:</label>
         <input type="text" id="firstName" name="firstName" required>
+        
         <label for="lastName">Last Name:</label>
         <input type="text" id="lastName" name="lastName" required>
+        
         <label for="dob">Date of Birth:</label>
         <input type="date" id="dob" name="dob" required>
+        
         <label for="birthTime">Birth Time:</label>
         <input type="time" id="birthTime" name="birthTime" required>
+        
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
         <button type="button" onclick="submitBookingForm()">Submit</button>
+        <button type="button" onclick="cancelBookingForm()">Cancel</button>
     </form>
 </div>
 
@@ -285,21 +296,32 @@
     }
 
     function submitBookingForm() {
-        // Customize this function to handle form submission (e.g., send data to a server)
         var firstName = document.getElementById('firstName').value;
         var lastName = document.getElementById('lastName').value;
         var dob = document.getElementById('dob').value;
         var birthTime = document.getElementById('birthTime').value;
+        var phoneNumber = document.getElementById('phoneNumber').value;
+        var email = document.getElementById('email').value;
 
         console.log('Form submitted with the following data:');
         console.log('First Name:', firstName);
         console.log('Last Name:', lastName);
         console.log('Date of Birth:', dob);
         console.log('Birth Time:', birthTime);
+        console.log('Phone Number:', phoneNumber);
+        console.log('Email:', email);
 
         // You can add logic here to send the form data to your server or perform other actions
+        // For now, we'll just close the form
+        document.getElementById('bookingForm').style.display = 'none';
+    }
+
+    function cancelBookingForm() {
+        // Customize this function based on your needs (e.g., close the form)
+        document.getElementById('bookingForm').style.display = 'none';
     }
 </script>
+
 
 <section id="contact">
     <h2>Contact Us</h2>
