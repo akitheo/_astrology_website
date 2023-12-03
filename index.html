@@ -283,71 +283,75 @@
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
 
-        <button type="button" onclick="submitBookingForm()">Submit</button>
-        <button type="button" onclick="cancelBookingForm()">Cancel</button>
-    </form>
+        <!-- Add hidden input fields to store selected day and time -->
+            <input type="hidden" id="selectedDay" name="selectedDay">
+            <input type="hidden" id="selectedTime" name="selectedTime">
+
+            <button type="button" onclick="submitBookingForm()">Submit</button>
+            <button type="button" onclick="cancelBookingForm()">Cancel</button>
+        </form>
 </div>
 
 <script>
-    function showBookingForm(day, time) {
-        // Customize this function based on your needs (e.g., show a modal)
-        document.getElementById('bookingForm').style.display = 'block';
-        document.getElementById('selectedDay').value = day;
-        document.getElementById('selectedTime').value = time;
-        console.log('Booking for ' + day + ' at ' + time);
-    }
+        function showBookingForm(day, time) {
+            // Customize this function based on your needs (e.g., show a modal)
+            document.getElementById('bookingForm').style.display = 'block';
+            document.getElementById('selectedDay').value = day;
+            document.getElementById('selectedTime').value = time;
+            console.log('Booking for ' + day + ' at ' + time);
+        }
 
-    function submitBookingForm() {
-        // Customize this function to handle form submission (e.g., send data to a server)
-        var firstName = document.getElementById('firstName').value;
-        var lastName = document.getElementById('lastName').value;
-        var dob = document.getElementById('dob').value;
-        var birthTime = document.getElementById('birthTime').value;
-        var phoneNumber = document.getElementById('phoneNumber').value;
-        var email = document.getElementById('email').value;
-        var selectedDay = document.getElementById('selectedDay').value;
-        var selectedTime = document.getElementById('selectedTime').value;
+        function submitBookingForm() {
+            // Customize this function to handle form submission (e.g., send data to a server)
+            var firstName = document.getElementById('firstName').value;
+            var lastName = document.getElementById('lastName').value;
+            var dob = document.getElementById('dob').value;
+            var birthTime = document.getElementById('birthTime').value;
+            var phoneNumber = document.getElementById('phoneNumber').value;
+            var email = document.getElementById('email').value;
+            var selectedDay = document.getElementById('selectedDay').value;
+            var selectedTime = document.getElementById('selectedTime').value;
 
-        console.log('Form submitted with the following data:');
-        console.log('First Name:', firstName);
-        console.log('Last Name:', lastName);
-        console.log('Date of Birth:', dob);
-        console.log('Birth Time:', birthTime);
-        console.log('Phone Number:', phoneNumber);
-        console.log('Email:', email);
-        console.log('Selected Day:', selectedDay);
-        console.log('Selected Time:', selectedTime);
+            console.log('Form submitted with the following data:');
+            console.log('First Name:', firstName);
+            console.log('Last Name:', lastName);
+            console.log('Date of Birth:', dob);
+            console.log('Birth Time:', birthTime);
+            console.log('Phone Number:', phoneNumber);
+            console.log('Email:', email);
+            console.log('Selected Day:', selectedDay);
+            console.log('Selected Time:', selectedTime);
 
-        // You can add logic here to send the form data to your server
-        // For now, we'll just close the form
-        document.getElementById('bookingForm').style.display = 'none';
+            // You can add logic here to send the form data to your server
+            // For now, we'll just close the form
+            document.getElementById('bookingForm').style.display = 'none';
 
-        // Make an AJAX request to the PHP file
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "process_form.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log(xhr.responseText);
-            }
-        };
-        xhr.send(
-            "firstName=" + encodeURIComponent(firstName) +
-            "&lastName=" + encodeURIComponent(lastName) +
-            "&dob=" + encodeURIComponent(dob) +
-            "&birthTime=" + encodeURIComponent(birthTime) +
-            "&phoneNumber=" + encodeURIComponent(phoneNumber) +
-            "&email=" + encodeURIComponent(email) +
-            "&selectedDay=" + encodeURIComponent(selectedDay) +
-            "&selectedTime=" + encodeURIComponent(selectedTime)
-        );
-    }
+            // Make an AJAX request to the PHP file
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "_astrology_website/process_form.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send(
+                "firstName=" + encodeURIComponent(firstName) +
+                "&lastName=" + encodeURIComponent(lastName) +
+                "&dob=" + encodeURIComponent(dob) +
+                "&birthTime=" + encodeURIComponent(birthTime) +
+                "&phoneNumber=" + encodeURIComponent(phoneNumber) +
+                "&email=" + encodeURIComponent(email) +
+                "&selectedDay=" + encodeURIComponent(selectedDay) +
+                "&selectedTime=" + encodeURIComponent(selectedTime)
+            );
+        }
 
-    function cancelBookingForm() {
-        // Customize this function based on your needs (e.g., close the form)
-        document.getElementById('bookingForm').style.display = 'none';
-    }
-</script>
+        function cancelBookingForm() {
+            // Customize this function based on your needs (e.g., close the form)
+            document.getElementById('bookingForm').style.display = 'none';
+        }
+    </script>
 
 
 <section id="contact">
@@ -361,10 +365,7 @@
     </div>
     <!-- Add contact form or additional information here -->
 </section>
-   <!-- Add hidden input fields to store selected day and time -->
-<input type="hidden" id="selectedDay" name="selectedDay">
-<input type="hidden" id="selectedTime" name="selectedTime"> 
-
+  
 <footer>
     <p>&copy; 2023 Astrology Consultation Booking. All rights reserved.</p>
 </footer>
