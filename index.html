@@ -292,6 +292,8 @@
     function showBookingForm(day, time) {
         // Customize this function based on your needs (e.g., show a modal)
         document.getElementById('bookingForm').style.display = 'block';
+        document.getElementById('selectedDay').value = day;
+        document.getElementById('selectedTime').value = time;
         console.log('Booking for ' + day + ' at ' + time);
     }
 
@@ -303,8 +305,8 @@
         var birthTime = document.getElementById('birthTime').value;
         var phoneNumber = document.getElementById('phoneNumber').value;
         var email = document.getElementById('email').value;
-        var day = "Monday"; // Replace with the actual selected day
-        var time = "8:00 PM - 8:30 PM"; // Replace with the actual selected time
+        var selectedDay = document.getElementById('selectedDay').value;
+        var selectedTime = document.getElementById('selectedTime').value;
 
         console.log('Form submitted with the following data:');
         console.log('First Name:', firstName);
@@ -313,6 +315,8 @@
         console.log('Birth Time:', birthTime);
         console.log('Phone Number:', phoneNumber);
         console.log('Email:', email);
+        console.log('Selected Day:', selectedDay);
+        console.log('Selected Time:', selectedTime);
 
         // You can add logic here to send the form data to your server
         // For now, we'll just close the form
@@ -334,8 +338,8 @@
             "&birthTime=" + encodeURIComponent(birthTime) +
             "&phoneNumber=" + encodeURIComponent(phoneNumber) +
             "&email=" + encodeURIComponent(email) +
-            "&day=" + encodeURIComponent(day) +
-            "&time=" + encodeURIComponent(time)
+            "&selectedDay=" + encodeURIComponent(selectedDay) +
+            "&selectedTime=" + encodeURIComponent(selectedTime)
         );
     }
 
@@ -350,13 +354,16 @@
     <h2>Contact Us</h2>
     <div class="contact-info">
         <p>Name: Theo (Po Chen Liao)</p>
-        <p>Email: apal707662@gmail.com</p>
-        <p>Phone No: +886- 0902417760</p>
+        <p>Email: tuturikpa@gmail.com</p>
+        <p>Phone No: +886- 983081679</p>
         <p>Facebook: <a href="https://www.facebook.com/XXXX" target="_blank">XXXX</a></p>
         <p>Instagram: <a href="https://www.instagram.com/XXXX" target="_blank">XXXX</a></p>
     </div>
     <!-- Add contact form or additional information here -->
 </section>
+   <!-- Add hidden input fields to store selected day and time -->
+<input type="hidden" id="selectedDay" name="selectedDay">
+<input type="hidden" id="selectedTime" name="selectedTime"> 
 
 <footer>
     <p>&copy; 2023 Astrology Consultation Booking. All rights reserved.</p>
