@@ -10,9 +10,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message_astrologer = "New booking request:\nName: " . $_POST["firstName"] . " " . $_POST["lastName"] . "\nDay: " . $_POST["day"] . "\nTime: " . $_POST["time"] . "\nPhone Number: " . $_POST["phoneNumber"] . "\nEmail: " . $_POST["email"];
 
     // Send email to customer
-    mail($to_customer, $subject_customer, $message_customer);
+    $customer_mail_result = mail($to_customer, $subject_customer, $message_customer);
 
     // Send email to astrologer
-    mail($to_astrologer, $subject_astrologer, $message_astrologer);
+    $astrologer_mail_result = mail($to_astrologer, $subject_astrologer, $message_astrologer);
+
+    // Check for successful email sending
+    if ($customer_mail_result && $astrologer_mail_result) {
+        echo "Emails sent successfully!";
+    } else {
+        echo "Error sending emails. Please try again later.";
+    }
 }
 ?>
+
