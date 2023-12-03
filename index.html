@@ -296,12 +296,15 @@
     }
 
     function submitBookingForm() {
+        // Customize this function to handle form submission (e.g., send data to a server)
         var firstName = document.getElementById('firstName').value;
         var lastName = document.getElementById('lastName').value;
         var dob = document.getElementById('dob').value;
         var birthTime = document.getElementById('birthTime').value;
         var phoneNumber = document.getElementById('phoneNumber').value;
         var email = document.getElementById('email').value;
+        var day = "Monday"; // Replace with the actual selected day
+        var time = "8:00 PM - 8:30 PM"; // Replace with the actual selected time
 
         console.log('Form submitted with the following data:');
         console.log('First Name:', firstName);
@@ -311,9 +314,29 @@
         console.log('Phone Number:', phoneNumber);
         console.log('Email:', email);
 
-        // You can add logic here to send the form data to your server or perform other actions
+        // You can add logic here to send the form data to your server
         // For now, we'll just close the form
         document.getElementById('bookingForm').style.display = 'none';
+
+        // Make an AJAX request to the PHP file
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "process_form.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+            }
+        };
+        xhr.send(
+            "firstName=" + encodeURIComponent(firstName) +
+            "&lastName=" + encodeURIComponent(lastName) +
+            "&dob=" + encodeURIComponent(dob) +
+            "&birthTime=" + encodeURIComponent(birthTime) +
+            "&phoneNumber=" + encodeURIComponent(phoneNumber) +
+            "&email=" + encodeURIComponent(email) +
+            "&day=" + encodeURIComponent(day) +
+            "&time=" + encodeURIComponent(time)
+        );
     }
 
     function cancelBookingForm() {
