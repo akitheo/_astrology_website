@@ -54,6 +54,20 @@
             border-radius: 50%;
             margin-right: 20px;
         }
+
+        .blink-box {
+            animation: blink 1s infinite;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        @keyframes blink {
+            0% { background-color: #333; color: white; }
+            50% { background-color: #fff; color: #333; }
+            100% { background-color: #333; color: white; }
+        }
     </style>
 </head>
 <body>
@@ -72,8 +86,8 @@
         </nav>
     </div>
 </header>
-    
-<section id="home">
+
+<section id="home" style="background-color: #f8f8f8; padding: 30px; text-align: center;">
     <div style="text-align: center; padding: 20px;">
         <img src="IMG/astro.jpg" alt="ASTRO" style="max-width: 100%; border-radius: 10px;">
     </div>
@@ -81,26 +95,30 @@
         <h2>Welcome to the Cosmic Guidance Center</h2>
         <p>Unlock the secrets of the stars and discover the profound insights they hold for you. At the Cosmic Guidance Center, our team of skilled astrologers is dedicated to providing you with a transformative experience. From personalized one-on-one consultations to detailed chart readings and mystical card readings, our services are designed to guide you on your unique journey.</p>
         <p>Immerse yourself in the ancient wisdom of astrology and let our astrologers unveil the celestial map of your life. Whether you seek clarity on relationships, career choices, or spiritual growth, our cosmic experts are here to assist you.</p>
-        <p>Book a consultation today and embark on a voyage of self-discovery, where the stars align to illuminate your path.</p>
-        <a href="#booking" style="text-decoration: none; color: #333; font-weight: bold;">Book a Consultation</a>
+        <div class="blink-box">
+            <a href="#booking" style="text-decoration: none; color: white; font-weight: bold;">Book a Consultation</a>
+        </div>
     </div>
-</section> 
+</section>
+
 <section id="services">
     <h2>Our Services</h2>
     <p>Embark on a personalized journey with our one-to-one consultation services, where our experienced astrologers provide insights tailored just for you. Explore the intricacies of your birth chart through our in-depth chart reading sessions, unraveling the cosmic mysteries that shape your unique personality and destiny. Dive into the mystical realm of card reading, where ancient wisdom meets modern guidance, offering clarity and foresight into your life's path. Additionally, we offer a variety of specialized astrology services, including compatibility analysis, career guidance, and spiritual counseling. Let our skilled astrologers illuminate the celestial map of your life, guiding you towards a future filled with cosmic harmony and self-discovery.</p>
     <!-- Add more content as needed -->
 </section>
+
 <section id="booking">
     <h2>Book a Consultation</h2>
     <p>Choose your astrologer and schedule a consultation...</p>
     <!-- Add booking form or details here -->
 </section>
+
 <section id="contact">
     <h2>Contact Us</h2>
     <p>Reach out to us for any questions or assistance...</p>
     <!-- Add contact details or a form here -->
 </section>
-    
+
 <footer>
     <p>&copy; 2023 Astrology Consultation Booking. All rights reserved.</p>
 </footer>
