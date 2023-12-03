@@ -6,7 +6,7 @@
     <title>Welcome to Astrology World</title>
     <style>
         body {
-            font-family: Times Roman, sans-serif;
+            font-family: 'Times New Roman', Times, serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
@@ -61,12 +61,23 @@
             border-radius: 10px;
             display: inline-block;
             margin-top: 20px;
+            background-color: #ff3333; /* Red */
         }
 
         @keyframes blink {
             0% { background-color: #333; color: white; }
             50% { background-color: #fff; color: #333; }
-            100% { background-color: #333; color: blue; }
+            100% { background-color: #333; color: white; }
+        }
+
+        #services p {
+            color: #000080; /* Navy Blue */
+        }
+
+        #booking a {
+            color: #ff3333; /* Red */
+            text-decoration: none;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -96,7 +107,7 @@
         <p>Unlock the secrets of the stars and discover the profound insights they hold for you. At the Cosmic Guidance Center, our team of skilled astrologers is dedicated to providing you with a transformative experience. From personalized one-on-one consultations to detailed chart readings and mystical card readings, our services are designed to guide you on your unique journey.</p>
         <p>Immerse yourself in the ancient wisdom of astrology and let our astrologers unveil the celestial map of your life. Whether you seek clarity on relationships, career choices, or spiritual growth, our cosmic experts are here to assist you.</p>
         <div class="blink-box">
-            <a href="#booking" style="text-decoration: none; color: white; font-weight: bold;">Book a Consultation</a>
+            <a href="#booking">Book a Consultation</a>
         </div>
     </div>
 </section>
