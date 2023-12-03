@@ -99,6 +99,38 @@
         .contact-info p {
             margin: 5px 0;
         }
+   #bookingForm {
+            display: none;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+        }
+
+        #bookingForm label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #bookingForm input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        #bookingForm button {
+            background-color: #ff3333;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -221,24 +253,19 @@
         </tbody>
     </table>
 </section>
-    
-<!-- Add a simple form for collecting basic information -->
-<div id="bookingForm" style="display: none;">
+    <!-- Add the following code for the form -->
+<div id="bookingForm">
     <h3>Booking Information</h3>
-    <form>
+    <form id="userBookingForm">
         <label for="firstName">First Name:</label>
         <input type="text" id="firstName" name="firstName" required>
-        <br>
         <label for="lastName">Last Name:</label>
         <input type="text" id="lastName" name="lastName" required>
-        <br>
         <label for="dob">Date of Birth:</label>
         <input type="date" id="dob" name="dob" required>
-        <br>
         <label for="birthTime">Birth Time:</label>
         <input type="time" id="birthTime" name="birthTime" required>
-        <br>
-        <button type="submit">Submit</button>
+        <button type="button" onclick="submitBookingForm()">Submit</button>
     </form>
 </div>
 
@@ -247,6 +274,22 @@
         // Customize this function based on your needs (e.g., show a modal)
         document.getElementById('bookingForm').style.display = 'block';
         console.log('Booking for ' + day + ' at ' + time);
+    }
+
+    function submitBookingForm() {
+        // Customize this function to handle form submission (e.g., send data to a server)
+        var firstName = document.getElementById('firstName').value;
+        var lastName = document.getElementById('lastName').value;
+        var dob = document.getElementById('dob').value;
+        var birthTime = document.getElementById('birthTime').value;
+
+        console.log('Form submitted with the following data:');
+        console.log('First Name:', firstName);
+        console.log('Last Name:', lastName);
+        console.log('Date of Birth:', dob);
+        console.log('Birth Time:', birthTime);
+
+        // You can add logic here to send the form data to your server or perform other actions
     }
 </script>
 
