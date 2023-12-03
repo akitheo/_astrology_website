@@ -195,61 +195,69 @@
         </thead>
         <tbody>
             <!-- Monday -->
-            <tr>
-                <td>Monday</td>
-                <td class="slot" data-day="Monday" data-time="8:00 PM - 8:30 PM">Half Hour Session</td>
-                <td class="slot" data-day="Monday" data-time="8:30 PM - 9:00 PM">Half Hour Session</td>
-                <td colspan="2" class="slot" data-day="Monday" data-time="9:00 PM - 10:00 PM">One Hour Session</td>
-                <td class="slot" data-day="Monday" data-time="10:00 PM - 10:30 PM">Half Hour Session</td>
-            </tr>
-            <!-- Tuesday -->
-            <tr>
-                <td>Tuesday</td>
-                <td class="slot" data-day="Tuesday" data-time="8:00 PM - 8:30 PM">Half Hour Session</td>
-                <td class="slot" data-day="Tuesday" data-time="8:30 PM - 9:00 PM">Half Hour Session</td>
-                <td colspan="2" class="slot" data-day="Tuesday" data-time="9:00 PM - 10:00 PM">One Hour Session</td>
-                <td class="slot" data-day="Tuesday" data-time="10:00 PM - 10:30 PM">Half Hour Session</td>
-            </tr>
-            <!-- Wednesday -->
-            <tr>
-                <td>Wednesday</td>
-                <td class="slot" data-day="Wednesday" data-time="8:00 PM - 8:30 PM">Half Hour Session</td>
-                <td class="slot" data-day="Wednesday" data-time="8:30 PM - 9:00 PM">Half Hour Session</td>
-                <td colspan="2" class="slot" data-day="Wednesday" data-time="9:00 PM - 10:00 PM">One Hour Session</td>
-                <td class="slot" data-day="Wednesday" data-time="10:00 PM - 10:30 PM">Half Hour Session</td>
-            </tr>
-            <!-- Thursday -->
-            <tr>
-                <td>Thursday</td>
-                <td class="slot" data-day="Thursday" data-time="8:00 PM - 8:30 PM">Half Hour Session</td>
-                <td class="slot" data-day="Thursday" data-time="8:30 PM - 9:00 PM">Half Hour Session</td>
-                <td colspan="2" class="slot" data-day="Thursday" data-time="9:00 PM - 10:00 PM">One Hour Session</td>
-                <td class="slot" data-day="Thursday" data-time="10:00 PM - 10:30 PM">Half Hour Session</td>
-            </tr>
-            <!-- Friday -->
-            <tr>
-                <td>Friday</td>
-                <td class="slot" data-day="Friday" data-time="8:00 PM - 8:30 PM">Half Hour Session</td>
-                <td class="slot" data-day="Friday" data-time="8:30 PM - 9:00 PM">Half Hour Session</td>
-                <td colspan="2" class="slot" data-day="Friday" data-time="9:00 PM - 10:00 PM">One Hour Session</td>
-                <td class="slot" data-day="Friday" data-time="10:00 PM - 10:30 PM">Half Hour Session</td>
-            </tr>
-            <!-- Saturday -->
-            <tr>
-                <td>Saturday</td>
-                <td class="slot" data-day="Saturday" data-time="8:00 PM - 8:30 PM">Half Hour Session</td>
-                <td class="slot" data-day="Saturday" data-time="8:30 PM - 9:00 PM">Half Hour Session</td>
-                <td colspan="2" class="slot" data-day="Saturday" data-time="9:00 PM - 10:00 PM">One Hour Session</td>
-                <td class="slot" data-day="Saturday" data-time="10:00 PM - 10:30 PM">Half Hour Session</td>
-            </tr>
-            <!-- Sunday -->
-            <tr>
-                <td>Sunday</td>
-                <td class="slot" data-day="Sunday" data-time="8:00 PM - 8:30 PM">Half Hour Session</td>
-                <td class="slot" data-day="Sunday" data-time="8:30 PM - 9:00 PM">Half Hour Session</td>
-                <td colspan="2" class="slot" data-day="Sunday" data-time="9:00 PM - 10:00 PM">One Hour Session</td>
-                <td class="slot" data-day="Sunday" data-time="10:00 PM - 10:30 PM">Half Hour Session</td>
-            </tr>
+            <!-- Monday -->
+<tr>
+    <td>Monday</td>
+    <td class="slot" data-day="Monday" data-time="8:00 PM - 8:30 PM" onclick="showBookingForm('Monday', '8:00 PM - 8:30 PM')">Half Hour Session</td>
+    <td class="slot" data-day="Monday" data-time="8:30 PM - 9:00 PM" onclick="showBookingForm('Monday', '8:30 PM - 9:00 PM')">Half Hour Session</td>
+    <td colspan="2" class="slot" data-day="Monday" data-time="9:00 PM - 10:00 PM" onclick="showBookingForm('Monday', '9:00 PM - 10:00 PM')">One Hour Session</td>
+    <td class="slot" data-day="Monday" data-time="10:00 PM - 10:30 PM" onclick="showBookingForm('Monday', '10:00 PM - 10:30 PM')">Half Hour Session</td>
+</tr>
+
+<!-- Tuesday -->
+<tr>
+    <td>Tuesday</td>
+    <td class="slot" data-day="Tuesday" data-time="8:00 PM - 8:30 PM" onclick="showBookingForm('Tuesday', '8:00 PM - 8:30 PM')">Half Hour Session</td>
+    <td class="slot" data-day="Tuesday" data-time="8:30 PM - 9:00 PM" onclick="showBookingForm('Tuesday', '8:30 PM - 9:00 PM')">Half Hour Session</td>
+    <td colspan="2" class="slot" data-day="Tuesday" data-time="9:00 PM - 10:00 PM" onclick="showBookingForm('Tuesday', '9:00 PM - 10:00 PM')">One Hour Session</td>
+    <td class="slot" data-day="Tuesday" data-time="10:00 PM - 10:30 PM" onclick="showBookingForm('Tuesday', '10:00 PM - 10:30 PM')">Half Hour Session</td>
+</tr>
+
+<!-- Wednesday -->
+<tr>
+    <td>Wednesday</td>
+    <td class="slot" data-day="Wednesday" data-time="8:00 PM - 8:30 PM" onclick="showBookingForm('Wednesday', '8:00 PM - 8:30 PM')">Half Hour Session</td>
+    <td class="slot" data-day="Wednesday" data-time="8:30 PM - 9:00 PM" onclick="showBookingForm('Wednesday', '8:30 PM - 9:00 PM')">Half Hour Session</td>
+    <td colspan="2" class="slot" data-day="Wednesday" data-time="9:00 PM - 10:00 PM" onclick="showBookingForm('Wednesday', '9:00 PM - 10:00 PM')">One Hour Session</td>
+    <td class="slot" data-day="Wednesday" data-time="10:00 PM - 10:30 PM" onclick="showBookingForm('Wednesday', '10:00 PM - 10:30 PM')">Half Hour Session</td>
+</tr>
+
+<!-- Thursday -->
+<tr>
+    <td>Thursday</td>
+    <td class="slot" data-day="Thursday" data-time="8:00 PM - 8:30 PM" onclick="showBookingForm('Thursday', '8:00 PM - 8:30 PM')">Half Hour Session</td>
+    <td class="slot" data-day="Thursday" data-time="8:30 PM - 9:00 PM" onclick="showBookingForm('Thursday', '8:30 PM - 9:00 PM')">Half Hour Session</td>
+    <td colspan="2" class="slot" data-day="Thursday" data-time="9:00 PM - 10:00 PM" onclick="showBookingForm('Thursday', '9:00 PM - 10:00 PM')">One Hour Session</td>
+    <td class="slot" data-day="Thursday" data-time="10:00 PM - 10:30 PM" onclick="showBookingForm('Thursday', '10:00 PM - 10:30 PM')">Half Hour Session</td>
+</tr>
+
+<!-- Friday -->
+<tr>
+    <td>Friday</td>
+    <td class="slot" data-day="Friday" data-time="8:00 PM - 8:30 PM" onclick="showBookingForm('Friday', '8:00 PM - 8:30 PM')">Half Hour Session</td>
+    <td class="slot" data-day="Friday" data-time="8:30 PM - 9:00 PM" onclick="showBookingForm('Friday', '8:30 PM - 9:00 PM')">Half Hour Session</td>
+    <td colspan="2" class="slot" data-day="Friday" data-time="9:00 PM - 10:00 PM" onclick="showBookingForm('Friday', '9:00 PM - 10:00 PM')">One Hour Session</td>
+    <td class="slot" data-day="Friday" data-time="10:00 PM - 10:30 PM" onclick="showBookingForm('Friday', '10:00 PM - 10:30 PM')">Half Hour Session</td>
+</tr>
+
+<!-- Saturday -->
+<tr>
+    <td>Saturday</td>
+    <td class="slot" data-day="Saturday" data-time="8:00 PM - 8:30 PM" onclick="showBookingForm('Saturday', '8:00 PM - 8:30 PM')">Half Hour Session</td>
+    <td class="slot" data-day="Saturday" data-time="8:30 PM - 9:00 PM" onclick="showBookingForm('Saturday', '8:30 PM - 9:00 PM')">Half Hour Session</td>
+    <td colspan="2" class="slot" data-day="Saturday" data-time="9:00 PM - 10:00 PM" onclick="showBookingForm('Saturday', '9:00 PM - 10:00 PM')">One Hour Session</td>
+    <td class="slot" data-day="Saturday" data-time="10:00 PM - 10:30 PM" onclick="showBookingForm('Saturday', '10:00 PM - 10:30 PM')">Half Hour Session</td>
+</tr>
+
+<!-- Sunday -->
+<tr>
+    <td>Sunday</td>
+    <td class="slot" data-day="Sunday" data-time="8:00 PM - 8:30 PM" onclick="showBookingForm('Sunday', '8:00 PM - 8:30 PM')">Half Hour Session</td>
+    <td class="slot" data-day="Sunday" data-time="8:30 PM - 9:00 PM" onclick="showBookingForm('Sunday', '8:30 PM - 9:00 PM')">Half Hour Session</td>
+    <td colspan="2" class="slot" data-day="Sunday" data-time="9:00 PM - 10:00 PM" onclick="showBookingForm('Sunday', '9:00 PM - 10:00 PM')">One Hour Session</td>
+    <td class="slot" data-day="Sunday" data-time="10:00 PM - 10:30 PM" onclick="showBookingForm('Sunday', '10:00 PM - 10:30 PM')">Half Hour Session</td>
+</tr>
+
         </tbody>
     </table>
 </section>
