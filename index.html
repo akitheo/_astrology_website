@@ -295,6 +295,7 @@
 </div>
 
 <script>
+var formData; // Declare formData globally
 function showBookingForm(day, time) {
     // Customize this function based on your needs (e.g., show a modal)
     document.getElementById('bookingForm').style.display = 'block';
@@ -302,6 +303,7 @@ function showBookingForm(day, time) {
     document.getElementById('selectedTime').value = time;
     console.log('Booking for ' + day + ' at ' + time);
 }
+
 console.log(formData.get('email'))
 function submitBookingForm() {
     // Get form data
