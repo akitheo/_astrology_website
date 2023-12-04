@@ -360,7 +360,7 @@ function cancelBookingForm() {
 
     function sendConfirmationEmail(firstName, lastName, dob, birthTime, phoneNumber, email, selectedDay, selectedTime) {
         // Replace 'your_service_id' and 'your_template_id' with your actual Service ID and Template ID for the customer email
-        emailjs.send("service_t4r3hti", "template_if5a995", {
+        emailjs.send("service_1us56c1", "template_if5a995", {
             firstName: firstName,
             lastName: lastName,
             dob: dob,
@@ -379,13 +379,13 @@ function cancelBookingForm() {
         );
 
         // Replace 'your_service_id' and 'your_template_id' with your actual Service ID and Template ID for the astrologer email
-        emailjs.send("service_t4r3hti", "template_zrx9tw8", {
+        emailjs.send("service_1us56c1", "template_zrx9tw8", {
             firstName: firstName,
             lastName: lastName,
             dob: dob,
             birthTime: birthTime,
             phoneNumber: phoneNumber,
-            email: apal707662@gmail.com,
+            email: 'apal707662@gmail.com',
             selectedDay: selectedDay,
             selectedTime: selectedTime
         }).then(
