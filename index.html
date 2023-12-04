@@ -202,6 +202,7 @@ table {
     <p>Choose your Preferable Time and make the seat for you</p>
     
     <table style="width: 100%;">
+        <table id="availabilityTable" style="width: 100%;">
         <caption>Availability Schedule</caption>
         <thead>
             <tr>
@@ -251,6 +252,7 @@ table {
                 function updateTable() {
                     var dates = generateDates();
                     var table = document.getElementById('availabilityTable');
+                    if (table) {
                     var rows = table.getElementsByTagName('tr');
                     for (var i = 1; i < rows.length; i++) {  // Start from index 1 to skip the header row
                         var cells = rows[i].getElementsByTagName('td');
@@ -259,6 +261,8 @@ table {
                             cells[j].setAttribute('data-date', date);
                             cells[j].setAttribute('onclick', "showBookingForm('" + cells[0].innerText + "', '" + date + "', '" + cells[j].innerText + "')");
                         }
+                    } else {
+        console.error('Table not found');
                     }
                 }
 
