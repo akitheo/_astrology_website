@@ -308,49 +308,53 @@ console.log(formData.get('email'))
 function submitBookingForm() {
     // Get form data
     var form = document.getElementById('userBookingForm');
-    var formData = new FormData(form);  // Initialize FormData here
+    var formData = new FormData(form);
 
-    // Get selected day and time
-    var selectedDay = document.getElementById('selectedDay').value;
-    var selectedTime = document.getElementById('selectedTime').value;
+    // Check if formData is defined and not empty
+    if (formData && formData.get) {
+        // Get selected day and time
+        var selectedDay = document.getElementById('selectedDay').value;
+        var selectedTime = document.getElementById('selectedTime').value;
 
-    // Make an AJAX request to submit the form to Formspree
-    var xhr = new XMLHttpRequest();
-    xhr.open(form.method, form.action, true);
-    xhr.setRequestHeader('Accept', 'application/json');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200 || xhr.status == 201) {
-                // Successful form submission
-                console.log('Form submitted successfully:', xhr.responseText);
+        // Make an AJAX request to submit the form to Formspree
+        var xhr = new XMLHttpRequest();
+        xhr.open(form.method, form.action, true);
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200 || xhr.status == 201) {
+                    // Successful form submission
+                    console.log('Form submitted successfully:', xhr.responseText);
 
-                // Send confirmation emails
-                sendConfirmationEmail(
-                    formData.get('firstName'),
-                    formData.get('lastName'),
-                    formData.get('dob'),
-                    formData.get('birthTime'),
-                    formData.get('phoneNumber'),
-                    formData.get('email'),
-                    selectedDay,
-                    selectedTime
-                );
+                    // Send confirmation emails
+                    sendConfirmationEmail(
+                        formData.get('firstName'),
+                        formData.get('lastName'),
+                        formData.get('dob'),
+                        formData.get('birthTime'),
+                        formData.get('phoneNumber'),
+                        formData.get('email'),
+                        selectedDay,
+                        selectedTime
+                    );
 
-                // Redirect to the custom success page
-                window.location.href = 'success.html';
-            } else {
-                // Form submission failed
-                console.error('Form submission failed:', xhr.responseText);
-                alert('Booking failed. Please try again later.');
+                    // Redirect to the custom success page
+                    window.location.href = 'success.html';
+                } else {
+                    // Form submission failed
+                    console.error('Form submission failed:', xhr.responseText);
+                    alert('Booking failed. Please try again later.');
+                }
+
+                // Close the form after submission
+                document.getElementById('bookingForm').style.display = 'none';
             }
-
-            // Close the form after submission
-            document.getElementById('bookingForm').style.display = 'none';
-        }
-    };
-    xhr.send(formData);
+        };
+        xhr.send(formData);
+    } else {
+        console.error('Form data is undefined or empty.');
+    }
 }
-
 function cancelBookingForm() {
     // Close the form
     document.getElementById('bookingForm').style.display = 'none';
