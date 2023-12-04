@@ -316,8 +316,8 @@ function submitBookingForm() {
                 // Successful form submission
                 console.log('Form submitted successfully:', xhr.responseText);
 
-                // Add code to display a success message or redirect the user if needed
-                alert('Booking successful! Check your email for confirmation.');
+                // Redirect to the custom success page
+                window.location.href = 'success.html';
             } else {
                 // Form submission failed
                 console.error('Form submission failed:', xhr.responseText);
