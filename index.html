@@ -302,7 +302,7 @@ function showBookingForm(day, time) {
     document.getElementById('selectedTime').value = time;
     console.log('Booking for ' + day + ' at ' + time);
 }
-
+console.log(formData.get('email'))
 function submitBookingForm() {
     // Get form data
     var form = document.getElementById('userBookingForm');
@@ -329,7 +329,7 @@ function submitBookingForm() {
                     formData.get('dob'),
                     formData.get('birthTime'),
                     formData.get('phoneNumber'),
-                    formData.get('email'),
+                    formData.get('email'),  // Use formData to get the user's email
                     selectedDay,
                     selectedTime
                 );
