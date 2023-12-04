@@ -264,7 +264,7 @@
     <!-- Add the following code for the form -->
 <div id="bookingForm">
     <h3>Booking Information</h3>
-    <form id="userBookingForm">
+    <form id="userBookingForm" action="https://formspree.io/f/xvojjjvy" method="POST">
         <label for="firstName">First Name:</label>
         <input type="text" id="firstName" name="firstName" required>
         
@@ -284,74 +284,58 @@
         <input type="email" id="email" name="email" required>
 
         <!-- Add hidden input fields to store selected day and time -->
-            <input type="hidden" id="selectedDay" name="selectedDay">
-            <input type="hidden" id="selectedTime" name="selectedTime">
+        <input type="hidden" id="selectedDay" name="selectedDay">
+        <input type="hidden" id="selectedTime" name="selectedTime">
 
-            <button type="button" onclick="submitBookingForm()">Submit</button>
-            <button type="button" onclick="cancelBookingForm()">Cancel</button>
-        </form>
+        <button type="button" onclick="submitBookingForm()">Submit</button>
+        <button type="button" onclick="cancelBookingForm()">Cancel</button>
+    </form>
 </div>
 
 <script>
-        function showBookingForm(day, time) {
-            // Customize this function based on your needs (e.g., show a modal)
-            document.getElementById('bookingForm').style.display = 'block';
-            document.getElementById('selectedDay').value = day;
-            document.getElementById('selectedTime').value = time;
-            console.log('Booking for ' + day + ' at ' + time);
-        }
+function showBookingForm(day, time) {
+    // Customize this function based on your needs (e.g., show a modal)
+    document.getElementById('bookingForm').style.display = 'block';
+    document.getElementById('selectedDay').value = day;
+    document.getElementById('selectedTime').value = time;
+    console.log('Booking for ' + day + ' at ' + time);
+}
 
-        function submitBookingForm() {
-            // Customize this function to handle form submission (e.g., send data to a server)
-            var firstName = document.getElementById('firstName').value;
-            var lastName = document.getElementById('lastName').value;
-            var dob = document.getElementById('dob').value;
-            var birthTime = document.getElementById('birthTime').value;
-            var phoneNumber = document.getElementById('phoneNumber').value;
-            var email = document.getElementById('email').value;
-            var selectedDay = document.getElementById('selectedDay').value;
-            var selectedTime = document.getElementById('selectedTime').value;
+function submitBookingForm() {
+    // Get form data
+    var form = document.getElementById('userBookingForm');
+    var formData = new FormData(form);
 
-            console.log('Form submitted with the following data:');
-            console.log('First Name:', firstName);
-            console.log('Last Name:', lastName);
-            console.log('Date of Birth:', dob);
-            console.log('Birth Time:', birthTime);
-            console.log('Phone Number:', phoneNumber);
-            console.log('Email:', email);
-            console.log('Selected Day:', selectedDay);
-            console.log('Selected Time:', selectedTime);
+    // Make an AJAX request to submit the form to Formspree
+    var xhr = new XMLHttpRequest();
+    xhr.open(form.method, form.action, true);
+    xhr.setRequestHeader('Accept', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200 || xhr.status == 201) {
+                // Successful form submission
+                console.log('Form submitted successfully:', xhr.responseText);
 
-            // You can add logic here to send the form data to your server
-            // For now, we'll just close the form
-            document.getElementById('bookingForm').style.display = 'none';
+                // Add code to display a success message or redirect the user if needed
+                alert('Booking successful! Check your email for confirmation.');
+            } else {
+                // Form submission failed
+                console.error('Form submission failed:', xhr.responseText);
+                alert('Booking failed. Please try again later.');
+            }
 
-            // Make an AJAX request to the PHP file
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "_astrology_website/process_form.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    console.log(xhr.responseText);
-                }
-            };
-            xhr.send(
-                "firstName=" + encodeURIComponent(firstName) +
-                "&lastName=" + encodeURIComponent(lastName) +
-                "&dob=" + encodeURIComponent(dob) +
-                "&birthTime=" + encodeURIComponent(birthTime) +
-                "&phoneNumber=" + encodeURIComponent(phoneNumber) +
-                "&email=" + encodeURIComponent(email) +
-                "&selectedDay=" + encodeURIComponent(selectedDay) +
-                "&selectedTime=" + encodeURIComponent(selectedTime)
-            );
-        }
-
-        function cancelBookingForm() {
-            // Customize this function based on your needs (e.g., close the form)
+            // Close the form after submission
             document.getElementById('bookingForm').style.display = 'none';
         }
-    </script>
+    };
+    xhr.send(formData);
+}
+
+function cancelBookingForm() {
+    // Close the form
+    document.getElementById('bookingForm').style.display = 'none';
+}
+</script>
 
 
 <section id="contact">
