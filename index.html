@@ -238,6 +238,17 @@ table {
             document.getElementById('selectedTime').value = time;
             console.log('Booking for ' + day + ' on ' + date + ' at ' + time);
         }
+            function generateDates() {
+            var nextMonday = getNextMonday();
+            var dates = [];
+            for (var i = 0; i < 7; i++) {
+                var currentDate = new Date(nextMonday);
+                currentDate.setDate(nextMonday.getDate() + i);
+                var formattedDate = currentDate.toISOString().split('T')[0];
+                dates.push(formattedDate);
+            }
+            return dates;
+        }
 
         function generateCalendar(month, year) {
             var calendarContainer = document.getElementById('calendar');
