@@ -308,7 +308,7 @@ console.log(formData.get('email'))
 function submitBookingForm() {
     // Get form data
     var form = document.getElementById('userBookingForm');
-    var formData = new FormData(form);
+    var formData = new FormData(form);  // Initialize FormData here
 
     // Get selected day and time
     var selectedDay = document.getElementById('selectedDay').value;
@@ -331,7 +331,7 @@ function submitBookingForm() {
                     formData.get('dob'),
                     formData.get('birthTime'),
                     formData.get('phoneNumber'),
-                    formData.get('email'),  // Use formData to get the user's email
+                    formData.get('email'),
                     selectedDay,
                     selectedTime
                 );
