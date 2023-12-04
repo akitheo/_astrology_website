@@ -337,6 +337,41 @@ function updateTable() {
         </tbody>
     </table>
 </section>
+ <!-- Calendar Section -->
+    <h3>Calendar</h3>
+    <table id="calendarTable" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Day</th>
+            </tr>
+        </thead>
+        <tbody>
+            <script>
+                // Function to update the calendar with dynamically generated dates and days
+                function updateCalendar() {
+                    var dates = generateDates();
+                    var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                    var table = document.getElementById('calendarTable');
+                    var rows = table.getElementsByTagName('tr');
+                    for (var i = 0; i < dates.length; i++) {
+                        var currentDate = new Date(dates[i]);
+                        var dayOfWeek = daysOfWeek[currentDate.getDay()];
+                        var newRow = table.insertRow(-1);
+                        var cell1 = newRow.insertCell(0);
+                        var cell2 = newRow.insertCell(1);
+                        cell1.innerHTML = dates[i];
+                        cell2.innerHTML = dayOfWeek;
+                        newRow.setAttribute('onclick', "showBookingForm('" + dayOfWeek + "', '" + dates[i] + "', 'YourDefaultTime')");
+                    }
+                }
+
+                // Call the updateCalendar function when the page loads
+                window.onload = updateCalendar;
+            </script>
+        </tbody>
+    </table>
+
     <!-- Add the following code for the form -->
 <div id="bookingForm">
     <h3>Booking Information</h3>
