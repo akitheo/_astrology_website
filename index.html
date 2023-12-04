@@ -248,23 +248,24 @@ table {
                     return dates;
                 }
 
-                // Function to update the table with dynamically generated dates
-                function updateTable() {
-                    var dates = generateDates();
-                    var table = document.getElementById('availabilityTable');
-                    if (table) {
-                    var rows = table.getElementsByTagName('tr');
-                    for (var i = 1; i < rows.length; i++) {  // Start from index 1 to skip the header row
-                        var cells = rows[i].getElementsByTagName('td');
-                        for (var j = 1; j < cells.length; j++) {  // Start from index 1 to skip the day column
-                            var date = dates[j - 1];  // Use j - 1 to align with the dates array
-                            cells[j].setAttribute('data-date', date);
-                            cells[j].setAttribute('onclick', "showBookingForm('" + cells[0].innerText + "', '" + date + "', '" + cells[j].innerText + "')");
-                        }
-                    } else {
+               // Function to update the table with dynamically generated dates
+function updateTable() {
+    var dates = generateDates();
+    var table = document.getElementById('availabilityTable');
+    if (table) {
+        var rows = table.getElementsByTagName('tr');
+        for (var i = 1; i < rows.length; i++) {  // Start from index 1 to skip the header row
+            var cells = rows[i].getElementsByTagName('td');
+            for (var j = 1; j < cells.length; j++) {  // Start from index 1 to skip the day column
+                var date = dates[j - 1];  // Use j - 1 to align with the dates array
+                cells[j].setAttribute('data-date', date);
+                cells[j].setAttribute('onclick', "showBookingForm('" + cells[0].innerText + "', '" + date + "', '" + cells[j].innerText + "')");
+            }
+        }
+    } else {
         console.error('Table not found');
-                    }
-                }
+    }
+}
 
                 // Call the updateTable function when the page loads
                 window.onload = updateTable;
