@@ -228,8 +228,7 @@ table {
             </tr>
         </thead>
         <tbody>
-
-            <script>
+            
         <script>
         function showBookingForm(day, date, time) {
             // Customize this function based on your needs (e.g., show a modal)
@@ -239,7 +238,7 @@ table {
             document.getElementById('selectedTime').value = time;
             console.log('Booking for ' + day + ' on ' + date + ' at ' + time);
         }
-                
+
         function generateCalendar(month, year) {
             var calendarContainer = document.getElementById('calendar');
 
@@ -298,25 +297,26 @@ table {
             calendarContainer.appendChild(calendarTable);
         }
 
-               // Function to update the table with dynamically generated dates
-function updateTable() {
-    var dates = generateDates();
-    var table = document.getElementById('availabilityTable');
-    if (table) {
-        var rows = table.getElementsByTagName('tr');
-        for (var i = 1; i < rows.length; i++) {  // Start from index 1 to skip the header row
-            var cells = rows[i].getElementsByTagName('td');
-            for (var j = 1; j < cells.length; j++) {  // Start from index 1 to skip the day column
-                var date = dates[j - 1];  // Use j - 1 to align with the dates array
-                cells[j].setAttribute('data-date', date);
-                cells[j].setAttribute('onclick', "showBookingForm('" + cells[0].innerText + "', '" + date + "', '" + cells[j].innerText + "')");
+        // Function to update the table with dynamically generated dates
+        function updateTable() {
+            var dates = generateDates();
+            var table = document.getElementById('availabilityTable');
+            if (table) {
+                var rows = table.getElementsByTagName('tr');
+                for (var i = 1; i < rows.length; i++) {  // Start from index 1 to skip the header row
+                    var cells = rows[i].getElementsByTagName('td');
+                    for (var j = 1; j < cells.length; j++) {  // Start from index 1 to skip the day column
+                        var date = dates[j - 1];  // Use j - 1 to align with the dates array
+                        cells[j].setAttribute('data-date', date);
+                        cells[j].setAttribute('onclick', "showBookingForm('" + cells[0].innerText + "', '" + date + "', '" + cells[j].innerText + "')");
+                    }
+                }
+            } else {
+                console.error('Table not found');
             }
         }
-    } else {
-        console.error('Table not found');
-    }
-}
-window.onload = function () {
+
+        window.onload = function () {
             var currentDate = new Date();
             updateTable();
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
