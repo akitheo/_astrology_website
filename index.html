@@ -179,6 +179,7 @@
 </section>
 
 <!-- Add the following code within the #booking section -->
+    
 <section id="booking">
     <h2>Book a Consultation</h2>
     <p>Choose your Preferable Time and make the seat for you</p>
@@ -196,6 +197,57 @@
             </tr>
         </thead>
         <tbody>
+
+            <script>
+                function showBookingForm(day, date, time) {
+                    // Customize this function based on your needs (e.g., show a modal)
+                    document.getElementById('bookingForm').style.display = 'block';
+                    document.getElementById('selectedDay').value = day;
+                    document.getElementById('selectedDate').value = date;
+                    document.getElementById('selectedTime').value = time;
+                    console.log('Booking for ' + day + ' on ' + date + ' at ' + time);
+                }
+
+                // Function to get the next Monday from the current date
+                function getNextMonday() {
+                    var currentDate = new Date();
+                    var daysUntilMonday = (1 + 7 - currentDate.getDay()) % 7;
+                    var nextMonday = new Date(currentDate);
+                    nextMonday.setDate(currentDate.getDate() + daysUntilMonday);
+                    return nextMonday;
+                }
+
+                // Function to generate dates for the next 7 days starting from next Monday
+                function generateDates() {
+                    var nextMonday = getNextMonday();
+                    var dates = [];
+                    for (var i = 0; i < 7; i++) {
+                        var currentDate = new Date(nextMonday);
+                        currentDate.setDate(nextMonday.getDate() + i);
+                        var formattedDate = currentDate.toISOString().split('T')[0];
+                        dates.push(formattedDate);
+                    }
+                    return dates;
+                }
+
+                // Function to update the table with dynamically generated dates
+                function updateTable() {
+                    var dates = generateDates();
+                    var table = document.getElementById('availabilityTable');
+                    var rows = table.getElementsByTagName('tr');
+                    for (var i = 1; i < rows.length; i++) {  // Start from index 1 to skip the header row
+                        var cells = rows[i].getElementsByTagName('td');
+                        for (var j = 1; j < cells.length; j++) {  // Start from index 1 to skip the day column
+                            var date = dates[j - 1];  // Use j - 1 to align with the dates array
+                            cells[j].setAttribute('data-date', date);
+                            cells[j].setAttribute('onclick', "showBookingForm('" + cells[0].innerText + "', '" + date + "', '" + cells[j].innerText + "')");
+                        }
+                    }
+                }
+
+                // Call the updateTable function when the page loads
+                window.onload = updateTable;
+            </script>
             <!-- Monday -->
             <!-- Monday -->
 <tr>
@@ -288,6 +340,7 @@
         <!-- Add hidden input fields to store selected day and time -->
         <input type="hidden" id="selectedDay" name="selectedDay">
         <input type="hidden" id="selectedTime" name="selectedTime">
+         <input type="hidden" id="selectedDate" name="selectedDate">
 
         <button type="button" onclick="submitBookingForm()">Submit</button>
         <button type="button" onclick="cancelBookingForm()">Cancel</button>
@@ -296,13 +349,6 @@
 
 <script>
 var formData; // Declare formData globally
-function showBookingForm(day, time) {
-    // Customize this function based on your needs (e.g., show a modal)
-    document.getElementById('bookingForm').style.display = 'block';
-    document.getElementById('selectedDay').value = day;
-    document.getElementById('selectedTime').value = time;
-    console.log('Booking for ' + day + ' at ' + time);
-}
 function submitBookingForm() {
     // Get form data
     var form = document.getElementById('userBookingForm');
@@ -310,6 +356,7 @@ function submitBookingForm() {
 
     // Get selected day and time
     var selectedDay = document.getElementById('selectedDay').value;
+    var selectedDate = document.getElementById('selectedDate').value;
     var selectedTime = document.getElementById('selectedTime').value;
 
     // Make an AJAX request to submit the form to Formspree
