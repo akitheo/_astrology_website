@@ -147,19 +147,19 @@ table {
         border: none;
         cursor: pointer;
     }
-        .calendar-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-    }
+       .calendar-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
 
-    .calendar-table th,
-    .calendar-table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: center;
-        cursor: pointer;
-    }
+        .calendar-table th,
+        .calendar-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+        }
     </style>
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 
@@ -212,13 +212,14 @@ table {
 <section id="booking">
     <h2>Book a Consultation</h2>
     <p>Choose your Preferable Time and make the seat for you</p>
+
     <div id="calendar"></div>
-   
-        <table id="availabilityTable" style="width: 100%;">
+
+    <table id="availabilityTable" style="width: 100%;">
         <caption>Availability Schedule</caption>
         <thead>
             <tr>
-                <th>Day</th>
+                <th></th> <!-- Empty cell for day names -->
                 <th>8:00 PM - 8:30 PM</th>
                 <th>8:30 PM - 9:00 PM</th>
                 <th>9:00 PM - 9:30 PM</th>
@@ -229,6 +230,7 @@ table {
         <tbody>
 
             <script>
+        <script>
         function showBookingForm(day, date, time) {
             // Customize this function based on your needs (e.g., show a modal)
             document.getElementById('bookingForm').style.display = 'block';
@@ -237,21 +239,63 @@ table {
             document.getElementById('selectedTime').value = time;
             console.log('Booking for ' + day + ' on ' + date + ' at ' + time);
         }
+                
+        function generateCalendar(month, year) {
+            var calendarContainer = document.getElementById('calendar');
 
-        function getNextMonthFirstDay() {
-            var currentDate = new Date();
-            currentDate.setDate(1); // Set the date to the first day of the month
-            return currentDate;
-        }
+            // Clear any existing content in the calendar container
+            calendarContainer.innerHTML = '';
 
-        function generateDates() {
-            var firstDay = getNextMonthFirstDay();
-            var dates = [];
-            while (firstDay.getMonth() === new Date().getMonth()) {
-                dates.push(new Date(firstDay));
-                firstDay.setDate(firstDay.getDate() + 1);
+            var firstDay = new Date(year, month, 1);
+            var lastDay = new Date(year, month + 1, 0);
+            var dateCounter = 1;
+
+            var calendarTable = document.createElement('table');
+            calendarTable.className = 'calendar-table';
+
+            // Create the header row with day names
+            var headerRow = document.createElement('tr');
+            var dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+            for (var i = 0; i < dayNames.length; i++) {
+                var dayCell = document.createElement('th');
+                dayCell.textContent = dayNames[i];
+                headerRow.appendChild(dayCell);
             }
-            return dates;
+            calendarTable.appendChild(headerRow);
+
+            // Create rows for each week
+            for (var i = 0; i < 6; i++) {
+                var weekRow = document.createElement('tr');
+
+                // Create cells for each day in the week
+                for (var j = 0; j < 7; j++) {
+                    var dateCell = document.createElement('td');
+
+                    if (i === 0 && j < firstDay.getDay()) {
+                        // Empty cells before the first day
+                        dateCell.textContent = '';
+                    } else if (dateCounter > lastDay.getDate()) {
+                        // Empty cells after the last day
+                        dateCell.textContent = '';
+                    } else {
+                        // Cells with date and onclick event
+                        dateCell.textContent = dateCounter;
+                        var dateObj = new Date(year, month, dateCounter);
+                        dateCell.setAttribute('data-date', dateObj.toISOString().split('T')[0]);
+                        dateCell.addEventListener('click', function () {
+                            showBookingForm(this.getAttribute('data-day'), this.getAttribute('data-date'), 'Selected Time');
+                        });
+                        dateCounter++;
+                    }
+
+                    weekRow.appendChild(dateCell);
+                }
+
+                calendarTable.appendChild(weekRow);
+            }
+
+            // Append the calendar table to the container
+            calendarContainer.appendChild(calendarTable);
         }
 
                // Function to update the table with dynamically generated dates
@@ -272,54 +316,10 @@ function updateTable() {
         console.error('Table not found');
     }
 }
-function generateCalendar(dates) {
-            var calendarContainer = document.getElementById('calendar');
-
-            // Clear any existing content in the calendar container
-            calendarContainer.innerHTML = '';
-
-            // Create a table for the calendar
-            var calendarTable = document.createElement('table');
-            calendarTable.className = 'calendar-table';
-
-            // Create the header row with day names
-            var headerRow = document.createElement('tr');
-            var dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-            for (var i = 0; i < dayNames.length; i++) {
-                var dayCell = document.createElement('th');
-                dayCell.textContent = dayNames[i];
-                headerRow.appendChild(dayCell);
-            }
-            calendarTable.appendChild(headerRow);
-
-            // Create rows for each week
-            for (var i = 0; i < dates.length; i += 7) {
-                var weekRow = document.createElement('tr');
-
-                // Create cells for each day in the week
-                for (var j = 0; j < 7 && i + j < dates.length; j++) {
-                    var dateCell = document.createElement('td');
-                    dateCell.textContent = dates[i + j].getDate();
-                    dateCell.setAttribute('data-date', dates[i + j].toISOString().split('T')[0]);
-
-                    // Attach the showBookingForm function to the cell
-                    dateCell.addEventListener('click', function () {
-                        showBookingForm(this.getAttribute('data-day'), this.getAttribute('data-date'), 'Selected Time');
-                    });
-
-                    weekRow.appendChild(dateCell);
-                }
-
-                calendarTable.appendChild(weekRow);
-            }
-
-            // Append the calendar table to the container
-            calendarContainer.appendChild(calendarTable);
-        }
-
-        window.onload = function () {
+window.onload = function () {
+            var currentDate = new Date();
             updateTable();
-            generateCalendar(generateDates());
+            generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         };
     </script>
             <!-- Monday -->
