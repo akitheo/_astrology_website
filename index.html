@@ -225,18 +225,17 @@ table {
                 <th>10:00 PM - 10:30 PM</th>
             </tr>
         </thead>
-        <!-- Add tbody here -->
         <tbody></tbody>
     </table>
 
     <div id="bookingForm" style="display: none;">
         <h3>Booking Form</h3>
-        <form>
+        <form id="userBookingForm">
             <label for="selectedDate">Selected Date: </label>
             <input type="text" id="selectedDate" readonly>
             <br>
             <label for="selectedTime">Select Time: </label>
-            <select id="selectedTime">
+            <select id="selectedTime" name="selectedTime">
                 <option value="8:00 PM - 8:30 PM">8:00 PM - 8:30 PM</option>
                 <option value="8:30 PM - 9:00 PM">8:30 PM - 9:00 PM</option>
                 <option value="9:00 PM - 9:30 PM">9:00 PM - 9:30 PM</option>
@@ -244,50 +243,66 @@ table {
                 <option value="10:00 PM - 10:30 PM">10:00 PM - 10:30 PM</option>
             </select>
             <br>
-            <button type="submit">Book Now</button>
+            
+            <!-- Additional time selection options can be added here -->
+
+            <!-- Keep the existing form fields -->
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+            
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+            
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+            
+            <label for="birthTime">Birth Time:</label>
+            <input type="time" id="birthTime" name="birthTime" required>
+            
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <button type="button" onclick="submitBookingForm()">Book Now</button>
+            <button type="button" onclick="cancelBookingForm()">Cancel</button>
         </form>
     </div>
 
     <script>
-        function showBookingForm(date, time) {
-            // Customize this function based on your needs (e.g., show a modal)
+        function showBookingForm(date) {
             document.getElementById('bookingForm').style.display = 'block';
             document.getElementById('selectedDate').value = date;
-            document.getElementById('selectedTime').value = time;
-            console.log('Booking for ' + date + ' at ' + time);
         }
 
         function generateCalendar(month, year) {
             var calendarContainer = document.getElementById('availabilityTable');
-
-            // Clear any existing content in the calendar container
             calendarContainer.querySelector('tbody').innerHTML = '';
 
             var firstDay = new Date(year, month, 1);
             var lastDay = new Date(year, month + 1, 0);
-            var dateCounter = 1;
 
-            // Create tbody if not present
             if (!calendarContainer.querySelector('tbody')) {
                 var tbody = document.createElement('tbody');
                 calendarContainer.appendChild(tbody);
             }
 
-            // Create rows for each day
             for (var i = 1; i <= lastDay.getDate(); i++) {
                 var row = document.createElement('tr');
-
-                // Date cell
                 var dateCell = document.createElement('td');
                 dateCell.textContent = i;
                 dateCell.setAttribute('data-date', i);
                 dateCell.addEventListener('click', function () {
                     var selectedDate = this.getAttribute('data-date');
-                    showBookingForm(selectedDate, 'Selected Time');
+                    showBookingForm(selectedDate);
                 });
                 row.appendChild(dateCell);
 
-                // You can add more cells based on your requirements
+                for (var j = 0; j < 5; j++) {
+                    var emptyCell = document.createElement('td');
+                    row.appendChild(emptyCell);
+                }
 
                 calendarContainer.querySelector('tbody').appendChild(row);
             }
@@ -298,213 +313,7 @@ table {
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         };
     </script>
-            <!-- Monday -->
-            <!-- Monday -->
-<tr>
-    <td>Monday</td>
-    <td class="slot" data-day="Monday" data-time="8:00 PM - 8:30 PM" onclick="showBookingForm('Monday', '8:00 PM - 8:30 PM')">Half Hour Session</td>
-    <td class="slot" data-day="Monday" data-time="8:30 PM - 9:00 PM" onclick="showBookingForm('Monday', '8:30 PM - 9:00 PM')">Half Hour Session</td>
-    <td colspan="2" class="slot" data-day="Monday" data-time="9:00 PM - 10:00 PM" onclick="showBookingForm('Monday', '9:00 PM - 10:00 PM')">One Hour Session</td>
-    <td class="slot" data-day="Monday" data-time="10:00 PM - 10:30 PM" onclick="showBookingForm('Monday', '10:00 PM - 10:30 PM')">Half Hour Session</td>
-</tr>
-
-<!-- Tuesday -->
-<tr>
-    <td>Tuesday</td>
-    <td class="slot" data-day="Tuesday" data-time="8:00 PM - 8:30 PM" onclick="showBookingForm('Tuesday', '8:00 PM - 8:30 PM')">Half Hour Session</td>
-    <td class="slot" data-day="Tuesday" data-time="8:30 PM - 9:00 PM" onclick="showBookingForm('Tuesday', '8:30 PM - 9:00 PM')">Half Hour Session</td>
-    <td colspan="2" class="slot" data-day="Tuesday" data-time="9:00 PM - 10:00 PM" onclick="showBookingForm('Tuesday', '9:00 PM - 10:00 PM')">One Hour Session</td>
-    <td class="slot" data-day="Tuesday" data-time="10:00 PM - 10:30 PM" onclick="showBookingForm('Tuesday', '10:00 PM - 10:30 PM')">Half Hour Session</td>
-</tr>
-
-<!-- Wednesday -->
-<tr>
-    <td>Wednesday</td>
-    <td class="slot" data-day="Wednesday" data-time="8:00 PM - 8:30 PM" onclick="showBookingForm('Wednesday', '8:00 PM - 8:30 PM')">Half Hour Session</td>
-    <td class="slot" data-day="Wednesday" data-time="8:30 PM - 9:00 PM" onclick="showBookingForm('Wednesday', '8:30 PM - 9:00 PM')">Half Hour Session</td>
-    <td colspan="2" class="slot" data-day="Wednesday" data-time="9:00 PM - 10:00 PM" onclick="showBookingForm('Wednesday', '9:00 PM - 10:00 PM')">One Hour Session</td>
-    <td class="slot" data-day="Wednesday" data-time="10:00 PM - 10:30 PM" onclick="showBookingForm('Wednesday', '10:00 PM - 10:30 PM')">Half Hour Session</td>
-</tr>
-
-<!-- Thursday -->
-<tr>
-    <td>Thursday</td>
-    <td class="slot" data-day="Thursday" data-time="8:00 PM - 8:30 PM" onclick="showBookingForm('Thursday', '8:00 PM - 8:30 PM')">Half Hour Session</td>
-    <td class="slot" data-day="Thursday" data-time="8:30 PM - 9:00 PM" onclick="showBookingForm('Thursday', '8:30 PM - 9:00 PM')">Half Hour Session</td>
-    <td colspan="2" class="slot" data-day="Thursday" data-time="9:00 PM - 10:00 PM" onclick="showBookingForm('Thursday', '9:00 PM - 10:00 PM')">One Hour Session</td>
-    <td class="slot" data-day="Thursday" data-time="10:00 PM - 10:30 PM" onclick="showBookingForm('Thursday', '10:00 PM - 10:30 PM')">Half Hour Session</td>
-</tr>
-
-<!-- Friday -->
-<tr>
-    <td>Friday</td>
-    <td class="slot" data-day="Friday" data-time="8:00 PM - 8:30 PM" onclick="showBookingForm('Friday', '8:00 PM - 8:30 PM')">Half Hour Session</td>
-    <td class="slot" data-day="Friday" data-time="8:30 PM - 9:00 PM" onclick="showBookingForm('Friday', '8:30 PM - 9:00 PM')">Half Hour Session</td>
-    <td colspan="2" class="slot" data-day="Friday" data-time="9:00 PM - 10:00 PM" onclick="showBookingForm('Friday', '9:00 PM - 10:00 PM')">One Hour Session</td>
-    <td class="slot" data-day="Friday" data-time="10:00 PM - 10:30 PM" onclick="showBookingForm('Friday', '10:00 PM - 10:30 PM')">Half Hour Session</td>
-</tr>
-
-<!-- Saturday -->
-<tr>
-    <td>Saturday</td>
-    <td class="slot" data-day="Saturday" data-time="8:00 PM - 8:30 PM" onclick="showBookingForm('Saturday', '8:00 PM - 8:30 PM')">Half Hour Session</td>
-    <td class="slot" data-day="Saturday" data-time="8:30 PM - 9:00 PM" onclick="showBookingForm('Saturday', '8:30 PM - 9:00 PM')">Half Hour Session</td>
-    <td colspan="2" class="slot" data-day="Saturday" data-time="9:00 PM - 10:00 PM" onclick="showBookingForm('Saturday', '9:00 PM - 10:00 PM')">One Hour Session</td>
-    <td class="slot" data-day="Saturday" data-time="10:00 PM - 10:30 PM" onclick="showBookingForm('Saturday', '10:00 PM - 10:30 PM')">Half Hour Session</td>
-</tr>
-
-<!-- Sunday -->
-<tr>
-    <td>Sunday</td>
-    <td class="slot" data-day="Sunday" data-time="8:00 PM - 8:30 PM" onclick="showBookingForm('Sunday', '8:00 PM - 8:30 PM')">Half Hour Session</td>
-    <td class="slot" data-day="Sunday" data-time="8:30 PM - 9:00 PM" onclick="showBookingForm('Sunday', '8:30 PM - 9:00 PM')">Half Hour Session</td>
-    <td colspan="2" class="slot" data-day="Sunday" data-time="9:00 PM - 10:00 PM" onclick="showBookingForm('Sunday', '9:00 PM - 10:00 PM')">One Hour Session</td>
-    <td class="slot" data-day="Sunday" data-time="10:00 PM - 10:30 PM" onclick="showBookingForm('Sunday', '10:00 PM - 10:30 PM')">Half Hour Session</td>
-</tr>
-
-        </tbody>
-    </table>
 </section>
-
-
-    <!-- Add the following code for the form -->
-<div id="bookingForm">
-    <h3>Booking Information</h3>
-    <form id="userBookingForm">
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" required>
-        
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" required>
-        
-        <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob" name="dob" required>
-        
-        <label for="birthTime">Birth Time:</label>
-        <input type="time" id="birthTime" name="birthTime" required>
-        
-        <label for="phoneNumber">Phone Number:</label>
-        <input type="tel" id="phoneNumber" name="phoneNumber" required>
-        
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-
-        <!-- Add hidden input fields to store selected day and time -->
-        <input type="hidden" id="selectedDay" name="selectedDay">
-        <input type="hidden" id="selectedTime" name="selectedTime">
-         <input type="hidden" id="selectedDate" name="selectedDate">
-
-        <button type="button" onclick="submitBookingForm()">Submit</button>
-        <button type="button" onclick="cancelBookingForm()">Cancel</button>
-    </form>
-</div>
-
-<script>
-var formData; // Declare formData globally
-function submitBookingForm() {
-    // Get form data
-    var form = document.getElementById('userBookingForm');
-    var formData = new FormData(form);
-
-    // Get selected day and time
-    var selectedDay = document.getElementById('selectedDay').value;
-    var selectedDate = document.getElementById('selectedDate').value;
-    var selectedTime = document.getElementById('selectedTime').value;
-
-    // Make an AJAX request to submit the form to Formspree
-    var xhr = new XMLHttpRequest();
-    xhr.open(form.method, form.action, true);
-    xhr.setRequestHeader('Accept', 'application/json');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200 || xhr.status == 201) {
-                // Successful form submission
-                console.log('Form submitted successfully:', xhr.responseText);
-
-                // Pass formData to sendConfirmationEmail
-                sendConfirmationEmail(
-                    formData,
-                    selectedDay,
-                    selectedTime
-                );
-
-                // Redirect to the custom success page
-                window.location.href = 'success.html';
-            } else {
-                // Form submission failed
-                console.error('Form submission failed:', xhr.responseText);
-                alert('Booking failed. Please try again later.');
-            }
-
-            // Close the form after submission
-            document.getElementById('bookingForm').style.display = 'none';
-        }
-    };
-    xhr.send(formData);
-}
-    
-function cancelBookingForm() {
-    // Close the form
-    document.getElementById('bookingForm').style.display = 'none';
-}
-</script>
-<script>
-// Initialize Email.js with your Public Key
-emailjs.init("5HL5c-zK1CReL-Pnw");
-
-function sendConfirmationEmail(formData, selectedDay, selectedTime) {
-    // Check if formData is defined
-    if (formData && typeof formData !== 'undefined') {
-        // Extract relevant form data
-        var firstName = formData.get('firstName');
-        var lastName = formData.get('lastName');
-        var dob = formData.get('dob');
-        var birthTime = formData.get('birthTime');
-        var phoneNumber = formData.get('phoneNumber');
-        var email = formData.get('email');
-
-        // Replace 'your_service_id' and 'your_template_id' with your actual Service ID and Template ID for the customer email
-        emailjs.send("service_1us56c1", "template_if5a995", {
-            firstName: firstName,
-            lastName: lastName,
-            dob: dob,
-            birthTime: birthTime,
-            phoneNumber: phoneNumber,
-            email: email,
-            selectedDay: selectedDay,
-            selectedTime: selectedTime
-        }).then(
-            function (response) {
-                console.log("Customer email sent successfully:", response);
-            },
-            function (error) {
-                console.error("Failed to send customer email:", error);
-            }
-        );
-
-        // Replace 'your_service_id' and 'your_template_id' with your actual Service ID and Template ID for the astrologer email
-        emailjs.send("service_1us56c1", "template_zrx9tw8", {
-            firstName: firstName,
-            lastName: lastName,
-            dob: dob,
-            birthTime: birthTime,
-            phoneNumber: phoneNumber,
-            email: email,
-            selectedDay: selectedDay,
-            selectedTime: selectedTime
-        }).then(
-            function (response) {
-                console.log("Astrologer email sent successfully:", response);
-            },
-            function (error) {
-                console.error("Failed to send astrologer email:", error);
-            }
-        );
-    } else {
-        console.error("Form data is undefined. Make sure to capture it before calling sendConfirmationEmail.");
-    }
-}
-</script>
 
 <section id="contact">
     <h2>Contact Us</h2>
