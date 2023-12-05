@@ -238,8 +238,7 @@ table {
             <select id="selectedTime" name="selectedTime">
                 <option value="8:00 PM - 8:30 PM">8:00 PM - 8:30 PM</option>
                 <option value="8:30 PM - 9:00 PM">8:30 PM - 9:00 PM</option>
-                <option value="9:00 PM - 9:30 PM">9:00 PM - 9:30 PM</option>
-                <option value="9:30 PM - 10:00 PM">9:30 PM - 10:00 PM</option>
+                <option value="9:30 PM - 10:00 PM">9:00 PM - 10:00 PM</option>
                 <option value="10:00 PM - 10:30 PM">10:00 PM - 10:30 PM</option>
             </select>
             <br>
@@ -324,6 +323,113 @@ table {
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         };
     </script>
+<script>
+var formData; // Declare formData globally
+function submitBookingForm() {
+    // Get form data
+    var form = document.getElementById('userBookingForm');
+    var formData = new FormData(form);
+ 
+    // Get selected day and time
+    var selectedDay = document.getElementById('selectedDay').value;
+    var selectedDate = document.getElementById('selectedDate').value;
+    var selectedTime = document.getElementById('selectedTime').value;
+ 
+    // Make an AJAX request to submit the form to Formspree
+    var xhr = new XMLHttpRequest();
+    xhr.open(form.method, form.action, true);
+    xhr.setRequestHeader('Accept', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200 || xhr.status == 201) {
+                // Successful form submission
+                console.log('Form submitted successfully:', xhr.responseText);
+ 
+                // Pass formData to sendConfirmationEmail
+                sendConfirmationEmail(
+                    formData,
+                    selectedDay,
+                    selectedTime
+                );
+ 
+                // Redirect to the custom success page
+                window.location.href = 'success.html';
+            } else {
+                // Form submission failed
+                console.error('Form submission failed:', xhr.responseText);
+                alert('Booking failed. Please try again later.');
+            }
+ 
+            // Close the form after submission
+            document.getElementById('bookingForm').style.display = 'none';
+        }
+    };
+    xhr.send(formData);
+}
+function cancelBookingForm() {
+    // Close the form
+    document.getElementById('bookingForm').style.display = 'none';
+}
+</script>
+<script>
+// Initialize Email.js with your Public Key
+emailjs.init("5HL5c-zK1CReL-Pnw");
+ 
+function sendConfirmationEmail(formData, selectedDay, selectedTime) {
+    // Check if formData is defined
+    if (formData && typeof formData !== 'undefined') {
+        // Extract relevant form data
+        var firstName = formData.get('firstName');
+        var lastName = formData.get('lastName');
+        var dob = formData.get('dob');
+        var birthTime = formData.get('birthTime');
+        var phoneNumber = formData.get('phoneNumber');
+        var email = formData.get('email');
+ 
+        // Replace 'your_service_id' and 'your_template_id' with your actual Service ID and Template ID for the customer email
+        emailjs.send("service_1us56c1", "template_if5a995", {
+            firstName: firstName,
+            lastName: lastName,
+            dob: dob,
+            birthTime: birthTime,
+            phoneNumber: phoneNumber,
+            email: email,
+            selectedDay: selectedDay,
+            selectedTime: selectedTime
+        }).then(
+            function (response) {
+                console.log("Customer email sent successfully:", response);
+            },
+            function (error) {
+                console.error("Failed to send customer email:", error);
+            }
+        );
+ 
+        // Replace 'your_service_id' and 'your_template_id' with your actual Service ID and Template ID for the astrologer email
+        emailjs.send("service_1us56c1", "template_zrx9tw8", {
+            firstName: firstName,
+            lastName: lastName,
+            dob: dob,
+            birthTime: birthTime,
+            phoneNumber: phoneNumber,
+            email: email,
+            selectedDay: selectedDay,
+            selectedTime: selectedTime
+        }).then(
+            function (response) {
+                console.log("Astrologer email sent successfully:", response);
+            },
+            function (error) {
+                console.error("Failed to send astrologer email:", error);
+            }
+        );
+    } else {
+        console.error("Form data is undefined. Make sure to capture it before calling sendConfirmationEmail.");
+    }
+}
+</script>
+
+    
 </section>
 
 <section id="contact">
