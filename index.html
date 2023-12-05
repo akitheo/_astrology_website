@@ -318,7 +318,11 @@ table {
             var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             return days[date.getDay()];
         }
-
+window.onload = function () {
+            var currentDate = new Date();
+            generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
+        };
+    
         function submitBookingForm() {
             // Get form data
             var form = document.getElementById('userBookingForm');
