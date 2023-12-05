@@ -390,9 +390,8 @@
             var currentDate = new Date();
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         };
-    function generateSkypeLink(email) {
-    
-    return "https://join.skype.com/your-skype-link";
+    function generateSkypeLink() {
+    return "https://join.skype.com/invite/live:.cid.b868440bfc2b1264";
 }
 
         function submitBookingForm() {
@@ -451,7 +450,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime) {
         var birthTime = formData.get('birthTime');
         var phoneNumber = formData.get('phoneNumber');
         var email = formData.get('email');
-        var skypeLink = generateSkypeLink(email);
+        var skypeLink = generateSkypeLink();
         // Replace 'your_service_id' and 'your_template_id' with your actual Service ID and Template ID for the customer email
         emailjs.send("service_1us56c1", "template_if5a995", {
             firstName: firstName,
