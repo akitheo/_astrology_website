@@ -277,41 +277,49 @@ table {
         }
 
         function generateCalendar(month, year) {
-            var calendarContainer = document.getElementById('availabilityTable');
-            calendarContainer.querySelector('tbody').innerHTML = '';
+    var calendarContainer = document.getElementById('availabilityTable');
+    calendarContainer.querySelector('tbody').innerHTML = '';
 
-            var firstDay = new Date(year, month, 1);
-            var lastDay = new Date(year, month + 1, 0);
-            var startingDay = firstDay.getDay();
+    // Display Month and Year in the caption
+    calendarContainer.querySelector('caption').textContent = getMonthName(month) + ' ' + year;
 
-            if (!calendarContainer.querySelector('tbody')) {
-                var tbody = document.createElement('tbody');
-                calendarContainer.appendChild(tbody);
+    var firstDay = new Date(year, month, 1);
+    var lastDay = new Date(year, month + 1, 0);
+    var startingDay = firstDay.getDay();
+
+    if (!calendarContainer.querySelector('tbody')) {
+        var tbody = document.createElement('tbody');
+        calendarContainer.appendChild(tbody);
+    }
+
+    var dateCounter = 1;
+    for (var i = 0; i < 6; i++) {
+        var row = document.createElement('tr');
+        for (var j = 0; j < 7; j++) {
+            var dayCell = document.createElement('td');
+            if (i === 0 && j < startingDay) {
+                // Empty cells before the first day
+                dayCell.textContent = '';
+            } else if (dateCounter <= lastDay.getDate()) {
+                dayCell.textContent = dateCounter;
+                dayCell.setAttribute('data-date', dateCounter);
+                dayCell.addEventListener('click', function () {
+                    var selectedDate = this.getAttribute('data-date');
+                    var selectedDay = getDayOfWeek(year, month, selectedDate);
+                    showBookingForm(selectedDay, selectedDate);
+                });
+                dateCounter++;
             }
-
-            var dateCounter = 1;
-            for (var i = 0; i < 6; i++) {
-                var row = document.createElement('tr');
-                for (var j = 0; j < 7; j++) {
-                    var dayCell = document.createElement('td');
-                    if (i === 0 && j < startingDay) {
-                        // Empty cells before the first day
-                        dayCell.textContent = '';
-                    } else if (dateCounter <= lastDay.getDate()) {
-                        dayCell.textContent = dateCounter;
-                        dayCell.setAttribute('data-date', dateCounter);
-                        dayCell.addEventListener('click', function () {
-                            var selectedDate = this.getAttribute('data-date');
-                            var selectedDay = getDayOfWeek(year, month, selectedDate);
-                            showBookingForm(selectedDay, selectedDate);
-                        });
-                        dateCounter++;
-                    }
-                    row.appendChild(dayCell);
-                }
-                calendarContainer.querySelector('tbody').appendChild(row);
-            }
+            row.appendChild(dayCell);
         }
+        calendarContainer.querySelector('tbody').appendChild(row);
+    }
+}
+
+function getMonthName(month) {
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return months[month];
+}
 
         function getDayOfWeek(year, month, day) {
             var date = new Date(year, month, day);
