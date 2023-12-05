@@ -390,16 +390,20 @@
             var currentDate = new Date();
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         };
+    function generateSkypeLink(email) {
     
+    return `https://join.skype.com/invite/${encodeURIComponent(email)}`;
+}
+
         function submitBookingForm() {
             // Get form data
             var form = document.getElementById('userBookingForm');
             var formData = new FormData(form);
- 
+            
             // Get selected day and time
             var selectedDate = document.getElementById('selectedDate').value;
             var selectedTime = document.getElementById('selectedTime').value;
-            var skypeLink = generateSkypeLink();
+            
             // Make an AJAX request to submit the form to Formspree
             var xhr = new XMLHttpRequest();
             xhr.open(form.method, form.action, true);
@@ -411,7 +415,7 @@
                         console.log('Form submitted successfully:', xhr.responseText);
  
                         // Pass formData to sendConfirmationEmail
-                        sendConfirmationEmail(formData, selectedDate, selectedTime , skypeLink);
+                        sendConfirmationEmail(formData, selectedDate, selectedTime);
  
                         // Redirect to the custom success page
                         window.location.href = 'success.html';
@@ -447,7 +451,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime) {
         var birthTime = formData.get('birthTime');
         var phoneNumber = formData.get('phoneNumber');
         var email = formData.get('email');
- 
+        var skypeLink = generateSkypeLink(email);
         // Replace 'your_service_id' and 'your_template_id' with your actual Service ID and Template ID for the customer email
         emailjs.send("service_1us56c1", "template_if5a995", {
             firstName: firstName,
