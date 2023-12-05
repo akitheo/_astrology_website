@@ -229,7 +229,7 @@ table {
         </thead>
         <tbody></tbody> <!-- This is where the dynamic content will be added -->
 
-        <script>
+          <script>
             function showBookingForm(day, date, time) {
                 // Customize this function based on your needs (e.g., show a modal)
                 document.getElementById('bookingForm').style.display = 'block';
@@ -237,6 +237,14 @@ table {
                 document.getElementById('selectedDate').value = date;
                 document.getElementById('selectedTime').value = time;
                 console.log('Booking for ' + day + ' on ' + date + ' at ' + time);
+            }
+
+            function getNextMonday() {
+                var currentDate = new Date();
+                var daysUntilMonday = (1 + 7 - currentDate.getDay()) % 7;
+                var nextMonday = new Date(currentDate);
+                nextMonday.setDate(currentDate.getDate() + daysUntilMonday);
+                return nextMonday;
             }
 
             function generateDates() {
