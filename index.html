@@ -399,7 +399,7 @@
             // Get selected day and time
             var selectedDate = document.getElementById('selectedDate').value;
             var selectedTime = document.getElementById('selectedTime').value;
- 
+            var skypeLink = generateSkypeLink();
             // Make an AJAX request to submit the form to Formspree
             var xhr = new XMLHttpRequest();
             xhr.open(form.method, form.action, true);
@@ -411,7 +411,7 @@
                         console.log('Form submitted successfully:', xhr.responseText);
  
                         // Pass formData to sendConfirmationEmail
-                        sendConfirmationEmail(formData, selectedDate, selectedTime);
+                        sendConfirmationEmail(formData, selectedDate, selectedTime , skypeLink);
  
                         // Redirect to the custom success page
                         window.location.href = 'success.html';
@@ -458,6 +458,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime) {
             email: email,
             selectedDay: selectedDay,
             selectedTime: selectedTime
+            skypeLink: skypeLink
         }).then(
             function (response) {
                 console.log("Customer email sent successfully:", response);
@@ -477,6 +478,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime) {
             email: email,
             selectedDay: selectedDay,
             selectedTime: selectedTime
+            skypeLink: skypeLink
         }).then(
             function (response) {
                 console.log("Astrologer email sent successfully:", response);
