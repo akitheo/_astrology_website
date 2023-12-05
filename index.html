@@ -225,6 +225,7 @@ table {
                 <th>10:00 PM - 10:30 PM</th>
             </tr>
         </thead>
+        <!-- Add tbody here -->
         <tbody></tbody>
     </table>
 
@@ -260,11 +261,17 @@ table {
             var calendarContainer = document.getElementById('availabilityTable');
 
             // Clear any existing content in the calendar container
-            calendarContainer.innerHTML = '';
+            calendarContainer.querySelector('tbody').innerHTML = '';
 
             var firstDay = new Date(year, month, 1);
             var lastDay = new Date(year, month + 1, 0);
             var dateCounter = 1;
+
+            // Create tbody if not present
+            if (!calendarContainer.querySelector('tbody')) {
+                var tbody = document.createElement('tbody');
+                calendarContainer.appendChild(tbody);
+            }
 
             // Create rows for each day
             for (var i = 1; i <= lastDay.getDate(); i++) {
