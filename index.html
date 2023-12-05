@@ -172,6 +172,19 @@
             background-color: #4CAF50;
             color: white;
         }
+          .navButton {
+            background-color: #3498db;
+            color: #fff;
+            padding: 8px;
+            border: none;
+            cursor: pointer;
+            margin-right: 5px;
+            border-radius: 5px;
+        }
+
+        .navButton:hover {
+            background-color: #2980b9;
+        }
 
     </style>
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
@@ -222,7 +235,7 @@
 
 <!-- Add the following code within the #booking section -->
 <section id="booking">
-    <h2>Book a Consultation</h2>
+    <h2 style="color: #3498db;">Book a Consultation</h2>
     <p>Choose your Preferable Date and Time</p>
 
     <table id="availabilityTable" style="width: 100%;">
@@ -282,10 +295,11 @@
             <button type="button" onclick="cancelBookingForm()">Cancel</button>
         </form>
     </div>
-    <button onclick="showPreviousMonth()">Previous Month</button>
-    <button onclick="showNextMonth()">Next Month</button>
-    <button onclick="showPreviousYear()">Previous Year</button>
-    <button onclick="showNextYear()">Next Year</button>
+    <button class="navButton" onclick="showPreviousYear()">Previous Year</button>
+    <button class="navButton" onclick="showPreviousMonth()">Previous Month</button>
+    <button class="navButton" onclick="showNextMonth()">Next Month</button>
+    <button class="navButton" onclick="showNextYear()">Next Year</button>
+
 
     <script>
         function showBookingForm(day, date) {
