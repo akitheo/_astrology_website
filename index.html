@@ -462,7 +462,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime) {
             email: email,
             selectedDay: selectedDay,
             selectedTime: selectedTime
-            skypeLink: skypeLink
+            "skypeLink": skypeLink
         }).then(
             function (response) {
                 console.log("Customer email sent successfully:", response);
@@ -482,7 +482,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime) {
             email: email,
             selectedDay: selectedDay,
             selectedTime: selectedTime
-            skypeLink: skypeLink
+            "skypeLink": skypeLink
         }).then(
             function (response) {
                 console.log("Astrologer email sent successfully:", response);
