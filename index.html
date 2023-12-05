@@ -238,7 +238,8 @@ table {
             document.getElementById('selectedTime').value = time;
             console.log('Booking for ' + day + ' on ' + date + ' at ' + time);
         }
-            function generateDates() {
+
+        function generateDates() {
             var nextMonday = getNextMonday();
             var dates = [];
             for (var i = 0; i < 7; i++) {
@@ -308,7 +309,7 @@ table {
             calendarContainer.appendChild(calendarTable);
         }
 
-        // Function to update the table with dynamically generated dates
+      // Function to update the table with dynamically generated dates
         function updateTable() {
             var dates = generateDates();
             var table = document.getElementById('availabilityTable');
