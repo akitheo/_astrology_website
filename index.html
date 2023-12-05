@@ -229,139 +229,142 @@ table {
         </thead>
         <tbody></tbody> <!-- This is where the dynamic content will be added -->
 
-          <script>
-            function showBookingForm(day, date, time) {
-                // Customize this function based on your needs (e.g., show a modal)
-                document.getElementById('bookingForm').style.display = 'block';
-                document.getElementById('selectedDay').value = day;
-                document.getElementById('selectedDate').value = date;
-                document.getElementById('selectedTime').value = time;
-                console.log('Booking for ' + day + ' on ' + date + ' at ' + time);
-            }
+           <script>
+        function showBookingForm(day, date, time) {
+            // Customize this function based on your needs (e.g., show a modal)
+            document.getElementById('bookingForm').style.display = 'block';
+            document.getElementById('selectedDay').value = day;
+            document.getElementById('selectedDate').value = date;
+            document.getElementById('selectedTime').value = time;
+            console.log('Booking for ' + day + ' on ' + date + ' at ' + time);
+        }
 
-            function getNextMonday() {
-                var currentDate = new Date();
-                var daysUntilMonday = (1 + 7 - currentDate.getDay()) % 7;
-                var nextMonday = new Date(currentDate);
-                nextMonday.setDate(currentDate.getDate() + daysUntilMonday);
-                return nextMonday;
-            }
+        function getAvailabilityForDate(selectedDate) {
+            // Replace this with your logic to fetch availability for the selected date
+            // For demonstration purposes, returning a dynamic array based on booked slots
+            var bookedSlots = getBookedSlotsForDate(selectedDate);
+            var availableSlots = [];
 
-            function generateDates() {
-                var nextMonday = getNextMonday();
-                var dates = [];
-                for (var i = 0; i < 7; i++) {
-                    var currentDate = new Date(nextMonday);
-                    currentDate.setDate(nextMonday.getDate() + i);
-                    var formattedDate = currentDate.toISOString().split('T')[0];
-                    dates.push(formattedDate);
-                }
-                return dates;
-            }
+            // Define the total available slots and maximum bookings per slot
+            var totalSlots = ['Half Hour Session', 'Half Hour Session', 'One Hour Session', 'Half Hour Session'];
+            var maxBookingsPerSlot = 2;
 
-            function generateCalendar(month, year) {
-                var calendarContainer = document.getElementById('calendar');
+            // Iterate through each slot and check availability
+            for (var i = 0; i < totalSlots.length; i++) {
+                var slot = totalSlots[i];
+                var bookingsCount = bookedSlots[slot] || 0;
 
-                // Clear any existing content in the calendar container
-                calendarContainer.innerHTML = '';
-
-                var firstDay = new Date(year, month, 1);
-                var lastDay = new Date(year, month + 1, 0);
-                var dateCounter = 1;
-
-                var calendarTable = document.createElement('table');
-                calendarTable.className = 'calendar-table';
-
-                // Create the header row with day names
-                var headerRow = document.createElement('tr');
-                var dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-                for (var i = 0; i < dayNames.length; i++) {
-                    var dayCell = document.createElement('th');
-                    dayCell.textContent = dayNames[i];
-                    headerRow.appendChild(dayCell);
-                }
-                calendarTable.appendChild(headerRow);
-
-                // Create rows for each week
-                for (var i = 0; i < 6; i++) {
-                    var weekRow = document.createElement('tr');
-
-                    // Create cells for each day in the week
-                    for (var j = 0; j < 7; j++) {
-                        var dateCell = document.createElement('td');
-
-                        if (i === 0 && j < firstDay.getDay()) {
-                            // Empty cells before the first day
-                            dateCell.textContent = '';
-                        } else if (dateCounter > lastDay.getDate()) {
-                            // Empty cells after the last day
-                            dateCell.textContent = '';
-                        } else {
-                            // Cells with date and onclick event
-                            dateCell.textContent = dateCounter;
-                            var dateObj = new Date(year, month, dateCounter);
-                            dateCell.setAttribute('data-date', dateObj.toISOString().split('T')[0]);
-                            dateCell.addEventListener('click', function () {
-                                showBookingForm(this.getAttribute('data-day'), this.getAttribute('data-date'), 'Selected Time');
-                                updateAvailabilityTable(this.getAttribute('data-date'));
-                            });
-                            dateCounter++;
-                        }
-
-                        weekRow.appendChild(dateCell);
-                    }
-
-                    calendarTable.appendChild(weekRow);
-                }
-
-                // Append the calendar table to the container
-                calendarContainer.appendChild(calendarTable);
-            }
-
-            function updateAvailabilityTable(selectedDate) {
-                var table = document.getElementById('availabilityTable');
-                var rows = table.getElementsByTagName('tr');
-                var timeslots = getAvailabilityForDate(selectedDate);
-
-                for (var i = 1; i < rows.length; i++) {
-                    var cells = rows[i].getElementsByTagName('td');
-                    for (var j = 1; j < cells.length; j++) {
-                        cells[j].textContent = timeslots[j - 1];
-                        cells[j].setAttribute('onclick', "showBookingForm('" + cells[0].innerText + "', '" + selectedDate + "', '" + cells[j].innerText + "')");
-                    }
-                }
-            }
-
-            function getAvailabilityForDate(selectedDate) {
-                // Replace this with your logic to fetch availability for the selected date
-                // For demonstration purposes, returning a static array
-                return ['Half Hour Session', 'Half Hour Session', 'One Hour Session', 'Half Hour Session'];
-            }
-
-            function updateTable() {
-                var dates = generateDates();
-                var table = document.getElementById('availabilityTable');
-                if (table) {
-                    var rows = table.getElementsByTagName('tr');
-                    for (var i = 1; i < rows.length; i++) {  // Start from index 1 to skip the header row
-                        var cells = rows[i].getElementsByTagName('td');
-                        for (var j = 1; j < cells.length; j++) {  // Start from index 1 to skip the day column
-                            var date = dates[j - 1];  // Use j - 1 to align with the dates array
-                            cells[j].setAttribute('data-date', date);
-                            cells[j].setAttribute('onclick', "showBookingForm('" + cells[0].innerText + "', '" + date + "', '" + cells[j].innerText + "')");
-                        }
-                    }
+                if (bookingsCount < maxBookingsPerSlot) {
+                    // Slot is available for booking
+                    availableSlots.push(slot);
                 } else {
-                    console.error('Table not found');
+                    // Slot is fully booked, display a message
+                    availableSlots.push('Slot Full');
                 }
             }
 
-            window.onload = function () {
-                var currentDate = new Date();
-                updateTable();
-                generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
+            return availableSlots;
+        }
+
+        // Function to fetch booked slots for the selected date (replace with actual logic)
+        function getBookedSlotsForDate(selectedDate) {
+            // For demonstration purposes, returning a static object
+            // where the keys are slot names, and values are the number of bookings
+            // Replace this with actual data retrieval logic from your database or storage
+            return {
+                'Half Hour Session': 2,  // Fully booked for demonstration
+                'One Hour Session': 1    // One booking for demonstration
             };
-        </script>
+        }
+
+        function generateCalendar(month, year) {
+            var calendarContainer = document.getElementById('calendar');
+
+            // Clear any existing content in the calendar container
+            calendarContainer.innerHTML = '';
+
+            var firstDay = new Date(year, month, 1);
+            var lastDay = new Date(year, month + 1, 0);
+            var dateCounter = 1;
+
+            var calendarTable = document.createElement('table');
+            calendarTable.className = 'calendar-table';
+
+            // Create the header row with day names
+            var headerRow = document.createElement('tr');
+            var dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+            for (var i = 0; i < dayNames.length; i++) {
+                var dayCell = document.createElement('th');
+                dayCell.textContent = dayNames[i];
+                headerRow.appendChild(dayCell);
+            }
+            calendarTable.appendChild(headerRow);
+
+            // Create rows for each week
+            for (var i = 0; i < 6; i++) {
+                var weekRow = document.createElement('tr');
+
+                // Create cells for each day in the week
+                for (var j = 0; j < 7; j++) {
+                    var dateCell = document.createElement('td');
+
+                    if (i === 0 && j < firstDay.getDay()) {
+                        // Empty cells before the first day
+                        dateCell.textContent = '';
+                    } else if (dateCounter > lastDay.getDate()) {
+                        // Empty cells after the last day
+                        dateCell.textContent = '';
+                    } else {
+                        // Cells with date and onclick event
+                        dateCell.textContent = dateCounter;
+                        var dateObj = new Date(year, month, dateCounter);
+                        dateCell.setAttribute('data-date', dateObj.toISOString().split('T')[0]);
+                        dateCell.addEventListener('click', function () {
+                            showBookingForm(this.getAttribute('data-day'), this.getAttribute('data-date'), 'Selected Time');
+                        });
+                        dateCounter++;
+                    }
+
+                    weekRow.appendChild(dateCell);
+                }
+
+                calendarTable.appendChild(weekRow);
+            }
+
+            // Append the calendar table to the container
+            calendarContainer.appendChild(calendarTable);
+        }
+
+        // Function to update the table with dynamically generated dates
+        function updateTable() {
+            var currentDate = new Date();
+            var dates = getAvailabilityForDate(currentDate.toISOString().split('T')[0]);
+            var table = document.getElementById('availabilityTable');
+            var tbody = table.querySelector('tbody');
+            
+            // Clear existing tbody content
+            tbody.innerHTML = '';
+
+            for (var i = 0; i < dates.length; i++) {
+                var row = document.createElement('tr');
+                var dateCell = document.createElement('td');
+                dateCell.textContent = dates[i];
+                dateCell.setAttribute('data-date', currentDate.toISOString().split('T')[0]);
+                dateCell.setAttribute('onclick', "showBookingForm('" + dateCell.getAttribute('data-day') + "', '" + dateCell.getAttribute('data-date') + "', '" + dateCell.textContent + "')");
+                row.appendChild(dateCell);
+
+                // You can add more cells based on your requirements
+
+                tbody.appendChild(row);
+            }
+        }
+
+        window.onload = function () {
+            var currentDate = new Date();
+            updateTable();
+            generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
+        };
+    </script>
             <!-- Monday -->
             <!-- Monday -->
 <tr>
