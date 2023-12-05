@@ -269,6 +269,10 @@ table {
             <button type="button" onclick="cancelBookingForm()">Cancel</button>
         </form>
     </div>
+    <button onclick="showPreviousMonth()">Previous Month</button>
+    <button onclick="showNextMonth()">Next Month</button>
+    <button onclick="showPreviousYear()">Previous Year</button>
+    <button onclick="showNextYear()">Next Year</button>
 
     <script>
         function showBookingForm(day, date) {
@@ -277,56 +281,85 @@ table {
         }
 
         function generateCalendar(month, year) {
-    var calendarContainer = document.getElementById('availabilityTable');
-    calendarContainer.querySelector('tbody').innerHTML = '';
+            var calendarContainer = document.getElementById('availabilityTable');
+            calendarContainer.querySelector('tbody').innerHTML = '';
 
-    // Display Month and Year in the caption
-    calendarContainer.querySelector('caption').textContent = getMonthName(month) + ' ' + year;
+            // Display Month and Year in the caption
+            calendarContainer.querySelector('caption').textContent = getMonthName(month) + ' ' + year;
 
-    var firstDay = new Date(year, month, 1);
-    var lastDay = new Date(year, month + 1, 0);
-    var startingDay = firstDay.getDay();
+            var firstDay = new Date(year, month, 1);
+            var lastDay = new Date(year, month + 1, 0);
+            var startingDay = firstDay.getDay();
 
-    if (!calendarContainer.querySelector('tbody')) {
-        var tbody = document.createElement('tbody');
-        calendarContainer.appendChild(tbody);
-    }
-
-    var dateCounter = 1;
-    for (var i = 0; i < 6; i++) {
-        var row = document.createElement('tr');
-        for (var j = 0; j < 7; j++) {
-            var dayCell = document.createElement('td');
-            if (i === 0 && j < startingDay) {
-                // Empty cells before the first day
-                dayCell.textContent = '';
-            } else if (dateCounter <= lastDay.getDate()) {
-                dayCell.textContent = dateCounter;
-                dayCell.setAttribute('data-date', dateCounter);
-                dayCell.addEventListener('click', function () {
-                    var selectedDate = this.getAttribute('data-date');
-                    var selectedDay = getDayOfWeek(year, month, selectedDate);
-                    showBookingForm(selectedDay, selectedDate);
-                });
-                dateCounter++;
+            if (!calendarContainer.querySelector('tbody')) {
+                var tbody = document.createElement('tbody');
+                calendarContainer.appendChild(tbody);
             }
-            row.appendChild(dayCell);
-        }
-        calendarContainer.querySelector('tbody').appendChild(row);
-    }
-}
 
-function getMonthName(month) {
-    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    return months[month];
-}
+            var dateCounter = 1;
+            for (var i = 0; i < 6; i++) {
+                var row = document.createElement('tr');
+                for (var j = 0; j < 7; j++) {
+                    var dayCell = document.createElement('td');
+                    if (i === 0 && j < startingDay) {
+                        // Empty cells before the first day
+                        dayCell.textContent = '';
+                    } else if (dateCounter <= lastDay.getDate()) {
+                        dayCell.textContent = dateCounter;
+                        dayCell.setAttribute('data-date', dateCounter);
+                        dayCell.setAttribute('data-month', month);
+                        dayCell.setAttribute('data-year', year);
+                        dayCell.addEventListener('click', function () {
+                            var selectedDate = this.getAttribute('data-date');
+                            var selectedMonth = this.getAttribute('data-month');
+                            var selectedYear = this.getAttribute('data-year');
+                            var selectedDay = getDayOfWeek(selectedYear, selectedMonth, selectedDate);
+                            showBookingForm(selectedDay, selectedDate);
+                        });
+                        dateCounter++;
+                    }
+                    row.appendChild(dayCell);
+                }
+                calendarContainer.querySelector('tbody').appendChild(row);
+            }
+        }
+
+        function getMonthName(month) {
+            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            return months[month];
+        }
+
+        function showPreviousMonth() {
+            var currentDate = new Date(document.getElementById('availabilityTable').querySelector('caption').textContent);
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
+        }
+
+        function showNextMonth() {
+            var currentDate = new Date(document.getElementById('availabilityTable').querySelector('caption').textContent);
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
+        }
+
+        function showPreviousYear() {
+            var currentDate = new Date(document.getElementById('availabilityTable').querySelector('caption').textContent);
+            currentDate.setFullYear(currentDate.getFullYear() - 1);
+            generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
+        }
+
+        function showNextYear() {
+            var currentDate = new Date(document.getElementById('availabilityTable').querySelector('caption').textContent);
+            currentDate.setFullYear(currentDate.getFullYear() + 1);
+            generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
+        }
 
         function getDayOfWeek(year, month, day) {
             var date = new Date(year, month, day);
             var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             return days[date.getDay()];
         }
-window.onload = function () {
+        
+       window.onload = function () {
             var currentDate = new Date();
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         };
