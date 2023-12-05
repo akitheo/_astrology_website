@@ -208,7 +208,6 @@ table {
 </section>
 
 <!-- Add the following code within the #booking section -->
-    
 <section id="booking">
     <h2>Book a Consultation</h2>
     <p>Choose your Preferable Date and Time</p>
@@ -217,12 +216,13 @@ table {
         <caption>Availability Schedule</caption>
         <thead>
             <tr>
-                <th>Date</th>
-                <th>8:00 PM - 8:30 PM</th>
-                <th>8:30 PM - 9:00 PM</th>
-                <th>9:00 PM - 9:30 PM</th>
-                <th>9:30 PM - 10:00 PM</th>
-                <th>10:00 PM - 10:30 PM</th>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -271,9 +271,9 @@ table {
     </div>
 
     <script>
-        function showBookingForm(date) {
+        function showBookingForm(day, date) {
             document.getElementById('bookingForm').style.display = 'block';
-            document.getElementById('selectedDate').value = date;
+            document.getElementById('selectedDate').value = day + ', ' + date;
         }
 
         function generateCalendar(month, year) {
@@ -282,30 +282,41 @@ table {
 
             var firstDay = new Date(year, month, 1);
             var lastDay = new Date(year, month + 1, 0);
+            var startingDay = firstDay.getDay();
 
             if (!calendarContainer.querySelector('tbody')) {
                 var tbody = document.createElement('tbody');
                 calendarContainer.appendChild(tbody);
             }
 
-            for (var i = 1; i <= lastDay.getDate(); i++) {
+            var dateCounter = 1;
+            for (var i = 0; i < 6; i++) {
                 var row = document.createElement('tr');
-                var dateCell = document.createElement('td');
-                dateCell.textContent = i;
-                dateCell.setAttribute('data-date', i);
-                dateCell.addEventListener('click', function () {
-                    var selectedDate = this.getAttribute('data-date');
-                    showBookingForm(selectedDate);
-                });
-                row.appendChild(dateCell);
-
-                for (var j = 0; j < 5; j++) {
-                    var emptyCell = document.createElement('td');
-                    row.appendChild(emptyCell);
+                for (var j = 0; j < 7; j++) {
+                    var dayCell = document.createElement('td');
+                    if (i === 0 && j < startingDay) {
+                        // Empty cells before the first day
+                        dayCell.textContent = '';
+                    } else if (dateCounter <= lastDay.getDate()) {
+                        dayCell.textContent = dateCounter;
+                        dayCell.setAttribute('data-date', dateCounter);
+                        dayCell.addEventListener('click', function () {
+                            var selectedDate = this.getAttribute('data-date');
+                            var selectedDay = getDayOfWeek(year, month, selectedDate);
+                            showBookingForm(selectedDay, selectedDate);
+                        });
+                        dateCounter++;
+                    }
+                    row.appendChild(dayCell);
                 }
-
                 calendarContainer.querySelector('tbody').appendChild(row);
             }
+        }
+
+        function getDayOfWeek(year, month, day) {
+            var date = new Date(year, month, day);
+            var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            return days[date.getDay()];
         }
 
         window.onload = function () {
