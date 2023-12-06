@@ -390,12 +390,65 @@
             var currentDate = new Date();
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         };
+
+        // Sample function to generate Zoom meeting link
+function generateZoomLink(customerEmail) {
+    // Use your Zoom API key and secret
+    const apiKey = '7U2vwSGGTkej1mvdGmC5TQ';
+    const apiSecret = 'BmyzhK4Op88R66KRgouHGhMgPVdJcZA8';
+
+    // Construct the Zoom URL
+    const zoomBaseUrl = 'https://api.zoom.us/v2/users/me/meetings';
+    const zoomParams = `api_key=${apiKey}&api_secret=${apiSecret}`;
+
+    // You might need to customize the meeting settings based on your requirements
+    const meetingSettings = {
+        topic: 'Astrology Consultation',
+        type: 1, // Scheduled meeting
+        duration: 60, // Duration in minutes
+    };
+
+    // Use fetch or another method to make a request to the Zoom API
+    return fetch(`${zoomBaseUrl}?${zoomParams}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(meetingSettings),
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Extract the join URL from the Zoom API response
+            const joinUrl = data.join_url;
+            return joinUrl;
+        })
+        .catch(error => {
+            console.error('Error generating Zoom link:', error);
+            return null;
+        });
+}
       
         function submitBookingForm() {
             // Get form data
             var form = document.getElementById('userBookingForm');
             var formData = new FormData(form);
-           
+            var customerEmail = formData.get('email');
+
+    // Generate Zoom link
+    generateZoomLink(customerEmail)
+        .then(zoomLink => {
+            if (zoomLink) {
+                // Zoom link successfully generated, use it as needed
+                console.log('Zoom link:', zoomLink);
+
+                // Pass formData and Zoom link to sendConfirmationEmail
+                sendConfirmationEmail(formData, zoomLink);
+            } else {
+                console.error('Failed to generate Zoom link.');
+                alert('Booking failed. Please try again later.');
+            }
+        });
+
             // Get selected day and time
             var selectedDate = document.getElementById('selectedDate').value;
             var selectedTime = document.getElementById('selectedTime').value;
@@ -437,7 +490,7 @@
 // Initialize Email.js with your Public Key
 emailjs.init("5HL5c-zK1CReL-Pnw");
  
-function sendConfirmationEmail(formData, selectedDay, selectedTime) {
+function sendConfirmationEmail(formData, selectedDay, selectedTime,zoomLink ) {
     // Check if formData is defined
     if (formData && typeof formData !== 'undefined') {
         // Extract relevant form data
@@ -447,7 +500,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime) {
         var birthTime = formData.get('birthTime');
         var phoneNumber = formData.get('phoneNumber');
         var email = formData.get('email');
-        var skypeLink = generateSkypeLink(email);
+       
         // Replace 'your_service_id' and 'your_template_id' with your actual Service ID and Template ID for the customer email
         emailjs.send("service_1us56c1", "template_if5a995", {
             firstName: firstName,
@@ -458,7 +511,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime) {
             email: email,
             selectedDay: selectedDay,
             selectedTime: selectedTime,
-         
+            zoomLink: zoomLink,
         }).then(
             function (response) {
                 console.log("Customer email sent successfully:", response);
@@ -478,7 +531,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime) {
             email: email,
             selectedDay: selectedDay,
             selectedTime: selectedTime,
-            
+            zoomLink: zoomLink,
         }).then(
             function (response) {
                 console.log("Astrologer email sent successfully:", response);
