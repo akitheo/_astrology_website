@@ -390,10 +390,10 @@
             var currentDate = new Date();
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         };
-    function generateSkypeLink(customerEmail) {
+  function generateSkypeLink(customerEmail) {
     // Use the customer's email to generate a unique meeting ID
     var meetingId = btoa(customerEmail); // You can use a more sophisticated method for production
-    return `https://join.skype.com/invite/${meetingId}`;
+    return `https://join.skype.com/invite/${meetingId}?chat`;
 }
 
         function submitBookingForm() {
