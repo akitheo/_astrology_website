@@ -390,12 +390,19 @@
             var currentDate = new Date();
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         };
-  function generateSkypeLink(customerEmail) {
-    // Use the customer's email to generate a unique meeting ID
-    var meetingId = btoa(customerEmail); // You can use a more sophisticated method for production
-    return `https://join.skype.com/invite/${meetingId}?chat`;
+  function generateUUID() {
+    // Simple UUID generator
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
 }
 
+function generateSkypeLink(customerEmail) {
+    var meetingId = generateUUID();
+    return `https://join.skype.com/invite/${meetingId}?chat`;
+}
         function submitBookingForm() {
             // Get form data
             var form = document.getElementById('userBookingForm');
