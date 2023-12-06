@@ -391,9 +391,10 @@
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         };
        function generateSkypeLink(customerEmail) {
-           var meetingId = btoa(customerEmail);
-           return `https://join.skype.com/${meetingId}`;
-         }
+    // Use encodeURIComponent to handle special characters in the email
+    var encodedEmail = encodeURIComponent(customerEmail);
+    return `https://join.skype.com/${encodedEmail}`;
+}
         function submitBookingForm() {
             // Get form data
             var form = document.getElementById('userBookingForm');
