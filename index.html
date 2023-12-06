@@ -394,65 +394,12 @@
     </script>
     
     <script>
-         
-// Adjusted function to generate Zoom meeting link
-function generateZoomLink() {
-    // Use your Zoom API key and secret
-    const apiKey = '7U2vwSGGTkej1mvdGmC5TQ';
-    const apiSecret = 'BmyzhK4Op88R66KRgouHGhMgPVdJcZA8';
-
-    // Construct the Zoom URL
-    const zoomBaseUrl = 'https://api.zoom.us/v2/users/me/meetings';
-    const zoomParams = `api_key=${apiKey}&api_secret=${apiSecret}`;
-
-    // You might need to customize the meeting settings based on your requirements
-    const meetingSettings = {
-        topic: 'Astrology Consultation',
-        type: 1, // Scheduled meeting
-        duration: 60, // Duration in minutes
-    };
-
-    // Use fetch or another method to make a request to the Zoom API
-    return fetch(`${zoomBaseUrl}?${zoomParams}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(meetingSettings),
-    })
-        .then(response => response.json())
-        .then(data => {
-            // Extract the join URL from the Zoom API response
-            console.log('Zoom link:', data.join_url);
-            return data.join_url;
-        })
-        .catch(error => {
-            console.error('Error generating Zoom link:', error);
-            return null;
-        });
-}
 
       
         function submitBookingForm() {
             // Get form data
             var form = document.getElementById('userBookingForm');
             var formData = new FormData(form);
-            var customerEmail = formData.get('email');
-
-    // Generate Zoom link
-        generateZoomLink()
-            .then(zoomLink => {
-                if (zoomLink) {
-                    // Zoom link successfully generated, use it as needed
-                    console.log('Zoom link:', zoomLink);
-
-                    // Pass formData and Zoom link to sendConfirmationEmail
-                    sendConfirmationEmail(formData, zoomLink);
-                } else {
-                    console.error('Failed to generate Zoom link.');
-                    alert('Booking failed. Please try again later.');
-                }
-            });
 
             // Get selected day and time
             var selectedDate = document.getElementById('selectedDate').value;
@@ -495,7 +442,7 @@ function generateZoomLink() {
 // Initialize Email.js with your Public Key
 emailjs.init("5HL5c-zK1CReL-Pnw");
  
-function sendConfirmationEmail(formData, selectedDay, selectedTime,zoomLink ) {
+function sendConfirmationEmail(formData, selectedDay, selectedTime) {
     // Check if formData is defined
     if (formData && typeof formData !== 'undefined') {
         // Extract relevant form data
@@ -515,8 +462,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime,zoomLink ) {
             phoneNumber: phoneNumber,
             email: email,
             selectedDay: selectedDay,
-            selectedTime: selectedTime,
-            zoomLink: zoomLink,
+            selectedTime: selectedTime
         }).then(
             function (response) {
                 console.log("Customer email sent successfully:", response);
@@ -535,8 +481,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime,zoomLink ) {
             phoneNumber: phoneNumber,
             email: email,
             selectedDay: selectedDay,
-            selectedTime: selectedTime,
-            zoomLink: zoomLink,
+            selectedTime: selectedTime
         }).then(
             function (response) {
                 console.log("Astrologer email sent successfully:", response);
