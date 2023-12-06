@@ -256,46 +256,47 @@
     </table>
 
     <div id="bookingForm" style="display: none;">
-        <h3>Booking Form</h3>
-        <form id="userBookingForm">
-            <label for="selectedDate">Selected Date: </label>
-            <input type="text" id="selectedDate" readonly>
-            <br>
-            <label for="selectedTime">Select Time: </label>
-            <select id="selectedTime" name="selectedTime">
-                <option value="8:00 PM - 8:30 PM">8:00 PM - 8:30 PM</option>
-                <option value="8:30 PM - 9:00 PM">8:30 PM - 9:00 PM</option>
-                <option value="9:00 PM - 9:30 PM">9:00 PM - 9:30 PM</option>
-                <option value="9:30 PM - 10:00 PM">9:30 PM - 10:00 PM</option>
-                <option value="10:00 PM - 10:30 PM">10:00 PM - 10:30 PM</option>
-            </select>
-            <br>
-            
-            <!-- Additional time selection options can be added here -->
+    <h3>Booking Form</h3>
+    <form id="userBookingForm">
+        <label for="selectedDate">Selected Date: </label>
+        <input type="text" id="selectedDate" readonly>
+        <br>
 
-            <!-- Keep the existing form fields -->
-            <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" name="firstName" required>
-            
-            <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" required>
-            
-            <label for="dob">Date of Birth:</label>
-            <input type="date" id="dob" name="dob" required>
-            
-            <label for="birthTime">Birth Time:</label>
-            <input type="time" id="birthTime" name="birthTime" required>
-            
-            <label for="phoneNumber">Phone Number:</label>
-            <input type="tel" id="phoneNumber" name="phoneNumber" required>
-            
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+        <label for="selectedTime">Select Time: </label>
+        <select id="selectedTime" name="selectedTime" required>
+            <option value="8:00 PM - 8:30 PM">8:00 PM - 8:30 PM</option>
+            <option value="8:30 PM - 9:00 PM">8:30 PM - 9:00 PM</option>
+            <option value="9:00 PM - 9:30 PM">9:00 PM - 9:30 PM</option>
+            <option value="9:30 PM - 10:00 PM">9:30 PM - 10:00 PM</option>
+            <option value="10:00 PM - 10:30 PM">10:00 PM - 10:30 PM</option>
+        </select>
+        <br>
 
-            <button type="button" onclick="submitBookingForm()">Book Now</button>
-            <button type="button" onclick="cancelBookingForm()">Cancel</button>
-        </form>
-    </div>
+        <!-- Additional time selection options can be added here -->
+
+        <!-- Keep the existing form fields -->
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <label for="birthTime">Birth Time:</label>
+        <input type="time" id="birthTime" name="birthTime" required>
+
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <button type="button" onclick="submitBookingForm()">Book Now</button>
+        <button type="button" onclick="cancelBookingForm()">Cancel</button>
+    </form>
+</div>
     <button class="navButton" onclick="showPreviousYear()">Previous Year</button>
     <button class="navButton" onclick="showPreviousMonth()">Previous Month</button>
     <button class="navButton" onclick="showNextMonth()">Next Month</button>
