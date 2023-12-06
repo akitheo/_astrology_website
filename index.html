@@ -401,7 +401,9 @@
             var form = document.getElementById('userBookingForm');
             var formData = new FormData(form);
             var customerEmail = formData.get('email');
+            console.log('Customer Email:', customerEmail);
             var skypeLink = generateSkypeLink(customerEmail);
+            console.log('Skype Link:', skypeLink);
             // Get selected day and time
             var selectedDate = document.getElementById('selectedDate').value;
             var selectedTime = document.getElementById('selectedTime').value;
@@ -464,7 +466,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime) {
             email: email,
             selectedDay: selectedDay,
             selectedTime: selectedTime,
-            skypeLink: skypeLink
+            'skypeLink': skypeLink
         }).then(
             function (response) {
                 console.log("Customer email sent successfully:", response);
@@ -484,7 +486,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime) {
             email: email,
             selectedDay: selectedDay,
             selectedTime: selectedTime,
-            skypeLink: skypeLink
+            'skypeLink': skypeLink
         }).then(
             function (response) {
                 console.log("Astrologer email sent successfully:", response);
