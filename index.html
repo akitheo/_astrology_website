@@ -216,6 +216,7 @@
 <section id="home" style="background-color: #f8f8f8; padding: 30px; text-align: center;">
     <div style="text-align: center; padding: 20px;">
         <img src="IMG/astro.jpg" alt="ASTRO" style="max-width: 100%; border-radius: 10px;">
+        
     </div>
     <div style="text-align: center;">
         <h2>Welcome to the Cosmic Guidance Center</h2>
@@ -391,42 +392,44 @@
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         };
 
-        // Sample function to generate Zoom meeting link
-function generateZoomLink(customerEmail) {
-    // Use your Zoom API key and secret
-    const apiKey = '7U2vwSGGTkej1mvdGmC5TQ';
-    const apiSecret = 'BmyzhK4Op88R66KRgouHGhMgPVdJcZA8';
+     <script>
+    // Adjusted function to generate Zoom meeting link
+    function generateZoomLink() {
+        // Use your Zoom API key and secret
+        const apiKey = '7U2vwSGGTkej1mvdGmC5TQ';
+        const apiSecret = 'BmyzhK4Op88R66KRgouHGhMgPVdJcZA8';
 
-    // Construct the Zoom URL
-    const zoomBaseUrl = 'https://api.zoom.us/v2/users/me/meetings';
-    const zoomParams = `api_key=${apiKey}&api_secret=${apiSecret}`;
+        // Construct the Zoom URL
+        const zoomBaseUrl = 'https://api.zoom.us/v2/users/me/meetings';
+        const zoomParams = `api_key=${apiKey}&api_secret=${apiSecret}`;
 
-    // You might need to customize the meeting settings based on your requirements
-    const meetingSettings = {
-        topic: 'Astrology Consultation',
-        type: 1, // Scheduled meeting
-        duration: 60, // Duration in minutes
-    };
+        // You might need to customize the meeting settings based on your requirements
+        const meetingSettings = {
+            topic: 'Astrology Consultation',
+            type: 1, // Scheduled meeting
+            duration: 60, // Duration in minutes
+        };
 
-    // Use fetch or another method to make a request to the Zoom API
-    return fetch(`${zoomBaseUrl}?${zoomParams}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(meetingSettings),
-    })
-        .then(response => response.json())
-        .then(data => {
-            // Extract the join URL from the Zoom API response
-            const joinUrl = data.join_url;
-            return joinUrl;
+        // Use fetch or another method to make a request to the Zoom API
+        return fetch(`${zoomBaseUrl}?${zoomParams}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(meetingSettings),
         })
-        .catch(error => {
-            console.error('Error generating Zoom link:', error);
-            return null;
-        });
-}
+            .then(response => response.json())
+            .then(data => {
+                // Extract the join URL from the Zoom API response
+                const joinUrl = data.join_url;
+                return joinUrl;
+            })
+            .catch(error => {
+                console.error('Error generating Zoom link:', error);
+                return null;
+            });
+    }
+
       
         function submitBookingForm() {
             // Get form data
@@ -435,51 +438,51 @@ function generateZoomLink(customerEmail) {
             var customerEmail = formData.get('email');
 
     // Generate Zoom link
-    generateZoomLink(customerEmail)
-        .then(zoomLink => {
-            if (zoomLink) {
-                // Zoom link successfully generated, use it as needed
-                console.log('Zoom link:', zoomLink);
+        generateZoomLink()
+            .then(zoomLink => {
+                if (zoomLink) {
+                    // Zoom link successfully generated, use it as needed
+                    console.log('Zoom link:', zoomLink);
 
-                // Pass formData and Zoom link to sendConfirmationEmail
-                sendConfirmationEmail(formData, zoomLink);
-            } else {
-                console.error('Failed to generate Zoom link.');
-                alert('Booking failed. Please try again later.');
-            }
-        });
+                    // Pass formData and Zoom link to sendConfirmationEmail
+                    sendConfirmationEmail(formData, zoomLink);
+                } else {
+                    console.error('Failed to generate Zoom link.');
+                    alert('Booking failed. Please try again later.');
+                }
+            });
 
             // Get selected day and time
             var selectedDate = document.getElementById('selectedDate').value;
             var selectedTime = document.getElementById('selectedTime').value;
             
             // Make an AJAX request to submit the form to Formspree
-            var xhr = new XMLHttpRequest();
-            xhr.open(form.method, form.action, true);
-            xhr.setRequestHeader('Accept', 'application/json');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200 || xhr.status == 201) {
-                        // Successful form submission
-                        console.log('Form submitted successfully:', xhr.responseText);
- 
-                        // Pass formData to sendConfirmationEmail
-                        sendConfirmationEmail(formData, selectedDate, selectedTime);
- 
-                        // Redirect to the custom success page
-                        window.location.href = 'success.html';
-                    } else {
-                        // Form submission failed
-                        console.error('Form submission failed:', xhr.responseText);
-                        alert('Booking failed. Please try again later.');
-                    }
- 
-                    // Close the form after submission
-                    document.getElementById('bookingForm').style.display = 'none';
+        var xhr = new XMLHttpRequest();
+        xhr.open(form.method, form.action, true);
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200 || xhr.status == 201) {
+                    // Successful form submission
+                    console.log('Form submitted successfully:', xhr.responseText);
+
+                    // Pass formData to sendConfirmationEmail
+                    sendConfirmationEmail(formData, selectedDate, selectedTime);
+                    
+                    // Redirect to the custom success page
+                    window.location.href = 'success.html';
+                } else {
+                    // Form submission failed
+                    console.error('Form submission failed:', xhr.responseText);
+                    alert('Booking failed. Please try again later.');
                 }
-            };
-            xhr.send(formData);
-        }
+
+                // Close the form after submission
+                document.getElementById('bookingForm').style.display = 'none';
+            }
+        };
+        xhr.send(formData);
+    }
 
         function cancelBookingForm() {
             // Close the form
