@@ -395,42 +395,41 @@
     
     <script>
          
-    // Adjusted function to generate Zoom meeting link
-    function generateZoomLink() {
-        // Use your Zoom API key and secret
-        const apiKey = '7U2vwSGGTkej1mvdGmC5TQ';
-        const apiSecret = 'BmyzhK4Op88R66KRgouHGhMgPVdJcZA8';
+   // Adjusted function to generate Zoom meeting link
+function generateZoomLink() {
+    // Use your Zoom API key and secret
+    const apiKey = '7U2vwSGGTkej1mvdGmC5TQ';
+    const apiSecret = 'BmyzhK4Op88R66KRgouHGhMgPVdJcZA8';
 
-        // Construct the Zoom URL
-        const zoomBaseUrl = 'https://api.zoom.us/v2/users/me/meetings';
-        const zoomParams = `api_key=${apiKey}&api_secret=${apiSecret}`;
+    // Construct the Zoom URL
+    const zoomBaseUrl = 'http://localhost:3000/zoom-api';
 
-        // You might need to customize the meeting settings based on your requirements
-        const meetingSettings = {
-            topic: 'Astrology Consultation',
-            type: 1, // Scheduled meeting
-            duration: 60, // Duration in minutes
-        };
+    // You might need to customize the meeting settings based on your requirements
+    const meetingSettings = {
+        topic: 'Astrology Consultation',
+        type: 1, // Scheduled meeting
+        duration: 60, // Duration in minutes
+    };
 
-        // Use fetch or another method to make a request to the Zoom API
-        return fetch(`${zoomBaseUrl}?${zoomParams}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(meetingSettings),
-        })
-            .then(response => response.json())
-            .then(data => {
-                // Extract the join URL from the Zoom API response
-                const joinUrl = data.join_url;
-                return joinUrl;
-            })
-            .catch(error => {
-                console.error('Error generating Zoom link:', error);
-                return null;
-            });
-    }
+    // Use fetch or another method to make a request to your server-side proxy
+    return fetch(zoomBaseUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(meetingSettings),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Extract the join URL from the response
+        const joinUrl = data.join_url;
+        return joinUrl;
+    })
+    .catch(error => {
+        console.error('Error generating Zoom link:', error);
+        return null;
+    });
+}
 
       
         function submitBookingForm() {
