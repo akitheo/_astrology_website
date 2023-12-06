@@ -464,7 +464,7 @@ function generateZoomLink(customerEmail) {
                         console.log('Form submitted successfully:', xhr.responseText);
  
                         // Pass formData to sendConfirmationEmail
-                        sendConfirmationEmail(formData, selectedDate, selectedTime);
+                        sendConfirmationEmail(formData, selectedDate, selectedTime,zoomLink);
  
                         // Redirect to the custom success page
                         window.location.href = 'success.html';
