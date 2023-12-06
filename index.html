@@ -400,6 +400,9 @@ function generateZoomLink() {
     // Use your Zoom API key and secret
     const apiKey = '7U2vwSGGTkej1mvdGmC5TQ';
     const apiSecret = 'BmyzhK4Op88R66KRgouHGhMgPVdJcZA8';
+// Inside generateZoomLink function
+ console.log('Zoom link:', joinUrl);
+return joinUrl;
 
     // Construct the Zoom URL
     const zoomBaseUrl = 'http://localhost:3000/zoom-api';
@@ -452,6 +455,8 @@ function generateZoomLink() {
                     alert('Booking failed. Please try again later.');
                 }
             });
+// Inside submitBookingForm function after calling generateZoomLink
+console.log('Zoom link from submitBookingForm:', zoomLink);
 
             // Get selected day and time
             var selectedDate = document.getElementById('selectedDate').value;
