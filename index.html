@@ -284,21 +284,9 @@
 <form id="userBookingForm">
 <label for="selectedDate">Selected Date: </label>
 <input type="text" id="selectedDate" readonly required>
-<br>
- 
-        <label for="selectedTime">Select Time: </label>
-<select id="selectedTime" name="selectedTime" required>
-<option value="8:00 PM - 8:30 PM">8:00 PM - 8:30 PM</option>
-<option value="8:30 PM - 9:00 PM">8:30 PM - 9:00 PM</option>
-<option value="9:00 PM - 9:30 PM">9:00 PM - 9:30 PM</option>
-<option value="9:30 PM - 10:00 PM">9:30 PM - 10:00 PM</option>
-<option value="10:00 PM - 10:30 PM">10:00 PM - 10:30 PM</option>
-</select>
-<br>
- 
-        <!-- Additional time selection options can be added here -->
- 
-        <!-- Keep the existing form fields -->
+<label for="selectedTime">Selected Time: </label>
+<input type="text" id="selectedTime" readonly required>
+
 <label for="firstName">First Name:</label>
 <input type="text" id="firstName" name="firstName" required>
  
@@ -328,11 +316,12 @@
  
  
     <script>
-        function showBookingForm(day, date) {
-            document.getElementById('bookingForm').style.display = 'block';
-            document.getElementById('selectedDate').value = day + ', ' + date;
-        }
-
+       
+function showBookingForm(day, date, selectedTime) {
+    document.getElementById('bookingForm').style.display = 'block';
+    document.getElementById('selectedDate').value = day + ', ' + date;
+    document.getElementById('selectedTime').value = selectedTime; // Set the selected time
+}
         var month;
         var year;
 
