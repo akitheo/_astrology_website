@@ -428,14 +428,13 @@
 
       
         function submitBookingForm() {
-            // Get form data
-            var form = document.getElementById('userBookingForm');
-            var formData = new FormData(form);
+    // Get form data
+    var form = document.getElementById('userBookingForm');
+    var formData = new FormData(form);
 
-            // Get selected day and time
-            var selectedDate = document.getElementById('selectedDate').value;
-            var selectedTime = document.getElementById('selectedTime').value;
-
+    // Get selected day and time
+    var selectedDate = document.getElementById('selectedDate').value;
+    var selectedTime = document.getElementById('selectedTime').value;
 
     // Define an array of required fields
     var requiredFields = ['firstName', 'lastName', 'dob', 'birthTime', 'phoneNumber', 'email'];
@@ -450,34 +449,34 @@
             return;
         }
     }
-// Simulate a successful booking and mark the selected slot as booked
-                var bookedDateParts = selectedDate.split(', ')[1].split(' ');
-                var bookedDay = bookedDateParts[0];
-                var bookedMonth = getMonthIndex(bookedDateParts[1]);
-                var bookedYear = bookedDateParts[2];
 
-                var bookedSlot = {
-                    day: parseInt(bookedDay),
-                    month: bookedMonth,
-                    year: parseInt(bookedYear),
-                };
+    // Simulate a successful booking and mark the selected slot as booked
+    var bookedDateParts = selectedDate.split(', ')[1].split(' ');
+    var bookedDay = bookedDateParts[0];
+    var bookedMonth = getMonthIndex(bookedDateParts[1]);
+    var bookedYear = bookedDateParts[2];
 
-                // Add the booked slot to the array
-                var bookedDates = [
-                    // Existing booked dates...
-                ];
+    var bookedSlot = {
+        day: parseInt(bookedDay),
+        month: bookedMonth,
+        year: parseInt(bookedYear),
+    };
 
-                bookedDates.push(bookedSlot);
+    // Add the booked slot to the array
+    var bookedDates = [
+        // Existing booked dates...
+    ];
 
-                // Update the booked slots
-                markBookedSlots();
+    bookedDates.push(bookedSlot);
 
-                // Clear the form and hide it
-                form.reset();
-                document.getElementById('bookingForm').style.display = 'none';
-            }
-            
-           // Make an AJAX request to submit the form to Formspree
+    // Update the booked slots
+    markBookedSlots();
+
+    // Clear the form and hide it
+    form.reset();
+    document.getElementById('bookingForm').style.display = 'none';
+
+    // Make an AJAX request to submit the form to Formspree
     var xhr = new XMLHttpRequest();
     xhr.open(form.method, form.action, true);
     xhr.setRequestHeader('Accept', 'application/json');
@@ -489,7 +488,7 @@
 
                 // Pass formData to sendConfirmationEmail
                 sendConfirmationEmail(formData, selectedDate, selectedTime);
-                
+
                 // Redirect to the custom success page
                 window.location.href = 'success.html';
             } else {
@@ -505,14 +504,15 @@
     xhr.send(formData);
 }
 
-        function cancelBookingForm() {
-            // Close the form
-            document.getElementById('bookingForm').style.display = 'none';
-        }
-         function getMonthIndex(monthName) {
-                var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                return months.indexOf(monthName);
-            }
+function cancelBookingForm() {
+    // Close the form
+    document.getElementById('bookingForm').style.display = 'none';
+}
+
+function getMonthIndex(monthName) {
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return months.indexOf(monthName);
+}
     </script>
     <script>
 // Initialize Email.js with your Public Key
