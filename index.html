@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Astrology World</title>
       <style>
@@ -186,6 +187,13 @@
             background-color: #2980b9;
         }
 
+/* Style for booked time slots */
+        .booked-slot {
+            background-color: #ff9999; /* Light red for booked slots */
+            cursor: not-allowed; /* Show a not-allowed cursor for booked slots */
+            color: #555; /* Adjust text color for better visibility */
+        }
+          
     </style>
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 
@@ -303,55 +311,78 @@
     <button class="navButton" onclick="showNextYear()">Next Year</button>
 
 
-    <script>
-        function showBookingForm(day, date) {
-            document.getElementById('bookingForm').style.display = 'block';
-            document.getElementById('selectedDate').value = day + ', ' + date;
-        }
+     <script>
+            // Integrated JavaScript code for booking and marking booked time slots
 
-        function generateCalendar(month, year) {
-            var calendarContainer = document.getElementById('availabilityTable');
-            calendarContainer.querySelector('tbody').innerHTML = '';
-
-            // Display Month and Year in the caption
-            calendarContainer.querySelector('caption').textContent = getMonthName(month) + ' ' + year;
-
-            var firstDay = new Date(year, month, 1);
-            var lastDay = new Date(year, month + 1, 0);
-            var startingDay = firstDay.getDay();
-
-            if (!calendarContainer.querySelector('tbody')) {
-                var tbody = document.createElement('tbody');
-                calendarContainer.appendChild(tbody);
+            function showBookingForm(day, date) {
+                document.getElementById('bookingForm').style.display = 'block';
+                document.getElementById('selectedDate').value = day + ', ' + date;
             }
 
-            var dateCounter = 1;
-            for (var i = 0; i < 6; i++) {
-                var row = document.createElement('tr');
-                for (var j = 0; j < 7; j++) {
-                    var dayCell = document.createElement('td');
-                    if (i === 0 && j < startingDay) {
-                        // Empty cells before the first day
-                        dayCell.textContent = '';
-                    } else if (dateCounter <= lastDay.getDate()) {
-                        dayCell.textContent = dateCounter;
-                        dayCell.setAttribute('data-date', dateCounter);
-                        dayCell.setAttribute('data-month', month);
-                        dayCell.setAttribute('data-year', year);
-                        dayCell.addEventListener('click', function () {
-                            var selectedDate = this.getAttribute('data-date');
-                            var selectedMonth = this.getAttribute('data-month');
-                            var selectedYear = this.getAttribute('data-year');
-                            var selectedDay = getDayOfWeek(selectedYear, selectedMonth, selectedDate);
-                            showBookingForm(selectedDay, selectedDate);
-                        });
-                        dateCounter++;
-                    }
-                    row.appendChild(dayCell);
+            function generateCalendar(month, year) {
+                var calendarContainer = document.getElementById('availabilityTable');
+                calendarContainer.querySelector('tbody').innerHTML = '';
+
+                // Display Month and Year in the caption
+                calendarContainer.querySelector('caption').textContent = getMonthName(month) + ' ' + year;
+
+                var firstDay = new Date(year, month, 1);
+                var lastDay = new Date(year, month + 1, 0);
+                var startingDay = firstDay.getDay();
+
+                if (!calendarContainer.querySelector('tbody')) {
+                    var tbody = document.createElement('tbody');
+                    calendarContainer.appendChild(tbody);
                 }
-                calendarContainer.querySelector('tbody').appendChild(row);
+
+                var dateCounter = 1;
+                for (var i = 0; i < 6; i++) {
+                    var row = document.createElement('tr');
+                    for (var j = 0; j < 7; j++) {
+                        var dayCell = document.createElement('td');
+                        if (i === 0 && j < startingDay) {
+                            // Empty cells before the first day
+                            dayCell.textContent = '';
+                        } else if (dateCounter <= lastDay.getDate()) {
+                            dayCell.textContent = dateCounter;
+                            dayCell.setAttribute('data-date', dateCounter);
+                            dayCell.setAttribute('data-month', month);
+                            dayCell.setAttribute('data-year', year);
+                            dayCell.addEventListener('click', function () {
+                                var selectedDate = this.getAttribute('data-date');
+                                var selectedMonth = this.getAttribute('data-month');
+                                var selectedYear = this.getAttribute('data-year');
+                                var selectedDay = getDayOfWeek(selectedYear, selectedMonth, selectedDate);
+                                showBookingForm(selectedDay, selectedDate);
+                            });
+                            dateCounter++;
+                        }
+                        row.appendChild(dayCell);
+                    }
+                    calendarContainer.querySelector('tbody').appendChild(row);
+                }
+
+                // Mark booked time slots
+                markBookedSlots();
             }
-        }
+
+            function markBookedSlots() {
+                // Example: Marking the 15th day of each month as booked
+                var bookedDates = [
+                    { year: 2023, month: 1, day: 15 },
+                    { year: 2023, month: 2, day: 15 },
+                    // Add more booked dates as needed
+                ];
+
+                bookedDates.forEach(function (booking) {
+                    var cell = document.querySelector(`[data-date="${booking.day}"][data-month="${booking.month - 1}"][data-year="${booking.year}"]`);
+                    if (cell) {
+                        cell.classList.add('booked-slot');
+                        cell.removeEventListener('click', showBookingForm);
+                        cell.title = 'This time slot is booked';
+                    }
+                });
+            }
 
         function getMonthName(month) {
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -420,7 +451,32 @@
             return;
         }
     }
+// Simulate a successful booking and mark the selected slot as booked
+                var bookedDateParts = selectedDate.split(', ')[1].split(' ');
+                var bookedDay = bookedDateParts[0];
+                var bookedMonth = getMonthIndex(bookedDateParts[1]);
+                var bookedYear = bookedDateParts[2];
 
+                var bookedSlot = {
+                    day: parseInt(bookedDay),
+                    month: bookedMonth,
+                    year: parseInt(bookedYear),
+                };
+
+                // Add the booked slot to the array
+                var bookedDates = [
+                    // Existing booked dates...
+                ];
+
+                bookedDates.push(bookedSlot);
+
+                // Update the booked slots
+                markBookedSlots();
+
+                // Clear the form and hide it
+                form.reset();
+                document.getElementById('bookingForm').style.display = 'none';
+            }
             
            // Make an AJAX request to submit the form to Formspree
     var xhr = new XMLHttpRequest();
@@ -454,6 +510,10 @@
             // Close the form
             document.getElementById('bookingForm').style.display = 'none';
         }
+         function getMonthIndex(monthName) {
+                var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                return months.indexOf(monthName);
+            }
     </script>
     <script>
 // Initialize Email.js with your Public Key
