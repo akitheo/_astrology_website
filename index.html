@@ -185,13 +185,30 @@
         .navButton:hover {
             background-color: #2980b9;
         }
+.time-slots {
+    display: flex;
+    flex-direction: column;
+}
 
-/* Style for booked time slots */
-        .booked-slot {
-            background-color: #ff9999; /* Light red for booked slots */
-            cursor: not-allowed; /* Show a not-allowed cursor for booked slots */
-            color: #555; /* Adjust text color for better visibility */
-        }
+.time-slots div {
+    cursor: pointer;
+    padding: 5px;
+    margin: 2px;
+    border-radius: 5px;
+    background-color: #4CAF50; /* Green background */
+    color: #ffff00; /* Yellow text */
+}
+
+.time-slots div:hover {
+    background-color: #45a049; /* Darker green on hover */
+    color: white;
+}
+
+.booked-slot {
+    background-color: #ff9999; /* Light red for booked slots */
+    cursor: not-allowed; /* Show a not-allowed cursor for booked slots */
+    color: #555; /* Adjust text color for better visibility */
+}
           
     </style>
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
@@ -316,49 +333,86 @@
             document.getElementById('selectedDate').value = day + ', ' + date;
         }
  
-        function generateCalendar(month, year) {
-            var calendarContainer = document.getElementById('availabilityTable');
-            calendarContainer.querySelector('tbody').innerHTML = '';
- 
-            // Display Month and Year in the caption
-            calendarContainer.querySelector('caption').textContent = getMonthName(month) + ' ' + year;
- 
-            var firstDay = new Date(year, month, 1);
-            var lastDay = new Date(year, month + 1, 0);
-            var startingDay = firstDay.getDay();
- 
-            if (!calendarContainer.querySelector('tbody')) {
-                var tbody = document.createElement('tbody');
-                calendarContainer.appendChild(tbody);
-            }
- 
-            var dateCounter = 1;
-            for (var i = 0; i < 6; i++) {
-                var row = document.createElement('tr');
-                for (var j = 0; j < 7; j++) {
-                    var dayCell = document.createElement('td');
-                    if (i === 0 && j < startingDay) {
-                        // Empty cells before the first day
-                        dayCell.textContent = '';
-                    } else if (dateCounter <= lastDay.getDate()) {
-                        dayCell.textContent = dateCounter;
-                        dayCell.setAttribute('data-date', dateCounter);
-                        dayCell.setAttribute('data-month', month);
-                        dayCell.setAttribute('data-year', year);
-                        dayCell.addEventListener('click', function () {
-                            var selectedDate = this.getAttribute('data-date');
-                            var selectedMonth = this.getAttribute('data-month');
-                            var selectedYear = this.getAttribute('data-year');
-                            var selectedDay = getDayOfWeek(selectedYear, selectedMonth, selectedDate);
-                            showBookingForm(selectedDay, selectedDate);
-                        });
-                        dateCounter++;
+       function generateCalendar(month, year) {
+    var calendarContainer = document.getElementById('availabilityTable');
+    calendarContainer.querySelector('tbody').innerHTML = '';
+
+    // Display Month and Year in the caption
+    calendarContainer.querySelector('caption').textContent = getMonthName(month) + ' ' + year;
+
+    var firstDay = new Date(year, month, 1);
+    var lastDay = new Date(year, month + 1, 0);
+    var startingDay = firstDay.getDay();
+
+    if (!calendarContainer.querySelector('tbody')) {
+        var tbody = document.createElement('tbody');
+        calendarContainer.appendChild(tbody);
+    }
+
+    var dateCounter = 1;
+    for (var i = 0; i < 6; i++) {
+        var row = document.createElement('tr');
+        for (var j = 0; j < 7; j++) {
+            var dayCell = document.createElement('td');
+            if (i === 0 && j < startingDay) {
+                // Empty cells before the first day
+                dayCell.textContent = '';
+            } else if (dateCounter <= lastDay.getDate()) {
+                dayCell.textContent = dateCounter;
+                dayCell.setAttribute('data-date', dateCounter);
+                dayCell.setAttribute('data-month', month);
+                dayCell.setAttribute('data-year', year);
+
+                // Example: Display four time slots for each date
+                var timeSlots = ['8:00 PM - 8:30 PM', '8:30 PM - 9:00 PM', '9:00 PM - 9:30 PM', '9:30 PM - 10:00 PM'];
+                var timeSlotsContainer = document.createElement('div');
+                timeSlotsContainer.classList.add('time-slots');
+
+                timeSlots.forEach(function (slot) {
+                    var slotElement = document.createElement('div');
+                    slotElement.textContent = slot;
+                    slotElement.setAttribute('data-date', dateCounter);
+                    slotElement.setAttribute('data-month', month);
+                    slotElement.setAttribute('data-year', year);
+                    slotElement.addEventListener('click', function () {
+                        var selectedDate = this.getAttribute('data-date');
+                        var selectedMonth = this.getAttribute('data-month');
+                        var selectedYear = this.getAttribute('data-year');
+                        var selectedDay = getDayOfWeek(selectedYear, selectedMonth, selectedDate);
+                        showBookingForm(selectedDay, selectedDate);
+                    });
+
+                    // Add class to booked slots (you can modify this based on your actual logic)
+                    if (isSlotBooked(dateCounter, month, year, slot)) {
+                        slotElement.classList.add('booked-slot');
                     }
-                    row.appendChild(dayCell);
-                }
-                calendarContainer.querySelector('tbody').appendChild(row);
+
+                    timeSlotsContainer.appendChild(slotElement);
+                });
+
+                dayCell.appendChild(timeSlotsContainer);
+
+                dateCounter++;
             }
+            row.appendChild(dayCell);
         }
+        calendarContainer.querySelector('tbody').appendChild(row);
+    }
+}
+var bookedSlots = [];
+
+function isSlotBooked(date, month, year, slot) {
+    // Check if the slot is in the bookedSlots array
+    return bookedSlots.some(function (booking) {
+        return (
+            booking.date === date &&
+            booking.month === month &&
+            booking.year === year &&
+            booking.slot === slot
+        );
+    });
+}
+
  
         function getMonthName(month) {
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -410,7 +464,19 @@
             // Get selected day and time
             var selectedDate = document.getElementById('selectedDate').value;
             var selectedTime = document.getElementById('selectedTime').value;
- 
+            
+ if (isSlotBooked(selectedDate, month, year, selectedTime)) {
+        alert('This slot is already booked. Please choose another time.');
+        return;
+    }
+
+    // Add the booked slot to the array
+    bookedSlots.push({
+        date: selectedDate,
+        month: month,
+        year: year,
+        slot: selectedTime
+    });
  
     // Define an array of required fields
     var requiredFields = ['firstName', 'lastName', 'dob', 'birthTime', 'phoneNumber', 'email'];
