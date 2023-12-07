@@ -365,23 +365,21 @@
                 markBookedSlots();
             }
 
-            function markBookedSlots() {
-                // Example: Marking the 15th day of each month as booked
-                var bookedDates = [
-                    { year: 2023, month: 1, day: 15 },
-                    { year: 2023, month: 2, day: 15 },
-                    // Add more booked dates as needed
-                ];
+           function markBookedSlots() {
+    // Retrieve booked dates from your backend or any other source
+    var bookedDates = [
+        // Initially, the array is empty
+    ];
 
-                bookedDates.forEach(function (booking) {
-                    var cell = document.querySelector(`[data-date="${booking.day}"][data-month="${booking.month - 1}"][data-year="${booking.year}"]`);
-                    if (cell) {
-                        cell.classList.add('booked-slot');
-                        cell.removeEventListener('click', showBookingForm);
-                        cell.title = 'This time slot is booked';
-                    }
-                });
-            }
+    bookedDates.forEach(function (booking) {
+        var cell = document.querySelector(`[data-date="${booking.day}"][data-month="${booking.month - 1}"][data-year="${booking.year}"]`);
+        if (cell) {
+            cell.classList.add('booked-slot');
+            cell.removeEventListener('click', showBookingForm);
+            cell.title = 'This time slot is booked';
+        }
+    });
+}
 
         function getMonthName(month) {
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
