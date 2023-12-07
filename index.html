@@ -312,6 +312,7 @@
 
      <script>
             var bookedDates = [];
+            bookedDates.push(selectedSlot);
             // Integrated JavaScript code for booking and marking booked time slots
 
             function showBookingForm(day, date) {
@@ -466,13 +467,6 @@
         alert('This time slot is already booked. Please choose another time.');
         return;
     }
-
-    // Add the booked slot to the array
-    var bookedDates = [
-        // Existing booked dates...
-    ];
-
-    bookedDates.push(selectedSlot);
 
     // Update the booked slots
     markBookedSlots();
