@@ -405,34 +405,50 @@
             // Get selected day and time
             var selectedDate = document.getElementById('selectedDate').value;
             var selectedTime = document.getElementById('selectedTime').value;
-            
-            // Make an AJAX request to submit the form to Formspree
-        var xhr = new XMLHttpRequest();
-        xhr.open(form.method, form.action, true);
-        xhr.setRequestHeader('Accept', 'application/json');
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
-                if (xhr.status == 200 || xhr.status == 201) {
-                    // Successful form submission
-                    console.log('Form submitted successfully:', xhr.responseText);
 
-                    // Pass formData to sendConfirmationEmail
-                    sendConfirmationEmail(formData, selectedDate, selectedTime);
-                    
-                    // Redirect to the custom success page
-                    window.location.href = 'success.html';
-                } else {
-                    // Form submission failed
-                    console.error('Form submission failed:', xhr.responseText);
-                    alert('Booking failed. Please try again later.');
-                }
 
-                // Close the form after submission
-                document.getElementById('bookingForm').style.display = 'none';
-            }
-        };
-        xhr.send(formData);
+    // Define an array of required fields
+    var requiredFields = ['firstName', 'lastName', 'dob', 'birthTime', 'phoneNumber', 'email'];
+
+    // Check if all required fields are provided
+    for (var i = 0; i < requiredFields.length; i++) {
+        var fieldName = requiredFields[i];
+        var fieldValue = formData.get(fieldName);
+
+        if (!fieldValue) {
+            alert('Please provide ' + fieldName + ' before submitting the form.');
+            return;
+        }
     }
+
+            
+           // Make an AJAX request to submit the form to Formspree
+    var xhr = new XMLHttpRequest();
+    xhr.open(form.method, form.action, true);
+    xhr.setRequestHeader('Accept', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200 || xhr.status == 201) {
+                // Successful form submission
+                console.log('Form submitted successfully:', xhr.responseText);
+
+                // Pass formData to sendConfirmationEmail
+                sendConfirmationEmail(formData, selectedDate, selectedTime);
+                
+                // Redirect to the custom success page
+                window.location.href = 'success.html';
+            } else {
+                // Form submission failed
+                console.error('Form submission failed:', xhr.responseText);
+                alert('Booking failed. Please try again later.');
+            }
+
+            // Close the form after submission
+            document.getElementById('bookingForm').style.display = 'none';
+        }
+    };
+    xhr.send(formData);
+}
 
         function cancelBookingForm() {
             // Close the form
