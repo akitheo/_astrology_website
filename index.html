@@ -425,12 +425,12 @@
     <script>
 
       
-        function submitBookingForm() {
+  function submitBookingForm() {
     // Get form data
     var form = document.getElementById('userBookingForm');
     var formData = new FormData(form);
 
-    // Get selected day and time
+    // Get selected day, date, and time
     var selectedDate = document.getElementById('selectedDate').value;
     var selectedTime = document.getElementById('selectedTime').value;
 
@@ -448,24 +448,30 @@
         }
     }
 
-    // Simulate a successful booking and mark the selected slot as booked
+    // Check if the selected time slot is already booked
     var bookedDateParts = selectedDate.split(', ')[1].split(' ');
     var bookedDay = bookedDateParts[0];
     var bookedMonth = getMonthIndex(bookedDateParts[1]);
     var bookedYear = bookedDateParts[2];
 
-    var bookedSlot = {
+    var selectedSlot = {
         day: parseInt(bookedDay),
         month: bookedMonth,
         year: parseInt(bookedYear),
+        time: selectedTime,
     };
+
+    if (isSlotAlreadyBooked(selectedSlot)) {
+        alert('This time slot is already booked. Please choose another time.');
+        return;
+    }
 
     // Add the booked slot to the array
     var bookedDates = [
         // Existing booked dates...
     ];
 
-    bookedDates.push(bookedSlot);
+    bookedDates.push(selectedSlot);
 
     // Update the booked slots
     markBookedSlots();
@@ -500,6 +506,20 @@
         }
     };
     xhr.send(formData);
+}
+
+function isSlotAlreadyBooked(selectedSlot) {
+    // Check if the selected slot is already booked
+    var isBooked = bookedDates.some(function (booking) {
+        return (
+            booking.day === selectedSlot.day &&
+            booking.month === selectedSlot.month &&
+            booking.year === selectedSlot.year &&
+            booking.time === selectedSlot.time
+        );
+    });
+
+    return isBooked;
 }
 
 function cancelBookingForm() {
