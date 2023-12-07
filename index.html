@@ -368,12 +368,13 @@ function showBookingForm(day, date, selectedTime) {
                     slotElement.setAttribute('data-month', month);
                     slotElement.setAttribute('data-year', year);
                     slotElement.addEventListener('click', function () {
-                        var selectedDate = this.getAttribute('data-date');
-                        var selectedMonth = this.getAttribute('data-month');
-                        var selectedYear = this.getAttribute('data-year');
-                        var selectedDay = getDayOfWeek(selectedYear, selectedMonth, selectedDate);
-                        showBookingForm(selectedDay, selectedDate);
-                    });
+    var selectedDate = this.getAttribute('data-date');
+    var selectedMonth = this.getAttribute('data-month');
+    var selectedYear = this.getAttribute('data-year');
+    var selectedDay = getDayOfWeek(selectedYear, selectedMonth, selectedDate);
+    var selectedTime = this.textContent; // Get the selected time directly from the clicked slot
+    showBookingForm(selectedDay, selectedDate, selectedTime);
+});
 
                     // Add class to booked slots (you can modify this based on your actual logic)
                     if (isSlotBooked(dateCounter, month, year, slot)) {
