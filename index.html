@@ -397,68 +397,51 @@
     <script>
 
  function submitBookingForm() {
-  // Get form data
-  var form = document.getElementById('userBookingForm');
-  var formData = new FormData(form);
+    // Get form data
+    var form = document.getElementById('userBookingForm');
+    var formData = new FormData(form);
 
-  // Validate form fields
-  var validationPassed = validateForm(formData);
+    // Validate form fields
+    var validationPassed = validateForm(formData);
 
-  if (validationPassed) {
-    // Get selected day and time
-    var selectedDate = document.getElementById('selectedDate').value;
-    var selectedTime = document.getElementById('selectedTime').value;
+    if (validationPassed) {
+        // Get selected day and time
+        var selectedDate = document.getElementById('selectedDate').value;
+        var selectedTime = document.getElementById('selectedTime').value;
 
-   // Make an AJAX request to submit the form to your Node.js server
-var xhr = new XMLHttpRequest();
-xhr.open('POST', 'http://localhost:3000/submit-form', true);
-xhr.onreadystatechange = function () {
-  if (xhr.readyState == 4) {
-    if (xhr.status == 200) {
-      // Successful form submission
-      console.log('Form submitted successfully:', xhr.responseText);
+        // Make an AJAX request to submit the form to your Node.js server
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:3000/submit-form', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    // Successful form submission
+                    console.log('Form submitted successfully:', xhr.responseText);
 
-      // Pass formData to sendConfirmationEmail
-      sendConfirmationEmail(formData, selectedDate, selectedTime);
+                    // Pass formData to sendConfirmationEmail
+                    sendConfirmationEmail(formData, selectedDate, selectedTime);
 
-      // Redirect to the custom success page
-      window.location.href = 'success.html';
+                    // Redirect to the custom success page
+                    window.location.href = 'success.html';
+                } else {
+                    // Form submission failed
+                    console.error('Form submission failed:', xhr.responseText);
+                    alert('Booking failed. Please try again later.');
+                }
+
+                // Close the form after submission
+                document.getElementById('bookingForm').style.display = 'none';
+            }
+        };
+        xhr.send(formData);  // Send the FormData object directly
     } else {
-      // Form submission failed
-      console.error('Form submission failed:', xhr.responseText);
-      alert('Booking failed. Please try again later.');
+        // Show validation error message
+        alert('Please fill in all the required fields before submitting the form.');
     }
-
-    // Close the form after submission
-    document.getElementById('bookingForm').style.display = 'none';
-  }
-};
-xhr.send(formData);  // Send the FormData object directly
-
-function validateForm(formData) {
-    // List of required field names
-    var requiredFields = ['firstName', 'lastName', 'dob', 'birthTime', 'phoneNumber', 'email'];
-
-    // Check if all required fields are filled
-    for (var i = 0; i < requiredFields.length; i++) {
-        var fieldName = requiredFields[i];
-        if (!formData.get(fieldName)) {
-            // Field is empty, validation failed
-            return false;
-        }
-    }
-
-    // All required fields are filled, validation passed
-    return true;
 }
-        function cancelBookingForm() {
-            // Close the form
-            document.getElementById('bookingForm').style.display = 'none';
-        }
     </script>
-   
-</section>
 
+<section>
 <section id="contact">
     <h2>Contact Us</h2>
     <div class="contact-info">
