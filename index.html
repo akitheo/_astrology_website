@@ -257,7 +257,7 @@
 
    <div id="bookingForm" style="display: none;">
     <h3>Booking Form</h3>
-    <form id="userBookingForm">
+    <form id="userBookingForm" action="/submit-form" method="post">
         <label for="selectedDate">Selected Date: </label>
         <input type="text" id="selectedDate" readonly required>
         <br>
@@ -396,50 +396,49 @@
     
     <script>
 
-      
-        function submitBookingForm() {
-    // Get form data
-    var form = document.getElementById('userBookingForm');
-    var formData = new FormData(form);
+  function submitBookingForm() {
+  // Get form data
+  var form = document.getElementById('userBookingForm');
+  var formData = new FormData(form);
 
-    // Validate form fields
-    var validationPassed = validateForm(formData);
+  // Validate form fields
+  var validationPassed = validateForm(formData);
 
-    if (validationPassed) {
-        // Get selected day and time
-        var selectedDate = document.getElementById('selectedDate').value;
-        var selectedTime = document.getElementById('selectedTime').value;
+  if (validationPassed) {
+    // Get selected day and time
+    var selectedDate = document.getElementById('selectedDate').value;
+    var selectedTime = document.getElementById('selectedTime').value;
 
-        // Make an AJAX request to submit the form to Formspree
-        var xhr = new XMLHttpRequest();
-        xhr.open(form.method, form.action, true);
-        xhr.setRequestHeader('Accept', 'application/json');
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
-                if (xhr.status == 200 || xhr.status == 201) {
-                    // Successful form submission
-                    console.log('Form submitted successfully:', xhr.responseText);
+    // Make an AJAX request to submit the form to your Node.js server
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:3000/submit-form', true);  // Update the URL
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          // Successful form submission
+          console.log('Form submitted successfully:', xhr.responseText);
 
-                    // Pass formData to sendConfirmationEmail
-                    sendConfirmationEmail(formData, selectedDate, selectedTime);
+          // Pass formData to sendConfirmationEmail
+          sendConfirmationEmail(formData, selectedDate, selectedTime);
 
-                    // Redirect to the custom success page
-                    window.location.href = 'success.html';
-                } else {
-                    // Form submission failed
-                    console.error('Form submission failed:', xhr.responseText);
-                    alert('Booking failed. Please try again later.');
-                }
+          // Redirect to the custom success page
+          window.location.href = 'success.html';
+        } else {
+          // Form submission failed
+          console.error('Form submission failed:', xhr.responseText);
+          alert('Booking failed. Please try again later.');
+        }
 
-                // Close the form after submission
-                document.getElementById('bookingForm').style.display = 'none';
-            }
-        };
-        xhr.send(formData);
-    } else {
-        // Show validation error message
-        alert('Please fill in all the required fields before submitting the form.');
-    }
+        // Close the form after submission
+        document.getElementById('bookingForm').style.display = 'none';
+      }
+    };
+    xhr.send(JSON.stringify(Object.fromEntries(formData)));
+  } else {
+    // Show validation error message
+    alert('Please fill in all the required fields before submitting the form.');
+  }
 }
 
 function validateForm(formData) {
@@ -463,63 +462,7 @@ function validateForm(formData) {
             document.getElementById('bookingForm').style.display = 'none';
         }
     </script>
-    <script>
-// Initialize Email.js with your Public Key
-emailjs.init("BbZGaMYpJL57eMkKi");
- 
-function sendConfirmationEmail(formData, selectedDay, selectedTime) {
-    // Check if formData is defined
-    if (formData && typeof formData !== 'undefined') {
-        // Extract relevant form data
-        var firstName = formData.get('firstName');
-        var lastName = formData.get('lastName');
-        var dob = formData.get('dob');
-        var birthTime = formData.get('birthTime');
-        var phoneNumber = formData.get('phoneNumber');
-        var email = formData.get('email');
-       
-        // Replace 'your_service_id' and 'your_template_id' with your actual Service ID and Template ID for the customer email
-        emailjs.send("service_18rwvel", "template_43zcmuu", {
-            firstName: firstName,
-            lastName: lastName,
-            dob: dob,
-            birthTime: birthTime,
-            phoneNumber: phoneNumber,
-            email: email,
-            selectedDay: selectedDay,
-            selectedTime: selectedTime
-        }).then(
-            function (response) {
-                console.log("Customer email sent successfully:", response);
-            },
-            function (error) {
-                console.error("Failed to send customer email:", error);
-            }
-        );
- 
-        // Replace 'your_service_id' and 'your_template_id' with your actual Service ID and Template ID for the astrologer email
-        emailjs.send("service_18rwvel", "template_zm7i2ir", {
-            firstName: firstName,
-            lastName: lastName,
-            dob: dob,
-            birthTime: birthTime,
-            phoneNumber: phoneNumber,
-            email: email,
-            selectedDay: selectedDay,
-            selectedTime: selectedTime
-        }).then(
-            function (response) {
-                console.log("Astrologer email sent successfully:", response);
-            },
-            function (error) {
-                console.error("Failed to send astrologer email:", error);
-            }
-        );
-    } else {
-        console.error("Form data is undefined. Make sure to capture it before calling sendConfirmationEmail.");
-    }
-}
-</script>
+   
 </section>
 
 <section id="contact">
