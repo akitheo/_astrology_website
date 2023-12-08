@@ -321,6 +321,7 @@ function showBookingForm(day, date, selectedTime) {
     document.getElementById('selectedDate').value = day + ', ' + date;
     document.getElementById('selectedTime').value = selectedTime; // Set the selected time
 }
+
         var month;
         var year;
 
@@ -366,12 +367,12 @@ function showBookingForm(day, date, selectedTime) {
                     slotElement.setAttribute('data-date', dateCounter);
                     slotElement.setAttribute('data-month', month);
                     slotElement.setAttribute('data-year', year);
-                    slotElement.addEventListener('click', function () {
+                   slotElement.addEventListener('click', function () {
     var selectedDate = this.getAttribute('data-date');
     var selectedMonth = this.getAttribute('data-month');
     var selectedYear = this.getAttribute('data-year');
     var selectedDay = getDayOfWeek(selectedYear, selectedMonth, selectedDate);
-    var selectedTime = this.textContent; // Get the selected time directly from the clicked slot
+    var selectedTime = document.getElementById('selectedTime').value; // Get the selected time from the input field
     showBookingForm(selectedDay, selectedDate, selectedTime);
 });
 
