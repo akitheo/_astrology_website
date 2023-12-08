@@ -4,13 +4,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const path = require('path');
-
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json()); // Parse JSON bodies
+
+app.use(cors());
+
 
 // Serve HTML form
 app.get('/', (req, res) => {
