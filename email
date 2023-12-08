@@ -1,4 +1,4 @@
 npm init -y
 npm install nodemailer
-npm install pass.env
+npm install dotenv
 
