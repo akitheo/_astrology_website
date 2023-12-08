@@ -409,37 +409,31 @@
     var selectedDate = document.getElementById('selectedDate').value;
     var selectedTime = document.getElementById('selectedTime').value;
 
-    // Make an AJAX request to submit the form to your Node.js server
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:3000/submit-form', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
-          // Successful form submission
-          console.log('Form submitted successfully:', xhr.responseText);
+   // Make an AJAX request to submit the form to your Node.js server
+var xhr = new XMLHttpRequest();
+xhr.open('POST', 'http://localhost:3000/submit-form', true);
+xhr.onreadystatechange = function () {
+  if (xhr.readyState == 4) {
+    if (xhr.status == 200) {
+      // Successful form submission
+      console.log('Form submitted successfully:', xhr.responseText);
 
-          // Pass formData to sendConfirmationEmail
-          sendConfirmationEmail(formData, selectedDate, selectedTime);
+      // Pass formData to sendConfirmationEmail
+      sendConfirmationEmail(formData, selectedDate, selectedTime);
 
-          // Redirect to the custom success page
-          window.location.href = 'success.html';
-        } else {
-          // Form submission failed
-          console.error('Form submission failed:', xhr.responseText);
-          alert('Booking failed. Please try again later.');
-        }
+      // Redirect to the custom success page
+      window.location.href = 'success.html';
+    } else {
+      // Form submission failed
+      console.error('Form submission failed:', xhr.responseText);
+      alert('Booking failed. Please try again later.');
+    }
 
-        // Close the form after submission
-        document.getElementById('bookingForm').style.display = 'none';
-      }
-    };
-    xhr.send(formData);  // Send the FormData object directly
-  } else {
-    // Show validation error message
-    alert('Please fill in all the required fields before submitting the form.');
+    // Close the form after submission
+    document.getElementById('bookingForm').style.display = 'none';
   }
-}
+};
+xhr.send(formData);  // Send the FormData object directly
 
 function validateForm(formData) {
     // List of required field names
