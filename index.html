@@ -211,9 +211,7 @@
 }
           
     </style>
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-
-    
+   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -522,7 +520,7 @@ function isSlotBooked(date, month, year, slot) {
 </script>
     <script>
 // Initialize Email.js with your Public Key
-emailjs.init("5HL5c-zK1CReL-Pnw");
+emailjs.init("BbZGaMYpJL57eMkKi");
  
 function sendConfirmationEmail(formData, selectedDay, selectedTime) {
     // Check if formData is defined
@@ -536,7 +534,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime) {
         var email = formData.get('email');
        
         // Replace 'your_service_id' and 'your_template_id' with your actual Service ID and Template ID for the customer email
-        emailjs.send("service_1us56c1", "template_if5a995", {
+        emailjs.send("service_18rwvel", "template_if5a995", {
             firstName: firstName,
             lastName: lastName,
             dob: dob,
@@ -555,7 +553,7 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime) {
         );
  
         // Replace 'your_service_id' and 'your_template_id' with your actual Service ID and Template ID for the astrologer email
-        emailjs.send("service_1us56c1", "template_zrx9tw8", {
+        emailjs.send("service_18rwvel", "template_zrx9tw8", {
             firstName: firstName,
             lastName: lastName,
             dob: dob,
