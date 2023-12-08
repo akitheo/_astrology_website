@@ -495,7 +495,10 @@ function isSlotBooked(date, month, year, slot) {
             if (xhr.status == 200 || xhr.status == 201) {
                 // Successful form submission
                 console.log('Form submitted successfully:', xhr.responseText);
- 
+                // Log values for debugging
+                  console.log('Form data:', formData);
+                    console.log('Selected date:', selectedDate);
+                     console.log('Selected time:', selectedTime);
                 // Pass formData to sendConfirmationEmail
                 sendConfirmationEmail(formData, selectedDate, selectedTime);
                 // Redirect to the custom success page
@@ -532,7 +535,11 @@ function sendConfirmationEmail(formData, selectedDay, selectedTime) {
         var birthTime = formData.get('birthTime');
         var phoneNumber = formData.get('phoneNumber');
         var email = formData.get('email');
-       
+        
+        console.log('Form data:', formData);
+    console.log('Selected day:', selectedDay);
+    console.log('Selected time:', selectedTime);
+        
         // Replace 'your_service_id' and 'your_template_id' with your actual Service ID and Template ID for the customer email
         emailjs.send("service_18rwvel", "template_if5a995", {
             firstName: firstName,
