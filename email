@@ -1,4 +1,5 @@
 npm init -y
 npm install nodemailer
 npm install dotenv
+npm install cors
 
