@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Astrology World</title>
       <style>
         body {
-    font-family: 'Times New Roman', Times, serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
         header {
             position: relative;
             overflow: hidden;
@@ -185,31 +185,7 @@
         .navButton:hover {
             background-color: #2980b9;
         }
-.time-slots {
-    display: flex;
-    flex-direction: column;
-}
 
-.time-slots div {
-    cursor: pointer;
-    padding: 5px;
-    margin: 2px;
-    border-radius: 5px;
-    background-color: #4CAF50; /* Green background */
-    color: #ffff00; /* Yellow text */
-}
-
-.time-slots div:hover {
-    background-color: #45a049; /* Darker green on hover */
-    color: white;
-}
-
-.booked-slot {
-    background-color: #ff9999; /* Light red for booked slots */
-    cursor: not-allowed; /* Show a not-allowed cursor for booked slots */
-    color: #555; /* Adjust text color for better visibility */
-}
-          
     </style>
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 
@@ -260,271 +236,209 @@
 
 <!-- Add the following code within the #booking section -->
 <section id="booking">
-<h2 style="color: #3498db;">Book a Consultation</h2>
-<p>Choose your Preferable Date and Time</p>
- 
+    <h2 style="color: #3498db;">Book a Consultation</h2>
+    <p>Choose your Preferable Date and Time</p>
+
     <table id="availabilityTable" style="width: 100%;">
-<caption>Availability Schedule</caption>
-<thead>
-<tr>
-<th>Sun</th>
-<th>Mon</th>
-<th>Tue</th>
-<th>Wed</th>
-<th>Thu</th>
-<th>Fri</th>
-<th>Sat</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
- 
+        <caption>Availability Schedule</caption>
+        <thead>
+            <tr>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
    <div id="bookingForm" style="display: none;">
-<h3>Booking Form</h3>
-<form id="userBookingForm">
-<label for="selectedDate">Selected Date: </label>
-<input type="text" id="selectedDate" readonly required>
-<br>
- 
+    <h3>Booking Form</h3>
+    <form id="userBookingForm">
+        <label for="selectedDate">Selected Date: </label>
+        <input type="text" id="selectedDate" readonly required>
+        <br>
+
         <label for="selectedTime">Select Time: </label>
-<select id="selectedTime" name="selectedTime" required>
-<option value="8:00 PM - 8:30 PM">8:00 PM - 8:30 PM</option>
-<option value="8:30 PM - 9:00 PM">8:30 PM - 9:00 PM</option>
-<option value="9:00 PM - 9:30 PM">9:00 PM - 9:30 PM</option>
-<option value="9:30 PM - 10:00 PM">9:30 PM - 10:00 PM</option>
-<option value="10:00 PM - 10:30 PM">10:00 PM - 10:30 PM</option>
-</select>
-<br>
- 
+        <select id="selectedTime" name="selectedTime" required>
+            <option value="8:00 PM - 8:30 PM">8:00 PM - 8:30 PM</option>
+            <option value="8:30 PM - 9:00 PM">8:30 PM - 9:00 PM</option>
+            <option value="9:00 PM - 9:30 PM">9:00 PM - 9:30 PM</option>
+            <option value="9:30 PM - 10:00 PM">9:30 PM - 10:00 PM</option>
+            <option value="10:00 PM - 10:30 PM">10:00 PM - 10:30 PM</option>
+        </select>
+        <br>
+
         <!-- Additional time selection options can be added here -->
- 
+
         <!-- Keep the existing form fields -->
-<label for="firstName">First Name:</label>
-<input type="text" id="firstName" name="firstName" required>
- 
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required>
+
         <label for="lastName">Last Name:</label>
-<input type="text" id="lastName" name="lastName" required>
- 
+        <input type="text" id="lastName" name="lastName" required>
+
         <label for="dob">Date of Birth:</label>
-<input type="date" id="dob" name="dob" required>
- 
+        <input type="date" id="dob" name="dob" required>
+
         <label for="birthTime">Birth Time:</label>
-<input type="time" id="birthTime" name="birthTime" required>
- 
+        <input type="time" id="birthTime" name="birthTime" required>
+
         <label for="phoneNumber">Phone Number:</label>
-<input type="tel" id="phoneNumber" name="phoneNumber" required>
- 
+        <input type="tel" id="phoneNumber" name="phoneNumber" required>
+
         <label for="email">Email:</label>
-<input type="email" id="email" name="email" required>
- 
+        <input type="email" id="email" name="email" required>
+
         <button type="button" onclick="submitBookingForm()">Book Now</button>
-<button type="button" onclick="cancelBookingForm()">Cancel</button>
-</form>
+        <button type="button" onclick="cancelBookingForm()">Cancel</button>
+    </form>
 </div>
-<button class="navButton" onclick="showPreviousYear()">Previous Year</button>
-<button class="navButton" onclick="showPreviousMonth()">Previous Month</button>
-<button class="navButton" onclick="showNextMonth()">Next Month</button>
-<button class="navButton" onclick="showNextYear()">Next Year</button>
- 
- 
+    <button class="navButton" onclick="showPreviousYear()">Previous Year</button>
+    <button class="navButton" onclick="showPreviousMonth()">Previous Month</button>
+    <button class="navButton" onclick="showNextMonth()">Next Month</button>
+    <button class="navButton" onclick="showNextYear()">Next Year</button>
+
+
     <script>
         function showBookingForm(day, date) {
             document.getElementById('bookingForm').style.display = 'block';
             document.getElementById('selectedDate').value = day + ', ' + date;
         }
- 
-       function generateCalendar(month, year) {
-    var calendarContainer = document.getElementById('availabilityTable');
-    calendarContainer.querySelector('tbody').innerHTML = '';
 
-    // Display Month and Year in the caption
-    calendarContainer.querySelector('caption').textContent = getMonthName(month) + ' ' + year;
+        function generateCalendar(month, year) {
+            var calendarContainer = document.getElementById('availabilityTable');
+            calendarContainer.querySelector('tbody').innerHTML = '';
 
-    var firstDay = new Date(year, month, 1);
-    var lastDay = new Date(year, month + 1, 0);
-    var startingDay = firstDay.getDay();
+            // Display Month and Year in the caption
+            calendarContainer.querySelector('caption').textContent = getMonthName(month) + ' ' + year;
 
-    if (!calendarContainer.querySelector('tbody')) {
-        var tbody = document.createElement('tbody');
-        calendarContainer.appendChild(tbody);
-    }
+            var firstDay = new Date(year, month, 1);
+            var lastDay = new Date(year, month + 1, 0);
+            var startingDay = firstDay.getDay();
 
-    var dateCounter = 1;
-    for (var i = 0; i < 6; i++) {
-        var row = document.createElement('tr');
-        for (var j = 0; j < 7; j++) {
-            var dayCell = document.createElement('td');
-            if (i === 0 && j < startingDay) {
-                // Empty cells before the first day
-                dayCell.textContent = '';
-            } else if (dateCounter <= lastDay.getDate()) {
-                dayCell.textContent = dateCounter;
-                dayCell.setAttribute('data-date', dateCounter);
-                dayCell.setAttribute('data-month', month);
-                dayCell.setAttribute('data-year', year);
-
-                // Example: Display four time slots for each date
-                var timeSlots = ['8:00 PM - 8:30 PM', '8:30 PM - 9:00 PM', '9:00 PM - 9:30 PM', '9:30 PM - 10:00 PM'];
-                var timeSlotsContainer = document.createElement('div');
-                timeSlotsContainer.classList.add('time-slots');
-
-                timeSlots.forEach(function (slot) {
-                    var slotElement = document.createElement('div');
-                    slotElement.textContent = slot;
-                    slotElement.setAttribute('data-date', dateCounter);
-                    slotElement.setAttribute('data-month', month);
-                    slotElement.setAttribute('data-year', year);
-                    slotElement.addEventListener('click', function () {
-                        var selectedDate = this.getAttribute('data-date');
-                        var selectedMonth = this.getAttribute('data-month');
-                        var selectedYear = this.getAttribute('data-year');
-                        var selectedDay = getDayOfWeek(selectedYear, selectedMonth, selectedDate);
-                        showBookingForm(selectedDay, selectedDate);
-                    });
-
-                    // Add class to booked slots (you can modify this based on your actual logic)
-                    if (isSlotBooked(dateCounter, month, year, slot)) {
-                        slotElement.classList.add('booked-slot');
-                    }
-
-                    timeSlotsContainer.appendChild(slotElement);
-                });
-
-                dayCell.appendChild(timeSlotsContainer);
-
-                dateCounter++;
+            if (!calendarContainer.querySelector('tbody')) {
+                var tbody = document.createElement('tbody');
+                calendarContainer.appendChild(tbody);
             }
-            row.appendChild(dayCell);
+
+            var dateCounter = 1;
+            for (var i = 0; i < 6; i++) {
+                var row = document.createElement('tr');
+                for (var j = 0; j < 7; j++) {
+                    var dayCell = document.createElement('td');
+                    if (i === 0 && j < startingDay) {
+                        // Empty cells before the first day
+                        dayCell.textContent = '';
+                    } else if (dateCounter <= lastDay.getDate()) {
+                        dayCell.textContent = dateCounter;
+                        dayCell.setAttribute('data-date', dateCounter);
+                        dayCell.setAttribute('data-month', month);
+                        dayCell.setAttribute('data-year', year);
+                        dayCell.addEventListener('click', function () {
+                            var selectedDate = this.getAttribute('data-date');
+                            var selectedMonth = this.getAttribute('data-month');
+                            var selectedYear = this.getAttribute('data-year');
+                            var selectedDay = getDayOfWeek(selectedYear, selectedMonth, selectedDate);
+                            showBookingForm(selectedDay, selectedDate);
+                        });
+                        dateCounter++;
+                    }
+                    row.appendChild(dayCell);
+                }
+                calendarContainer.querySelector('tbody').appendChild(row);
+            }
         }
-        calendarContainer.querySelector('tbody').appendChild(row);
-    }
-}
-var bookedSlots = [];
 
-function isSlotBooked(date, month, year, slot) {
-    // Check if the slot is in the bookedSlots array
-    return bookedSlots.some(function (booking) {
-        return (
-            booking.date === date &&
-            booking.month === month &&
-            booking.year === year &&
-            booking.slot === slot
-        );
-    });
-}
-
- 
         function getMonthName(month) {
             var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             return months[month];
         }
- 
+
         function showPreviousMonth() {
             var currentDate = new Date(document.getElementById('availabilityTable').querySelector('caption').textContent);
             currentDate.setMonth(currentDate.getMonth() - 1);
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         }
- 
+
         function showNextMonth() {
             var currentDate = new Date(document.getElementById('availabilityTable').querySelector('caption').textContent);
             currentDate.setMonth(currentDate.getMonth() + 1);
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         }
- 
+
         function showPreviousYear() {
             var currentDate = new Date(document.getElementById('availabilityTable').querySelector('caption').textContent);
             currentDate.setFullYear(currentDate.getFullYear() - 1);
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         }
- 
+
         function showNextYear() {
             var currentDate = new Date(document.getElementById('availabilityTable').querySelector('caption').textContent);
             currentDate.setFullYear(currentDate.getFullYear() + 1);
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         }
- 
+
         function getDayOfWeek(year, month, day) {
             var date = new Date(year, month, day);
             var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             return days[date.getDay()];
         }
+        
        window.onload = function () {
             var currentDate = new Date();
             generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
         };
-</script>
-<script>
- 
+    </script>
+    
+    <script>
+
       
         function submitBookingForm() {
             // Get form data
             var form = document.getElementById('userBookingForm');
             var formData = new FormData(form);
- 
+
             // Get selected day and time
             var selectedDate = document.getElementById('selectedDate').value;
             var selectedTime = document.getElementById('selectedTime').value;
             
- if (isSlotBooked(selectedDate, month, year, selectedTime)) {
-        alert('This slot is already booked. Please choose another time.');
-        return;
+            // Make an AJAX request to submit the form to Formspree
+        var xhr = new XMLHttpRequest();
+        xhr.open(form.method, form.action, true);
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200 || xhr.status == 201) {
+                    // Successful form submission
+                    console.log('Form submitted successfully:', xhr.responseText);
+
+                    // Pass formData to sendConfirmationEmail
+                    sendConfirmationEmail(formData, selectedDate, selectedTime);
+                    
+                    // Redirect to the custom success page
+                    window.location.href = 'success.html';
+                } else {
+                    // Form submission failed
+                    console.error('Form submission failed:', xhr.responseText);
+                    alert('Booking failed. Please try again later.');
+                }
+
+                // Close the form after submission
+                document.getElementById('bookingForm').style.display = 'none';
+            }
+        };
+        xhr.send(formData);
     }
 
-    // Add the booked slot to the array
-    bookedSlots.push({
-        date: selectedDate,
-        month: month,
-        year: year,
-        slot: selectedTime
-    });
- 
-    // Define an array of required fields
-    var requiredFields = ['firstName', 'lastName', 'dob', 'birthTime', 'phoneNumber', 'email'];
- 
-    // Check if all required fields are provided
-    for (var i = 0; i < requiredFields.length; i++) {
-        var fieldName = requiredFields[i];
-        var fieldValue = formData.get(fieldName);
- 
-        if (!fieldValue) {
-            alert('Please provide ' + fieldName + ' before submitting the form.');
-            return;
-        }
-    }
- 
-            
-           // Make an AJAX request to submit the form to Formspree
-    var xhr = new XMLHttpRequest();
-    xhr.open(form.method, form.action, true);
-    xhr.setRequestHeader('Accept', 'application/json');
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200 || xhr.status == 201) {
-                // Successful form submission
-                console.log('Form submitted successfully:', xhr.responseText);
- 
-                // Pass formData to sendConfirmationEmail
-                sendConfirmationEmail(formData, selectedDate, selectedTime);
-                // Redirect to the custom success page
-                window.location.href = 'success.html';
-            } else {
-                // Form submission failed
-                console.error('Form submission failed:', xhr.responseText);
-                alert('Booking failed. Please try again later.');
-            }
- 
-            // Close the form after submission
-            document.getElementById('bookingForm').style.display = 'none';
-        }
-    };
-    xhr.send(formData);
-}
- 
         function cancelBookingForm() {
             // Close the form
             document.getElementById('bookingForm').style.display = 'none';
         }
-</script>
+    </script>
     <script>
 // Initialize Email.js with your Public Key
 emailjs.init("BbZGaMYpJL57eMkKi");
