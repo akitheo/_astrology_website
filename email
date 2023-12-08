@@ -3,3 +3,4 @@ npm install nodemailer
 npm install dotenv
 npm install cors
 
+npm install express body-parser nodemailer path dotenv cors
