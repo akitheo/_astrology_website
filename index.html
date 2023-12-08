@@ -395,7 +395,23 @@
     </script>
     
     <script>
+// Move the validateForm function here or make sure it is defined before submitBookingForm
+        function validateForm(formData) {
+            // List of required field names
+            var requiredFields = ['firstName', 'lastName', 'dob', 'birthTime', 'phoneNumber', 'email'];
 
+            // Check if all required fields are filled
+            for (var i = 0; i < requiredFields.length; i++) {
+                var fieldName = requiredFields[i];
+                if (!formData.get(fieldName)) {
+                    // Field is empty, validation failed
+                    return false;
+                }
+            }
+
+            // All required fields are filled, validation passed
+            return true;
+        }
  function submitBookingForm() {
                 // Get form data
                 var form = document.getElementById('userBookingForm');
