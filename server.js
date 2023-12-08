@@ -12,6 +12,7 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json()); // Parse JSON bodies
 app.use(cors());
+
 // Serve HTML form
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'form.html'));
@@ -20,7 +21,7 @@ app.get('/', (req, res) => {
 // Handle form submission
 app.post('/submit-form', async (req, res) => {
   try {
-    // Extract form data from FormData object
+    // Extract form data from request body
     const formData = req.body;
 
     // Nodemailer configuration
@@ -38,11 +39,11 @@ app.post('/submit-form', async (req, res) => {
       to: 'apal707662@gmail.com', // Replace with the astrologer's email address
       subject: 'New Consultation Booking',
       html: `
-        <p>Name: ${formData.get('firstName')} ${formData.get('lastName')}</p>
-        <p>Date of Birth: ${formData.get('dob')}</p>
-        <p>Birth Time: ${formData.get('birthTime')}</p>
-        <p>Phone Number: ${formData.get('phoneNumber')}</p>
-        <p>Email: ${formData.get('email')}</p>
+        <p>Name: ${formData.firstName} ${formData.lastName}</p>
+        <p>Date of Birth: ${formData.dob}</p>
+        <p>Birth Time: ${formData.birthTime}</p>
+        <p>Phone Number: ${formData.phoneNumber}</p>
+        <p>Email: ${formData.email}</p>
       `,
     };
 
@@ -56,11 +57,6 @@ app.post('/submit-form', async (req, res) => {
     console.error('Error processing form submission:', error);
     res.status(500).send('Internal Server Error');
   }
-});
-
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
 });
 
 // Start the server
