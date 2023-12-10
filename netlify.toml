@@ -1,4 +1,4 @@
 [build]
-  command = "npm run build"
-  publish = "_astrology_website/netlify/functions"
+  command = "npm run build"  # Replace with your build command if needed
+  publish = "/"  # Publish directory is set to the root because index.html is in the root
 
