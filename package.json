@@ -1,1 +1,19 @@
-npm init -y
+{
+  "name": "Astrology",
+  "version": "1.0.0",
+  "description": "Astrology",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build"
+  },
+  "dependencies": {
+    // Your dependencies go here
+  },
+  "devDependencies": {
+    // Your development dependencies go here
+  },
+  "keywords": [],
+  "author": "Akash",
+  "license": "MIT",
+  "private": true
+}
