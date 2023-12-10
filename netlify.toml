@@ -1,0 +1,2 @@
+[build]
+  functions = "_astrology_website/netlify/functions"
