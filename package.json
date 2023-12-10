@@ -6,12 +6,8 @@
   "scripts": {
     "build": "npm run build"
   },
-  "dependencies": {
-    // Your dependencies go here
-  },
-  "devDependencies": {
-    // Your development dependencies go here
-  },
+  "dependencies": {},
+  "devDependencies": {},
   "keywords": [],
   "author": "Akash",
   "license": "MIT",
