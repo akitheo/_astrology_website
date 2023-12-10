@@ -3,26 +3,21 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
-const path = require('path');
 const cors = require('cors');
+
 const app = express();
-const port = process.env.PORT || 3000;  // Keep this line once
+const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json()); // Parse JSON bodies
 app.use(cors());
 
-// Serve HTML form
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'form.html'));
-});
-
-// Handle form submission
-app.post('/submit-form', async (req, res) => {
+// Handle form submission (updated as a function)
+exports.handler = async function (event, context) {
   try {
     // Extract form data from the request body
-    const formData = req.body;
+    const formData = JSON.parse(event.body);
 
     // Nodemailer configuration
     const transporter = nodemailer.createTransport({
@@ -39,11 +34,11 @@ app.post('/submit-form', async (req, res) => {
       to: 'apal707662@gmail.com',
       subject: 'New Consultation Booking',
       html: `
-        <p>Name: ${req.body.firstName} ${req.body.lastName}</p>
-        <p>Date of Birth: ${req.body.dob}</p>
-        <p>Birth Time: ${req.body.birthTime}</p>
-        <p>Phone Number: ${req.body.phoneNumber}</p>
-        <p>Email: ${req.body.email}</p>
+        <p>Name: ${formData.firstName} ${formData.lastName}</p>
+        <p>Date of Birth: ${formData.dob}</p>
+        <p>Birth Time: ${formData.birthTime}</p>
+        <p>Phone Number: ${formData.phoneNumber}</p>
+        <p>Email: ${formData.email}</p>
       `,
     };
 
@@ -52,15 +47,22 @@ app.post('/submit-form', async (req, res) => {
     console.log('Email sent:', info.response);
 
     // Respond with a success message
-    res.status(200).send('Form submission successful');
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: 'Form submission successful' }),
+    };
   } catch (error) {
     console.error('Error processing form submission:', error);
-    res.status(500).send('Internal Server Error');
+
+    // Respond with an error message
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Internal Server Error' }),
+    };
   }
-});
+};
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+// Export the express app (optional, depending on your needs)
+module.exports = app;
 
+// Note: The server will still run locally when you test it, but Netlify will use the exported handler function for the serverless function.
