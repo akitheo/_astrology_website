@@ -417,44 +417,46 @@
                 var form = document.getElementById('userBookingForm');
                 var formData = new FormData(form);
 
-                // Validate form fields
-                var validationPassed = validateForm(formData);
+               // Validate form fields
+            var validationPassed = validateForm(formData);
 
-                if (validationPassed) {
-                    // Get selected day and time
-                    var selectedDate = document.getElementById('selectedDate').value;
-                    var selectedTime = document.getElementById('selectedTime').value;
+            if (validationPassed) {
+                // Get selected day and time
+                var selectedDate = document.getElementById('selectedDate').value;
+                var selectedTime = document.getElementById('selectedTime').value;
 
-                    // Make an AJAX request to submit the form to your Node.js server
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('POST', 'http://localhost:3000/submit-form', true);
+                // Use the Fetch API to submit the form data to the Netlify serverless function
+                const serverUrl = '/.netlify/functions/submitForm';
 
-                    xhr.onload = function () {
-                        if (xhr.status == 200 && xhr.readyState === XMLHttpRequest.DONE) {
-                            // Successful form submission
-                            console.log('Form submitted successfully:', xhr.responseText);
+                fetch(serverUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData)),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Form submitted successfully:', data);
 
-                            // Pass formData to sendConfirmationEmail
-                            sendConfirmationEmail(formData, selectedDate, selectedTime);
+                        // Pass formData to sendConfirmationEmail
+                        sendConfirmationEmail(formData, selectedDate, selectedTime);
 
-                            // Redirect to the custom success page
-                            window.location.href = 'success.html';
-                        } else {
-                            // Form submission failed
-                            console.error('Form submission failed:', xhr.responseText);
-                            alert('Booking failed. Please try again later.');
-                        }
+                        // Redirect to the custom success page
+                        window.location.href = 'success.html';
+                    })
+                    .catch(error => {
+                        console.error('Form submission failed:', error);
+                        alert('Booking failed. Please try again later.');
+                    });
 
-                        // Close the form after submission
-                        document.getElementById('bookingForm').style.display = 'none';
-                    };
-
-                    xhr.send(formData);  // Send the FormData object directly
-                } else {
-                    // Show validation error message
-                    alert('Please fill in all the required fields before submitting the form.');
-                }
+                // Close the form after submission
+                document.getElementById('bookingForm').style.display = 'none';
+            } else {
+                // Show validation error message
+                alert('Please fill in all the required fields before submitting the form.');
             }
+        }
         function cancelBookingForm() {
     // Implementation of cancelBookingForm
     document.getElementById('bookingForm').style.display = 'none';
