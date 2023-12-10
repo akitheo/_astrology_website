@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Astrology",
   "main": "index.js",
-  "scripts": {},
+    "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "dotenv": "^10.0.0"
   }
