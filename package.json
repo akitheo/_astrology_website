@@ -14,7 +14,9 @@
     "path": "latest",
     "body-parser": "latest"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@netlify/plugin-functions": "^4.2.0"  
+  },
   "keywords": [],
   "author": "Akash",
   "license": "MIT",
