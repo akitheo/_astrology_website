@@ -257,7 +257,7 @@
 
    <div id="bookingForm" style="display: none;">
     <h3>Booking Form</h3>
-    <form id="userBookingForm" action="/submit-form" method="post">
+   <form id="userBookingForm" action="/.netlify/functions/submitForm" method="post">
         <label for="selectedDate">Selected Date: </label>
         <input type="text" id="selectedDate" readonly required>
         <br>
@@ -429,12 +429,12 @@
         const serverUrl = '/.netlify/functions/submitForm';
 
         fetch(serverUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(Object.fromEntries(formData)),
-        })
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(Object.fromEntries(formData)),
+})
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
