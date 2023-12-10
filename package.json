@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node index.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "dotenv": "^10.0.0" 
+  },
   "devDependencies": {},
   "keywords": [],
   "author": "Akash",
