@@ -4,7 +4,9 @@
   "description": "Astrology",
   "main": "index.js",
   "scripts": {},
-  "dependencies": {},
+  "dependencies": {
+    "dotenv": "^10.0.0"
+  }
   "devDependencies": {},
   "keywords": [],
   "author": "Akash",
