@@ -1,2 +1,4 @@
 [build]
-  functions = "_astrology_website/netlify/functions"
+  command = "npm run build"
+  publish = "_astrology_website/netlify/functions"
+
