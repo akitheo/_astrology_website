@@ -413,50 +413,55 @@
             return true;
         }
  function submitBookingForm() {
-                // Get form data
-                var form = document.getElementById('userBookingForm');
-                var formData = new FormData(form);
+    // Get form data
+    var form = document.getElementById('userBookingForm');
+    var formData = new FormData(form);
 
-               // Validate form fields
-            var validationPassed = validateForm(formData);
+    // Validate form fields
+    var validationPassed = validateForm(formData);
 
-            if (validationPassed) {
-                // Get selected day and time
-                var selectedDate = document.getElementById('selectedDate').value;
-                var selectedTime = document.getElementById('selectedTime').value;
+    if (validationPassed) {
+        // Get selected day and time
+        var selectedDate = document.getElementById('selectedDate').value;
+        var selectedTime = document.getElementById('selectedTime').value;
 
-                // Use the Fetch API to submit the form data to the Netlify serverless function
-                const serverUrl = '/.netlify/functions/submitForm';
+        // Use the Fetch API to submit the form data to the Netlify serverless function
+        const serverUrl = '/.netlify/functions/submitForm';
 
-                fetch(serverUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(Object.fromEntries(formData)),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Form submitted successfully:', data);
+        fetch(serverUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(Object.fromEntries(formData)),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Form submitted successfully:', data);
 
-                        // Pass formData to sendConfirmationEmail
-                        sendConfirmationEmail(formData, selectedDate, selectedTime);
+                // Pass formData to sendConfirmationEmail
+                sendConfirmationEmail(formData, selectedDate, selectedTime);
 
-                        // Redirect to the custom success page
-                        window.location.href = 'success.html';
-                    })
-                    .catch(error => {
-                        console.error('Form submission failed:', error);
-                        alert('Booking failed. Please try again later.');
-                    });
+                // Redirect to the custom success page
+                window.location.href = 'success.html';
+            })
+            .catch(error => {
+                console.error('Form submission failed:', error);
+                alert('Booking failed. Please try again later.');
+            });
 
-                // Close the form after submission
-                document.getElementById('bookingForm').style.display = 'none';
-            } else {
-                // Show validation error message
-                alert('Please fill in all the required fields before submitting the form.');
-            }
-        }
+        // Close the form after submission
+        document.getElementById('bookingForm').style.display = 'none';
+    } else {
+        // Show validation error message
+        alert('Please fill in all the required fields before submitting the form.');
+    }
+}
         function cancelBookingForm() {
     // Implementation of cancelBookingForm
     document.getElementById('bookingForm').style.display = 'none';
