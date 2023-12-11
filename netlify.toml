@@ -4,8 +4,9 @@
 
 [functions]
   [[functions]]
-  name = "submitForm"
-  path = "netlify/functions/submitForm.js"
+    name = "submitForm"
+    path = "netlify/functions/submitForm.js"
+
 
 
 
