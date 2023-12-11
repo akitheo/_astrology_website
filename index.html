@@ -395,77 +395,44 @@
     </script>
     
     <script>
-// Move the validateForm function here or make sure it is defined before submitBookingForm
-        function validateForm(formData) {
-            // List of required field names
-            var requiredFields = ['firstName', 'lastName', 'dob', 'birthTime', 'phoneNumber', 'email'];
+function submitBookingForm() {
+        // Get form data
+        var form = document.getElementById('userBookingForm');
+        var formData = new FormData(form);
 
-            // Check if all required fields are filled
-            for (var i = 0; i < requiredFields.length; i++) {
-                var fieldName = requiredFields[i];
-                if (!formData.get(fieldName)) {
-                    // Field is empty, validation failed
-                    return false;
-                }
-            }
+        // Validate form fields
+        var validationPassed = validateForm(formData);
 
-            // All required fields are filled, validation passed
-            return true;
+        if (validationPassed) {
+            // Redirect to the success page
+            window.location.href = 'success.html';
+        } else {
+            // Show validation error message
+            alert('Please fill in all the required fields before submitting the form.');
         }
- function submitBookingForm() {
-    // Get form data
-    var form = document.getElementById('userBookingForm');
-    var formData = new FormData(form);
-
-    // Validate form fields
-    var validationPassed = validateForm(formData);
-
-    if (validationPassed) {
-        // Get selected day and time
-        var selectedDate = document.getElementById('selectedDate').value;
-        var selectedTime = document.getElementById('selectedTime').value;
-
-        // Use the Fetch API to submit the form data to the Netlify serverless function
-        const serverUrl = '/.netlify/functions/submitForm';
-
-        fetch(serverUrl, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(Object.fromEntries(formData)),
-})
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Form submitted successfully:', data);
-
-                // Pass formData to sendConfirmationEmail
-                sendConfirmationEmail(formData, selectedDate, selectedTime);
-
-                // Redirect to the custom success page
-                window.location.href = 'success.html';
-            })
-            .catch(error => {
-                console.error('Form submission failed:', error);
-                alert('Booking failed. Please try again later.');
-            });
-
-        // Close the form after submission
-        document.getElementById('bookingForm').style.display = 'none';
-    } else {
-        // Show validation error message
-        alert('Please fill in all the required fields before submitting the form.');
     }
-}
-        function cancelBookingForm() {
-    // Implementation of cancelBookingForm
-    document.getElementById('bookingForm').style.display = 'none';
-  }
+
+    function validateForm(formData) {
+        // List of required field names
+        var requiredFields = ['firstName', 'lastName', 'dob', 'birthTime', 'phoneNumber', 'email'];
+
+        // Check if all required fields are filled
+        for (var i = 0; i < requiredFields.length; i++) {
+            var fieldName = requiredFields[i];
+            if (!formData.get(fieldName)) {
+                // Field is empty, validation failed
+                return false;
+            }
+        }
+
+        // All required fields are filled, validation passed
+        return true;
+    }
+
+    function cancelBookingForm() {
+        // Implementation of cancelBookingForm
+        document.getElementById('bookingForm').style.display = 'none';
+    }
     </script>
 
 <section>
