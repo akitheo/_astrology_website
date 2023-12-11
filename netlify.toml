@@ -2,8 +2,9 @@
   command = "npm ci"
   publish = "/"  # Publish directory is set to the root because index.html is in the root
 
-[build.functions]
+[functions]
   directory = "netlify/functions"
+
 
 
 
