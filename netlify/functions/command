@@ -1,6 +1,0 @@
-npm init -y
-npm install nodemailer
-npm install -D @netlify/plugin-functions
-npm install
-
-
