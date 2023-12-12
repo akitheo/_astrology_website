@@ -258,7 +258,7 @@
 
    <div id="bookingForm" style="display: none;">
     <h3>Booking Form</h3>
-    <form action="process_form.php" method="post">
+   <form id="userBookingForm" action="process_form.php" method="post">
         <label for="selectedDate">Selected Date: </label>
         <input type="text" id="selectedDate" readonly required>
         <br>
@@ -397,21 +397,21 @@
     
     <script>
 function submitBookingForm() {
-        // Get form data
-        var form = document.getElementById('userBookingForm');
-        var formData = new FormData(form);
+    // Get form data
+    var form = document.getElementById('userBookingForm');
+    var formData = new FormData(form);
 
-        // Validate form fields
-        var validationPassed = validateForm(formData);
+    // Validate form fields
+    var validationPassed = validateForm(formData);
 
-        if (validationPassed) {
-            // Redirect to the success page
-            window.location.href = 'success.html';
-        } else {
-            // Show validation error message
-            alert('Please fill in all the required fields before submitting the form.');
-        }
+    if (validationPassed) {
+        // Redirect to the success page
+        window.location.href = 'success.html';
+    } else {
+        // Show validation error message
+        alert('Please fill in all the required fields before submitting the form.');
     }
+}
 
     function validateForm(formData) {
         // List of required field names
