@@ -63,22 +63,23 @@ app.post('/submitForm', (req, res) => {
     text: userMessage,
   };
 
-  // Send emails
-  transporter.sendMail(astrologerMailOptions, (error, info) => {
-    if (error) {
-      console.error('Error sending email to astrologer:', error);
-    } else {
-      console.log('Email sent to astrologer:', info.response);
-    }
-  });
+ transporter.sendMail(astrologerMailOptions, (error, info) => {
+  if (error) {
+    console.error('Error sending email to astrologer:', error);
+    return res.status(500).send('Error sending email to astrologer');
+  } else {
+    console.log('Email sent to astrologer:', info.response);
+  }
+});
 
-  transporter.sendMail(userMailOptions, (error, info) => {
-    if (error) {
-      console.error('Error sending email to user:', error);
-    } else {
-      console.log('Email sent to user:', info.response);
-    }
-  });
+transporter.sendMail(userMailOptions, (error, info) => {
+  if (error) {
+    console.error('Error sending email to user:', error);
+    return res.status(500).send('Error sending email to user');
+  } else {
+    console.log('Email sent to user:', info.response);
+  }
+});
 
   // Redirect to success page
   res.redirect('/success.html');
