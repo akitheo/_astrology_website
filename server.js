@@ -14,7 +14,7 @@ app.use(express.static('public'));
 
 app.post('/submitForm', (req, res) => {
   const { firstName, lastName, dob, birthTime, phoneNumber, email, selectedDate, selectedTime } = req.body;
-
+   console.log('Received form submission:', req.body);
   // Astrologer's email address
   const astrologerEmail = 'apal707662@gmail.com';  // Replace with astrologer's email address
 
