@@ -1,13 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
+const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+app.use(cors());
 // Serve static files (your HTML, CSS, JS) from the 'public' directory
 app.use(express.static('public'));
 
@@ -63,10 +64,9 @@ app.post('/submitForm', (req, res) => {
     text: userMessage,
   };
 
- transporter.sendMail(astrologerMailOptions, (error, info) => {
+transporter.sendMail(astrologerMailOptions, (error, info) => {
   if (error) {
     console.error('Error sending email to astrologer:', error);
-    return res.status(500).send('Error sending email to astrologer');
   } else {
     console.log('Email sent to astrologer:', info.response);
   }
@@ -75,7 +75,6 @@ app.post('/submitForm', (req, res) => {
 transporter.sendMail(userMailOptions, (error, info) => {
   if (error) {
     console.error('Error sending email to user:', error);
-    return res.status(500).send('Error sending email to user');
   } else {
     console.log('Email sent to user:', info.response);
   }
