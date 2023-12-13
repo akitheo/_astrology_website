@@ -398,35 +398,37 @@
     
     <script>
 function submitBookingForm() {
-    // Get form data
+    // Get form element
     var form = document.getElementById('userBookingForm');
+    
+    // Get form data
     var formData = new FormData(form);
 
     // Validate form fields
     var validationPassed = validateForm(formData);
 
-   if (validationPassed) {
-            // Send data to the external spreadsheet using AJAX
-            $.ajax({
-                url: "https://api.apispreadsheets.com/data/aSmdZI6gAkEIneqh/",
-                type: "post",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function () {
-                    alert("Form Data Submitted :)");
-                    // Optionally, you can redirect the user to a success page
-                    // window.location.href = 'success.html';
-                },
-                error: function () {
-                    alert("There was an error :(");
-                }
-            });
-        } else {
-            // Show validation error message
-            alert('Please fill in all the required fields before submitting the form.');
-        }
+    if (validationPassed) {
+        // Send data to the external spreadsheet using AJAX
+        $.ajax({
+            url: "https://api.apispreadsheets.com/data/aSmdZI6gAkEIneqh/",
+            type: "post",
+            data: formData,  // Pass the form element, not formData object
+            processData: false,
+            contentType: false,
+            success: function () {
+                alert("Form Data Submitted :)");
+                // Optionally, you can redirect the user to a success page
+                // window.location.href = 'success.html';
+            },
+            error: function () {
+                alert("There was an error :(");
+            }
+        });
+    } else {
+        // Show validation error message
+        alert('Please fill in all the required fields before submitting the form.');
     }
+}
 
     function validateForm(formData) {
         // Your existing validation logic here
