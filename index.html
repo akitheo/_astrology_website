@@ -407,7 +407,7 @@ function submitBookingForm() {
     // Validate form fields
     var validationPassed = validateForm(formData);
 
-     if (validationPassed) {
+    if (validationPassed) {
         // Send data to the Google Apps Script web app using AJAX
         $.ajax({
             url: "https://script.google.com/macros/s/AKfycbyrZ-G8RURdNZFWtaua5IZ0slg4DAhW_fEEqagr4Rsnkvj0cnLkwVoFcCedfN8PqE-O/exec",
@@ -428,27 +428,28 @@ function submitBookingForm() {
         // Show validation error message
         alert('Please fill in all the required fields before submitting the form.');
     }
-    
-    function validateForm(formData) {
-        // Your existing validation logic here
+}
 
-        // Example: Check if the required fields are filled
-        var requiredFields = ['firstName', 'lastName', 'dob', 'birthTime', 'phoneNumber', 'email'];
-        for (var i = 0; i < requiredFields.length; i++) {
-            var fieldName = requiredFields[i];
-            if (!formData.get(fieldName)) {
-                // Field is empty, validation failed
-                return false;
-            }
+function validateForm(formData) {
+    // Your existing validation logic here
+
+    // Example: Check if the required fields are filled
+    var requiredFields = ['firstName', 'lastName', 'dob', 'birthTime', 'phoneNumber', 'email'];
+    for (var i = 0; i < requiredFields.length; i++) {
+        var fieldName = requiredFields[i];
+        if (!formData.get(fieldName)) {
+            // Field is empty, validation failed
+            return false;
         }
-
-        return true;
     }
 
-    function cancelBookingForm() {
-        // Your existing cancelBookingForm logic here
-        document.getElementById('bookingForm').style.display = 'none';
-    }
+    return true;
+}
+
+function cancelBookingForm() {
+    // Your existing cancelBookingForm logic here
+    document.getElementById('bookingForm').style.display = 'none';
+}
     </script>
 
 <section>
