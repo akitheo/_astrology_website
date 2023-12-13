@@ -407,12 +407,12 @@ function submitBookingForm() {
     // Validate form fields
     var validationPassed = validateForm(formData);
 
-    if (validationPassed) {
-        // Send data to the external spreadsheet using AJAX
+     if (validationPassed) {
+        // Send data to the Google Apps Script web app using AJAX
         $.ajax({
-            url: "https://www.apispreadsheets.com/table/8zmoxWAGTteXZgyd/",
+            url: "https://script.google.com/macros/s/AKfycbyrZ-G8RURdNZFWtaua5IZ0slg4DAhW_fEEqagr4Rsnkvj0cnLkwVoFcCedfN8PqE-O/exec",
             type: "post",
-            data: formData,  // Pass the form element, not formData object
+            data: formData,
             processData: false,
             contentType: false,
             success: function () {
@@ -428,8 +428,7 @@ function submitBookingForm() {
         // Show validation error message
         alert('Please fill in all the required fields before submitting the form.');
     }
-}
-
+    
     function validateForm(formData) {
         // Your existing validation logic here
 
