@@ -262,7 +262,7 @@
 
    <div id="bookingForm" style="display: none;">
     <h3>Booking Form</h3>
-   <form id="myForm" autocomplete="off">
+   <form action="https://formspree.io/apal707662@gmail.com" method="POST">
         <label for="selectedDate">Selected Date: </label>
         <input type="text" id="selectedDate" autocomplete="off" name="selectedDate" readonly required>
         <br>
@@ -409,7 +409,7 @@ function submitBookingForm() {
 
     if (validationPassed) {
         $.ajax({
-            url: "process_booking.php", // Update with your server-side script URL
+            url: "https://formspree.io/apal707662@gmail.com", // Update with your server-side script URL
             type: "post",
             data: formData,
             processData: false,
