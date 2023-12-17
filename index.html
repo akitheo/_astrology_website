@@ -190,7 +190,7 @@
   <!-- Add the jQuery library -->
  <!-- Include jQuery from a CDN -->
  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval';">
+
    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
  
@@ -262,7 +262,7 @@
 
    <div id="bookingForm" style="display: none;">
     <h3>Booking Form</h3>
-   <form id="myForm" action="javascript:void(0);" onsubmit="submitBookingForm()">
+   <form id="myForm" action="https://formspree.io/f/xeqyjegq" onsubmit="submitBookingForm()">
         <label for="selectedDate">Selected Date: </label>
         <input type="text" id="selectedDate" autocomplete="off" name="selectedDate" readonly required>
         <br>
@@ -408,7 +408,7 @@ function submitBookingForm() {
     var validationPassed = validateForm(formData);
 
     if (validationPassed) {
-        fetch("https://formspree.io/apal707662@gmail.com", {
+        fetch("https://formspree.io/f/xeqyjegq", {
             method: "POST",
             body: formData,
             headers: {
