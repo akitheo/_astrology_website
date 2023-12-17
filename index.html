@@ -297,6 +297,8 @@
 
         <label for="email">Email:</label>
         <input type="email" id="email" autocomplete="off" name="email" required>
+        <label for="userMessage">Additional Message:</label>
+        <textarea id="userMessage" name="userMessage" rows="4"></textarea>
 
         <button type="button" onclick="submitBookingForm()">Book Now</button>
         <button type="button" onclick="cancelBookingForm()">Cancel</button>
@@ -401,39 +403,31 @@
     
     <script>
 function submitBookingForm() {
-    // Get form element
     var form = document.getElementById('myForm');
-    
-    // Get form data
     var formData = new FormData(form);
-
-    // Validate form fields
     var validationPassed = validateForm(formData);
 
     if (validationPassed) {
-        // Send data to the Google Apps Script web app using AJAX
         $.ajax({
-    url: "https://script.google.com/macros/s/AKfycbwfZ1bxCyfXtPr8vLqywLWi_Y43tDUyRqxFHmnYo072hK2pfrPzQOn3mn2q53YDt3_e/exec",
-    type: "post",
-    data: formData,
-    processData: false,
-    contentType: false,
-    dataType: 'jsonp',  // Specify JSONP
-    success: function (response) {
-        alert("Form Data Submitted :)");
-        // Optionally, you can redirect the user to a success page
-        // window.location.href = 'success.html';
-    },
-    error: function () {
-        alert("There was an error :(");
-    }
-});
+            url: "process_booking.php", // Update with your server-side script URL
+            type: "post",
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json', // Use JSON for better data handling
+            success: function (response) {
+                alert("Form Data Submitted :)");
+                // Optionally, you can redirect the user to a success page
+                 window.location.href = 'success.html';
+            },
+            error: function () {
+                alert("There was an error :(");
+            }
+        });
     } else {
-        // Show validation error message
         alert('Please fill in all the required fields before submitting the form.');
     }
 }
-
 function validateForm(formData) {
     // Your existing validation logic here
 
