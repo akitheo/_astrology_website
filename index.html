@@ -189,7 +189,7 @@
     </style>
   <!-- Add the jQuery library -->
  <!-- Include jQuery from a CDN -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
@@ -401,33 +401,35 @@
         };
     </script>
     
-    <script>
+<script>
 function submitBookingForm() {
     var form = document.getElementById('myForm');
     var formData = new FormData(form);
     var validationPassed = validateForm(formData);
 
     if (validationPassed) {
-        $.ajax({
-            url: "https://formspree.io/apal707662@gmail.com", // Update with your server-side script URL
-            type: "post",
-            data: formData,
-            processData: false,
-            contentType: false,
-            dataType: 'json', // Use JSON for better data handling
-            success: function (response) {
-                alert("Form Data Submitted :)");
-                // Optionally, you can redirect the user to a success page
-                 window.location.href = 'success.html';
-            },
-            error: function () {
-                alert("There was an error :(");
+        fetch("https://formspree.io/apal707662@gmail.com", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "Accept": "application/json"
             }
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("Form Data Submitted :)");
+            // Optionally, you can redirect the user to a success page
+            window.location.href = 'success.html';
+        })
+        .catch(error => {
+            alert("There was an error :(");
+            console.error('Error:', error);
         });
     } else {
         alert('Please fill in all the required fields before submitting the form.');
     }
 }
+
 function validateForm(formData) {
     // Your existing validation logic here
 
@@ -448,7 +450,8 @@ function cancelBookingForm() {
     // Your existing cancelBookingForm logic here
     document.getElementById('bookingForm').style.display = 'none';
 }
-    </script>
+</script>
+
 
 <section>
 <section id="contact">
