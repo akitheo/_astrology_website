@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: application/json');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $to = "apal707662@gmail.com"; // Update with the actual email address of the astrologer
     $subject = "New Consultation Booking";
@@ -13,14 +15,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                "X-Mailer: PHP/" . phpversion();
 
     // Send the email
-    mail($to, $subject, $message, $headers);
+    $success = mail($to, $subject, $message, $headers);
 
-    // You can also handle additional processing or validation here
-
-    // Respond to the AJAX request
-    echo json_encode(["success" => true]);
+    if ($success) {
+        // Respond to the AJAX request
+        echo json_encode(["success" => true]);
+    } else {
+        // Handle email sending failure
+        echo json_encode(["success" => false, "error" => "Error sending email"]);
+    }
 } else {
     // Respond to invalid requests
-    echo json_encode(["success" => false]);
+    echo json_encode(["success" => false, "error" => "Invalid request method"]);
 }
 ?>
