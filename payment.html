@@ -1,0 +1,63 @@
+<!-- payment.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Options</title>
+</head>
+<body>
+    <h1>Payment Options</h1>
+    <p>Please choose a session duration:</p>
+
+    <label>
+        <input type="radio" name="session" value="1" onclick="selectSession(1200)"> 1 Hour - 1200 NTD
+    </label>
+
+    <label>
+        <input type="radio" name="session" value="2" onclick="selectSession(2000)"> 2 Hours - 2000 NTD
+    </label>
+
+    <label>
+        <input type="radio" name="session" value="3" onclick="selectSession(2500)"> 3 Hours - 2500 NTD
+    </label>
+
+    <button onclick="payNow()">Pay Now</button>
+    <button onclick="payLater()">Pay Later</button>
+
+    <script>
+        let selectedSessionPrice = 0;
+
+        function selectSession(price) {
+            selectedSessionPrice = price;
+        }
+
+        function payNow() {
+            if (selectedSessionPrice === 0) {
+                alert("Please select a session duration first.");
+            } else {
+                // Add logic to initiate immediate payment
+                alert("Redirecting to payment gateway for immediate payment... Price: " + selectedSessionPrice + " NTD");
+                // You may replace the alert with actual redirection code to a payment gateway
+
+                // Redirect to success page after payment
+                window.location.href = 'success.html';
+            }
+        }
+
+        function payLater() {
+            if (selectedSessionPrice === 0) {
+                alert("Please select a session duration first.");
+            } else {
+                // Add logic for handling payments later
+                alert("Payment later option selected. Price: " + selectedSessionPrice + " NTD");
+                alert("Please make the payment within three days, or your booking will be cancelled.");
+                // You may replace the alerts with your logic or user interface elements
+
+                // Redirect to success page after booking
+                window.location.href = 'success.html';
+            }
+        }
+    </script>
+</body>
+</html>
