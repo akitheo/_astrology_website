@@ -182,7 +182,6 @@
   <!-- Add the jQuery library -->
  <!-- Include jQuery from a CDN -->
  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="initiatePayment-script.js"></script>
 
    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
@@ -403,7 +402,7 @@ function submitBookingForm() {
         localStorage.setItem('formData', JSON.stringify(Object.fromEntries(formData.entries())));
 
         // Add logic to initiate the payment process (redirect to payment page)
-        initiatePayment(selectedSessionPrice); // Replace this with your actual payment logic
+            window.location.href = 'payment.html';
     } else {
         alert('Please fill in all the required fields before submitting the form.');
     }
