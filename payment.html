@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <script src="https://www.paypal.com/sdk/js?client-id=AZEYOWfH8Z2D7ulhDJtByUTa4aViCh9R4B6W_duot43ayg153RqA75npE_vIjBk0AKfNUhjYI0KvgQQo&currency=TWD"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AZEYOWfH8Z2D7ulhDJtByUTa4aViCh9R4B6W_duot43ayg153RqA75npE_vIjBk0AKfNUhjYI0KvgQQo&currency=TWD"></script>
     <title>Payment Options</title>
 </head>
 <body>
@@ -26,6 +26,9 @@
     <button onclick="payNow()">Pay Now</button>
     <button onclick="payLater()">Pay Later</button>
 
+    <!-- Container for PayPal buttons -->
+    <div id="paypal-button-container"></div>
+
     <script>
         let selectedSessionPrice = 0;
 
@@ -37,12 +40,8 @@
             if (selectedSessionPrice === 0) {
                 alert("Please select a session duration first.");
             } else {
-                // Add logic to initiate immediate payment
-                alert("Redirecting to payment gateway for immediate payment... Price: " + selectedSessionPrice + " NTD");
-                // You may replace the alert with actual redirection code to a payment gateway
-
-                // Redirect to success page after payment
-                window.location.href = 'success.html';
+                // Invoke initiatePayment with the selected session price
+                initiatePayment(selectedSessionPrice);
             }
         }
 
@@ -50,18 +49,12 @@
             if (selectedSessionPrice === 0) {
                 alert("Please select a session duration first.");
             } else {
-                // Add logic for handling payments later
                 alert("Payment later option selected. Price: " + selectedSessionPrice + " NTD");
                 alert("Please make the payment within three days, or your booking will be cancelled.");
-                // You may replace the alerts with your logic or user interface elements
-
-                // Redirect to success page after booking
                 window.location.href = 'success.html';
             }
         }
-    </script>
-     <!-- Place the PayPal script here -->
-    <script>
+
         function initiatePayment(amount) {
             paypal.Buttons({
                 createOrder: function(data, actions) {
@@ -76,16 +69,12 @@
                 },
                 onApprove: function(data, actions) {
                     return actions.order.capture().then(function(details) {
-                        // Successful payment - Add your logic here
                         alert('Payment successful!');
-                        window.location.href = 'success.html'; // Redirect to success page
+                        window.location.href = 'success.html';
                     });
                 }
             }).render('#paypal-button-container');
         }
     </script>
-
-    <!-- Container for PayPal buttons -->
-    <div id="paypal-button-container"></div>
 </body>
 </html>
