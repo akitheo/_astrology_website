@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Welcome to Astrology World</title>
       <style>
         body {
@@ -186,15 +187,25 @@
             background-color: #2980b9;
         }
 
-          @media only screen and (max-width: 600px) {
-            #bookingForm {
-                width: 80%;
-                margin: 0 auto;
-            }
+         @media only screen and (max-width: 600px) {
+    #bookingForm {
+        width: 90%;
+        margin: 0 auto;
+    }
 
-            #bookingForm button {
-                width: 100%;
-            }
+    #bookingForm label,
+    #bookingForm input,
+    #bookingForm select,
+    #bookingForm textarea {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+    #bookingForm button {
+        width: 100%;
+    }
+}
 
     </style>
   <!-- Add the jQuery library -->
@@ -202,7 +213,6 @@
  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
  
 </head>
