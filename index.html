@@ -398,27 +398,16 @@ function submitBookingForm() {
     var validationPassed = validateForm(formData);
 
     if (validationPassed) {
-        fetch("https://formspree.io/f/xeqyjegq", {
-            method: "POST",
-            body: formData,
-            headers: {
-                "Accept": "application/json"
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert("Form Data Submitted :)");
-            // Optionally, you can redirect the user to a success page
-            window.location.href = 'payment.html';
-        })
-        .catch(error => {
-            alert("There was an error :(");
-            console.error('Error:', error);
-        });
+        // Save form data to localStorage for retrieval after payment
+        localStorage.setItem('formData', JSON.stringify(Object.fromEntries(formData.entries())));
+
+        // Add logic to initiate the payment process (redirect to payment page)
+        initiatePayment(selectedSessionPrice); // Replace this with your actual payment logic
     } else {
         alert('Please fill in all the required fields before submitting the form.');
     }
 }
+
 
 function validateForm(formData) {
     // Your existing validation logic here
