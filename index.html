@@ -122,33 +122,6 @@
             background-color: #4CAF50;
             color: white;
         }
-
-        #bookingForm {
-            display: none;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 999;
-        }
-
-        #bookingForm label,
-        #bookingForm input {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        #bookingForm button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-        }
-
        .calendar-table {
         width: 100%;
         border-collapse: collapse;
@@ -189,22 +162,20 @@
 
          @media only screen and (max-width: 600px) {
     #bookingForm {
-        width: 90%;
-        margin: 0 auto;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    #bookingForm label,
-    #bookingForm input,
-    #bookingForm select,
-    #bookingForm textarea {
-        width: 100%;
-        box-sizing: border-box;
-        margin-bottom: 10px;
-    }
-
-    #bookingForm button {
-        width: 100%;
-    }
+#bookingForm label,
+#bookingForm input,
+#bookingForm select,
+#bookingForm textarea,
+#bookingForm button {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
 }
 
     </style>
