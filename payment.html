@@ -36,10 +36,14 @@
             selectedSessionPrice = price;
         }
 
-         function payNow(amount) {
-            // Invoke initiatePayment with the fixed currency and selected session price
-            initiatePayment('USD', amount);
-        }
+         function payNow() {
+    if (selectedSessionPrice === 0) {
+        alert("Please select a session duration first.");
+    } else {
+        // Invoke initiatePayment with the selected session price
+        initiatePayment(selectedSessionPrice);
+    }
+}
 
         function payLater() {
             if (selectedSessionPrice === 0) {
@@ -58,11 +62,13 @@
                         purchase_units: [{
                             amount: {
                                 value: amount,
-                               currency_code: currencyCode // Set currency to NTD
+                                currency_code: 'TWD' // Set currency to NTD
                             }
                         }]
                     });
-                },
+                }, 
+
+
                 onApprove: function (data, actions) {
             return actions.order.capture().then(function (details) {
                 alert('Payment successful!');
