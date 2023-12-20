@@ -36,14 +36,10 @@
             selectedSessionPrice = price;
         }
 
-        function payNow() {
-    if (selectedSessionPrice === 0) {
-        alert("Please select a session duration first.");
-    } else {
-        // Invoke initiatePayment with the selected session price
-        initiatePayment('USD', selectedSessionPrice);
-    }
-}
+         function payNow(amount) {
+            // Invoke initiatePayment with the fixed currency and selected session price
+            initiatePayment('USD', amount);
+        }
 
         function payLater() {
             if (selectedSessionPrice === 0) {
