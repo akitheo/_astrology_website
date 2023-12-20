@@ -41,7 +41,7 @@
         alert("Please select a session duration first.");
     } else {
         // Invoke initiatePayment with the selected session price
-        initiatePayment(selectedSessionPrice);
+        initiatePayment('USD', selectedSessionPrice);
     }
 }
 
@@ -62,7 +62,7 @@
                         purchase_units: [{
                             amount: {
                                 value: amount,
-                                currency_code: 'TWD' // Set currency to NTD
+                               currency_code: currencyCode // Set currency to NTD
                             }
                         }]
                     });
